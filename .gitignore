@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# CMake building directory
+build
+bin
+
+# IDE project setting
+*.user
+
+# Apple desktop services store
+.DS_Store
