@@ -19,17 +19,17 @@
  *  @}
  */
 
-// Wait functions timeout
+//! Wait functions timeout
 #define NMC_WAIT_TIME_INFINITE              (0xFFFFFFFF)
 
 /*! \addtogroup Device_State
  *  State definition of devices. NMC_DeviceGetState()
  *  @{
  */
-#define NMC_DEVICE_STATE_INIT               (1)
-#define NMC_DEVICE_STATE_READY              (2)
-#define NMC_DEVICE_STATE_ERROR              (3)
-#define NMC_DEVICE_STATE_OPERATION          (4)
+#define NMC_DEVICE_STATE_INIT               (1)   //!< Init: The device parameters are not configured or have been removed.
+#define NMC_DEVICE_STATE_READY              (2)   //!< Ready: The device parameters have been configured
+#define NMC_DEVICE_STATE_ERROR              (3)   //!< Error: The device enters a critical error state, such as the communication failure.
+#define NMC_DEVICE_STATE_OPERATION          (4)   //!< Operation
 /*!
  *  @}
  */
@@ -70,53 +70,60 @@
  *  Coordinate system type definition for group operation
  *  @{
  */
-#define NMC_COORD_MCS                       (0)   // (MCS) Mechanical also called base/world coord. system
-#define NMC_COORD_PCS                       (1)   // (PCS) Programming also called product/work coord. system
-#define NMC_COORD_ACS                       (2)   // (ACS) Axis coord. system
+#define NMC_COORD_MCS                       (0)   //!< (MCS) Mechanical also called base/world coordinate system
+#define NMC_COORD_PCS                       (1)   //!< (PCS) Programming also called product/work coordinate system
+#define NMC_COORD_ACS                       (2)   //!< (ACS) Axis coordinate system
 /*!
  *  @}
  */
 
 /*! \addtogroup Axis_State
  *  State definition of axis.
+ *  The axis state is read via NMC_AxisGetState(). The variable represents the
+ *  meanings as following.
  *  @{
  */
-#define NMC_AXIS_STATE_DISABLE              (0)
-#define NMC_AXIS_STATE_STAND_STILL          (1)
-#define NMC_AXIS_STATE_HOMING               (2)
-#define NMC_AXIS_STATE_DISCRETE_MOTION      (3)
-#define NMC_AXIS_STATE_CONTINUOUS_MOTION    (4)
-#define NMC_AXIS_STATE_STOPPING             (5)
-#define NMC_AXIS_STATE_STOPPED              (6)
-#define NMC_AXIS_STATE_WAIT_SYNC            (7)
+#define NMC_AXIS_STATE_DISABLE              (0)   //!< Disable: The servo is OFF.
+#define NMC_AXIS_STATE_STAND_STILL          (1)   //!< Enable: The servo is stand still.
+#define NMC_AXIS_STATE_HOMING               (2)   //!< Executing the Homing motion.
+#define NMC_AXIS_STATE_DISCRETE_MOTION      (3)   //!< Executing the point-to-point motion.
+#define NMC_AXIS_STATE_CONTINUOUS_MOTION    (4)   //!< Executing the continuous motion.
+#define NMC_AXIS_STATE_STOPPING             (5)   //!< Receiving the Stop command and slowing down to stop.
+#define NMC_AXIS_STATE_STOPPED              (6)   //!< Receiving the Stop command and stopped.
+#define NMC_AXIS_STATE_WAIT_SYNC            (7)   //!< Receiving the Wait command and waiting for SYNC signal.
 #define NMC_AXIS_STATE_GROUP_MOTION         (8)
-#define NMC_AXIS_STATE_ERROR                (10)
+#define NMC_AXIS_STATE_ERROR                (10)  //!< Stop for error.
 /*!
  *  @}
  */
 
 /*! \addtogroup Axis_Status
  *  Status bit number definition of axis
+ *  The axis status is read via NMC_AxisGetStatus(). Each bit code of the
+ *  variable represents the meanings Positiveas following.
+ *
+ *  (*1) After the error state is resolved, the Latched signal will be cleared
+ *  to 0 after the function NMC_AxisResetState() is called.
  *  @{
  */
-#define NMC_AXIS_STATUS_EMG                 (0)
-#define NMC_AXIS_STATUS_ALM                 (1)
-#define NMC_AXIS_STATUS_PEL                 (2)
-#define NMC_AXIS_STATUS_NEL                 (3)
-#define NMC_AXIS_STATUS_PSEL                (4)
-#define NMC_AXIS_STATUS_NSEL                (5)
-#define NMC_AXIS_STATUS_ENA                 (6)
-#define NMC_AXIS_STATUS_ERR                 (7)
-#define NMC_AXIS_STATUS_TAR                 (8)
-#define NMC_AXIS_STATUS_CSTP                (9)
-#define NMC_AXIS_STATUS_ACC                 (10)
-#define NMC_AXIS_STATUS_DEC                 (11)
-#define NMC_AXIS_STATUS_MV                  (12)
-#define NMC_AXIS_STATUS_OP                  (13)
-#define NMC_AXIS_STATUS_STOP                (14)
-#define NMC_AXIS_STATUS_RPEL	            (16)
-#define NMC_AXIS_STATUS_RNEL	            (17)
-#define NMC_AXIS_STATUS_RHOM	            (18)
+#define NMC_AXIS_STATUS_EMG                 (0)   //!< A latched signal is issued at the EMG signal (*1).
+#define NMC_AXIS_STATUS_ALM                 (1)   //!< A latched signal is issued at the servo Alarm (*1).
+#define NMC_AXIS_STATUS_PEL                 (2)   //!< A latched signal is issued at the positive limit signal (*1).
+#define NMC_AXIS_STATUS_NEL                 (3)   //!< A latched signal is issued at the negative limit signal (*1).
+#define NMC_AXIS_STATUS_PSEL                (4)   //!< A latched signal is issued at the software positive limit signal (*1).
+#define NMC_AXIS_STATUS_NSEL                (5)   //!< A latched signal is issued at the software negitive limit signal (*1).
+#define NMC_AXIS_STATUS_ENA                 (6)   //!< The axis is Enable or Disable.
+#define NMC_AXIS_STATUS_ERR                 (7)   //!< Axis error
+#define NMC_AXIS_STATUS_TAR                 (8)   //!< The axis has reached the target position.
+#define NMC_AXIS_STATUS_CSTP                (9)   //!< The axis commands to Stop.
+#define NMC_AXIS_STATUS_ACC                 (10)  //!< The axis is operating in acceleration.
+#define NMC_AXIS_STATUS_DEC                 (11)  //!< The axis is operating in decceleration.
+#define NMC_AXIS_STATUS_MV                  (12)  //!< The axis is operating at the maximum velocity.
+#define NMC_AXIS_STATUS_OP                  (13)  //!< The axis is operating.
+#define NMC_AXIS_STATUS_STOP                (14)  //!< The axis is STOP.
+#define NMC_AXIS_STATUS_RPEL	              (16)  //!< Positive limit signal: 1: Triggered, 0: Not Triggered
+#define NMC_AXIS_STATUS_RNEL	              (17)  //!< Negative limit signal: 1: Triggered, 0: Not Triggered
+#define NMC_AXIS_STATUS_RHOM	              (18)  //!< Home signal: 1: High level, 0: Low Level
 /*!
  *  @}
  */
@@ -124,63 +131,78 @@
 
 /*! \addtogroup Axis_Status_Mask
  *  Status bit mask definition of axis
+ *
+ *  The motion status is read via NMC_AxisGetStatus(). Each bit mask of the
+ *  variable represents the meanings as following.
+ *
+ *  (*1) After the error state is resolved, the Latched signal will be cleared
+ *  to 0 after the function NMC_AxisResetState() is called.
  *  @{
  */
-#define NMC_AXIS_STATUS_MASK_EMG            (0x00000001)
-#define NMC_AXIS_STATUS_MASK_ALM            (0x00000002)
-#define NMC_AXIS_STATUS_MASK_PEL            (0x00000004)
-#define NMC_AXIS_STATUS_MASK_NEL            (0x00000008)
-#define NMC_AXIS_STATUS_MASK_PSEL           (0x00000010)
-#define NMC_AXIS_STATUS_MASK_NSEL           (0x00000020)
-#define NMC_AXIS_STATUS_MASK_ENA            (0x00000040)
-#define NMC_AXIS_STATUS_MASK_ERR            (0x00000080)
-#define NMC_AXIS_STATUS_MASK_TAR            (0x00000100)
-#define NMC_AXIS_STATUS_MASK_CSTP           (0x00000200)
-#define NMC_AXIS_STATUS_MASK_ACC            (0x00000400)
-#define NMC_AXIS_STATUS_MASK_DEC            (0x00000800)
-#define NMC_AXIS_STATUS_MASK_MV             (0x00001000)
-#define NMC_AXIS_STATUS_MASK_OP             (0x00002000)
-#define NMC_AXIS_STATUS_MASK_STOP           (0x00004000)
-#define NMC_AXIS_STATUS_MASK_RPEL	        (0x00010000)
-#define NMC_AXIS_STATUS_MASK_RNEL	        (0x00020000)
-#define NMC_AXIS_STATUS_MASK_RHOM	        (0x00040000)
+#define NMC_AXIS_STATUS_MASK_EMG            (0x00000001)  //!< The mask for a latched signal issued at the EMG signal (*1).
+#define NMC_AXIS_STATUS_MASK_ALM            (0x00000002)  //!< The mask for a latched signal issued at the servo Alarm (*1).
+#define NMC_AXIS_STATUS_MASK_PEL            (0x00000004)  //!< The mask for a latched signal issued at the positive limit signal (*1).
+#define NMC_AXIS_STATUS_MASK_NEL            (0x00000008)  //!< The mask for a latched signal issued at the negative limit signal (*1).
+#define NMC_AXIS_STATUS_MASK_PSEL           (0x00000010)  //!< The mask for a latched signal issued at the software positive signal (*1).
+#define NMC_AXIS_STATUS_MASK_NSEL           (0x00000020)  //!< The mask for a latched signal issued at the software negative signal (*1).
+#define NMC_AXIS_STATUS_MASK_ENA            (0x00000040)  //!< The mask to indicate the axis is Enable or Disable.
+#define NMC_AXIS_STATUS_MASK_ERR            (0x00000080)  //!< The mask for axis error.
+#define NMC_AXIS_STATUS_MASK_TAR            (0x00000100)  //!< The mask to indicate the axis has reached the target position.
+#define NMC_AXIS_STATUS_MASK_CSTP           (0x00000200)  //!< The mask to indicate the axis commands to Stop.
+#define NMC_AXIS_STATUS_MASK_ACC            (0x00000400)  //!< The mask to indicate the axis is operating in acceleration.
+#define NMC_AXIS_STATUS_MASK_DEC            (0x00000800)  //!< The mask to indicate the axis is operating in decceleration.
+#define NMC_AXIS_STATUS_MASK_MV             (0x00001000)  //!< The mask to indicate the axis is operating at the maximum velocity.
+#define NMC_AXIS_STATUS_MASK_OP             (0x00002000)  //!< The mask to indicate the axis is operating.
+#define NMC_AXIS_STATUS_MASK_STOP           (0x00004000)  //!< The mask to indicate the axis is STOP.
+#define NMC_AXIS_STATUS_MASK_RPEL	          (0x00010000)  //!< The mask for the positive limit signal: 1:Triggered, 0: Not Triggered.
+#define NMC_AXIS_STATUS_MASK_RNEL	          (0x00020000)  //!< The mask for the negative limit signal: 1:Triggered, 0: Not Triggered.
+#define NMC_AXIS_STATUS_MASK_RHOM	          (0x00040000)  //!< The mask for the home signal: 1: High level, 0: Low level.
 /*!
  *  @}
  */
 
 /*! \addtogroup Group_State
  *  State definition of group
+ *
+ *  The group state is read via NMC_GroupGetState(). The variable represents
+ *  the meanings as following
  *  @{
  */
-#define NMC_GROUP_STATE_DISABLE             (0)
-#define NMC_GROUP_STATE_STAND_STILL         (1)
-#define NMC_GROUP_STATE_STOPPED             (2)
-#define NMC_GROUP_STATE_STOPPING            (3)
-#define NMC_GROUP_STATE_MOVING              (4)
-#define NMC_GROUP_STATE_HOMING              (5)
-#define NMC_GROUP_STATE_ERROR               (6)
+#define NMC_GROUP_STATE_DISABLE             (0)   //!< Disable: The group servo is OFF.
+#define NMC_GROUP_STATE_STAND_STILL         (1)   //!< Enable: The group servo is stand still.
+#define NMC_GROUP_STATE_STOPPED             (2)   //!< Receiving the Stop command and stopped.
+#define NMC_GROUP_STATE_STOPPING            (3)   //!< Receiving the Stop command and slowing down to stop.
+#define NMC_GROUP_STATE_MOVING              (4)   //!< Executing the move command.
+#define NMC_GROUP_STATE_HOMING              (5)   //!< Executing the Homing motion.
+#define NMC_GROUP_STATE_ERROR               (6)   //!< Stop for error.
 /*!
  *  @}
  */
 
 /*! \addtogroup Group_Status
  *  Status bit number definition of group
+ *
+ *  The group status is read via NMC_GroupGetStatus(). Each bit code of the
+ *  variable represents the meanings as following.
+ *
+ *  (*1) After the error state is resolved, the Latched signal will be cleared
+ *  to 0 after the function NMC_GroupResetState() is called.
  *  @{
  */
-#define NMC_GROUP_STATUS_EMG                (0)
-#define NMC_GROUP_STATUS_ALM                (1)
-#define NMC_GROUP_STATUS_PEL                (2)
-#define NMC_GROUP_STATUS_NEL                (3)
-#define NMC_GROUP_STATUS_PSEL               (4)
-#define NMC_GROUP_STATUS_NSEL               (5)
-#define NMC_GROUP_STATUS_ENA                (6)
-#define NMC_GROUP_STATUS_ERR                (7)
-#define NMC_GROUP_STATUS_CSTP               (9)
-#define NMC_GROUP_STATUS_ACC                (10)
-#define NMC_GROUP_STATUS_DEC                (11)
-#define NMC_GROUP_STATUS_MV                 (12)
-#define NMC_GROUP_STATUS_OP                 (13)
-#define NMC_GROUP_STATUS_STOP               (14)
+#define NMC_GROUP_STATUS_EMG                (0)   //!< A latched signal is issued at the external EMG signal (*1).
+#define NMC_GROUP_STATUS_ALM                (1)   //!< A latched signal is issued at a group axis servo Alarm (*1).
+#define NMC_GROUP_STATUS_PEL                (2)   //!< A latched signal is issued at the positive limit signal of a group axis (*1).
+#define NMC_GROUP_STATUS_NEL                (3)   //!< A latched signal is issued at the negative limit signal of a group axis (*1).
+#define NMC_GROUP_STATUS_PSEL               (4)   //!< A latched signal is issued at the software positive limit signal of a group axis (*1).
+#define NMC_GROUP_STATUS_NSEL               (5)   //!< A latched signal is issued at the software negative limit signal of a group axis (*1).
+#define NMC_GROUP_STATUS_ENA                (6)   //!< The group is Enable or Disable.
+#define NMC_GROUP_STATUS_ERR                (7)   //!< Group (a group of axis) error
+#define NMC_GROUP_STATUS_CSTP               (9)   //!< No displacement of all group axis (i.e. the displacement is 0)
+#define NMC_GROUP_STATUS_ACC                (10)  //!< Moving in the Cartesian coordinate system (along a line or an arc) and accelerating to the maximum velocity or decelerating. The value is 0 for PTP or JOG motion.
+#define NMC_GROUP_STATUS_DEC                (11)  //!< Moving in the Cartesian coordinate system (along a line or an arc) and deccelerating to the target position or STOP. The value is 0 for PTP or JOG motion.
+#define NMC_GROUP_STATUS_MV                 (12)  //!< Moving in the Cartesian coordinate system (along a line or an arc) at the maximum velocity. The value is 0 for PTP or JOG motion.
+#define NMC_GROUP_STATUS_OP                 (13)  //!< The group is moving. That is the state is GROUP_MOVING, GROUP_HOMING or GROUP_STOPPING.
+#define NMC_GROUP_STATUS_STOP               (14)  //!< The group is STOP. That is the state is GROUP_STOPPED.
 /*!
  *  @}
  */
@@ -323,28 +345,65 @@
  *  @}
  */
 
+
+/*! @struct Pos_T     NexMotionDef.h
+ *  @brief  The general data types related to motion, which is defined in NexMotionDef.h
+ *
+ *  It is used to describe the coordinate position of group, and can be ACS
+ *  coordinates or MCS/PCS coordinates depended on the definitions of API.
+ */
 typedef struct
 {
     // For Cartesian space(MCS,PCS) : X, Y, Z, A, B, C, U, V
     // For Axis space(ACS): Axis 0 ~ 7
+    /*! The pos[0~7] represents the coordinate axis 0~7 in the group for the ACS
+     *  coordinate system, and it represents the X-axis, Y-axis, Z-axis, A-axis,
+     *  B-axis, C-axis, U-axis, and V-axis for the Cartesian coordinate system
+     *  (MCS/PCS).
+     */
     F64_T pos[NMC_MAX_POS_SIZE];
 } Pos_T;
 
+
+/*! @struct Xyz_T     NexMotionDef.h
+ *  @brief  The data types related to motion in Cartesian system,
+ *          which is defined in NexMotionDef.h.
+ *
+ *  It is used to describe the X-axis, Y-axis and Z-axis of the Cartesian
+ *  coordinate system.
+ */
 typedef struct
 {
     // For Cartesian space(MCS,PCS) : X, Y, Z,
+    /*! The pos[0], pos[1] and pos[2] represent the X-axis, Y-axis, and Z-axis
+     *  of the Cartesian coordinate system, respectively.
+     */
     F64_T pos[NMC_MAX_XYZ_SIZE];
 } Xyz_T;
 
+
+/*! @struct APos_T     NexMotionDef.h
+ *  @brief  The data types related to motion in Axis system,
+ *          which is defined in NexMotionDef.h.
+ *
+ *  It is used to describe the value of axes of the Machine coordinate system.
+ */
 typedef struct
 {
-    // To describe a position in Axis space (ACS): Axis 0 ~ 7
+    //! To describe a position in Axis space (ACS): Axis 0 ~ 7
     F64_T aPos[NMC_MAX_AXIS_POS_SIZE];
 } APos_T;
 
+
+/*! @struct CPos_T     NexMotionDef.h
+ *  @brief  The data types related to pose in Cartesian space,
+ *          which is defined in NexMotionDef.h.
+ *
+ *  It is used to describe the value of position & orientation of the Cartesian coordinate system.
+ */
 typedef struct
 {
-    // To describe a position in Cartesian space(MCS,PCS) : X, Y, Z, A, B, C
+    //! To describe a position in Cartesian space(MCS,PCS) : X, Y, Z, A, B, C
     F64_T  cPos[NMC_MAX_CARTESIAN_POS_SIZE];
 } CPos_T;
 
@@ -370,31 +429,48 @@ typedef struct
     F64_T pose[NMC_MAX_POSE_DATA_SIZE];
 } CoordTrans_T;
 
-// Hook function type definition
+
+/*!
+ *  @brief  Hook function type definition.
+ *  @param *FPFuncAddress The index of the called function.
+ *  @param *PFuncName     The name of the called function.
+ *  @param ReturnCode     The return value of the called function.
+ *  @param *PUserData     The index of user data set by NMC_DebugSetHookData().
+ *  @return None
+ */
 typedef void(*PF_NmcHookAPI)( const void *FPFuncAddress , const char *PFuncName, RTN_ERR ReturnCode, void *PUserData );
 
 #pragma  pack(push, 1)
+/*! @struct NmcTime_T     NexMotionDef.h
+ *  @brief  A data structure is used to describe the system time.
+ *
+ */
 typedef struct
 {
-    U32_T year;         //  1601 through 30827
-    U32_T month;        //  1 through 12.
-    U32_T day;          //  1 through 31.
-    U32_T hour;         //  0 through 23.
-    U32_T minute;       //  0 through 59.
-    U32_T second;       //  0 through 59
-    U32_T milliseconds; //  0 through 999
+    U32_T year;         //!<  1601 through 30827
+    U32_T month;        //!<  1 through 12.
+    U32_T day;          //!<  1 through 31.
+    U32_T hour;         //!<  0 through 23.
+    U32_T minute;       //!<  0 through 59.
+    U32_T second;       //!<  0 through 59
+    U32_T milliseconds; //!<  0 through 999
 } NmcTime_T;
 
+
+/*! @struct NmcMsg_T     NexMotionDef.h
+ *  @brief  A data structure is used to describe the system message.
+ *
+ */
 typedef struct
 {
-    U32_T       sizeOfStruct;  // return sizeof( NmcMsg_T )
-    NmcTime_T   localTime;
-    U32_T       index;
-    I32_T       type;
-    char        source[NMC_MAX_MSG_SOURCE_SIZE];
-    I32_T       id;
-    I32_T       code;
-    char        text[NMC_MAX_MSG_TEXT_SIZE];
+    U32_T       sizeOfStruct;   //!< The size of NmcMsg_T, and equivalent to the sizeof(NmcMsg_T).
+    NmcTime_T   localTime;      //!< The system time recorded when the message is generated.
+    U32_T       index;          //!< The index of message.
+    I32_T       type;           //!< The type of message. 0: Normal, 1: Warning, 2: Error
+    char        source[NMC_MAX_MSG_SOURCE_SIZE];  //!< The source of message (reserved).
+    I32_T       id;             //!< The identification of message (reserved).
+    I32_T       code;           //!< The code of message.
+    char        text[NMC_MAX_MSG_TEXT_SIZE];  //!< The content of message.
 } NmcMsg_T;
 #pragma	pack(pop)
 
