@@ -40,3 +40,6 @@ bin
 
 # Apple desktop services store
 .DS_Store
+
+# Sample directory (temperary)
+Samples
