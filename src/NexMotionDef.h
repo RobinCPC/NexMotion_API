@@ -121,9 +121,9 @@
 #define NMC_AXIS_STATUS_MV                  (12)  //!< The axis is operating at the maximum velocity.
 #define NMC_AXIS_STATUS_OP                  (13)  //!< The axis is operating.
 #define NMC_AXIS_STATUS_STOP                (14)  //!< The axis is STOP.
-#define NMC_AXIS_STATUS_RPEL	              (16)  //!< Positive limit signal: 1: Triggered, 0: Not Triggered
-#define NMC_AXIS_STATUS_RNEL	              (17)  //!< Negative limit signal: 1: Triggered, 0: Not Triggered
-#define NMC_AXIS_STATUS_RHOM	              (18)  //!< Home signal: 1: High level, 0: Low Level
+#define NMC_AXIS_STATUS_RPEL                (16)  //!< Positive limit signal: 1: Triggered, 0: Not Triggered
+#define NMC_AXIS_STATUS_RNEL                (17)  //!< Negative limit signal: 1: Triggered, 0: Not Triggered
+#define NMC_AXIS_STATUS_RHOM                (18)  //!< Home signal: 1: High level, 0: Low Level
 /*!
  *  @}
  */
@@ -154,9 +154,9 @@
 #define NMC_AXIS_STATUS_MASK_MV             (0x00001000)  //!< The mask to indicate the axis is operating at the maximum velocity.
 #define NMC_AXIS_STATUS_MASK_OP             (0x00002000)  //!< The mask to indicate the axis is operating.
 #define NMC_AXIS_STATUS_MASK_STOP           (0x00004000)  //!< The mask to indicate the axis is STOP.
-#define NMC_AXIS_STATUS_MASK_RPEL	          (0x00010000)  //!< The mask for the positive limit signal: 1:Triggered, 0: Not Triggered.
-#define NMC_AXIS_STATUS_MASK_RNEL	          (0x00020000)  //!< The mask for the negative limit signal: 1:Triggered, 0: Not Triggered.
-#define NMC_AXIS_STATUS_MASK_RHOM	          (0x00040000)  //!< The mask for the home signal: 1: High level, 0: Low level.
+#define NMC_AXIS_STATUS_MASK_RPEL           (0x00010000)  //!< The mask for the positive limit signal: 1:Triggered, 0: Not Triggered.
+#define NMC_AXIS_STATUS_MASK_RNEL           (0x00020000)  //!< The mask for the negative limit signal: 1:Triggered, 0: Not Triggered.
+#define NMC_AXIS_STATUS_MASK_RHOM           (0x00040000)  //!< The mask for the home signal: 1: High level, 0: Low level.
 /*!
  *  @}
  */
@@ -472,7 +472,7 @@ typedef struct
     I32_T       code;           //!< The code of message.
     char        text[NMC_MAX_MSG_TEXT_SIZE];  //!< The content of message.
 } NmcMsg_T;
-#pragma	pack(pop)
+#pragma pack(pop)
 
 
 typedef struct
