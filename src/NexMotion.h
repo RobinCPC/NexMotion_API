@@ -165,14 +165,143 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerDisable( I32_T DevID );
 RTN_ERR FNTYPE NMC_DeviceWatchdogTimerReset( I32_T DevID );
 
 // Advanced controller initialization APIs
+/**
+ * @brief Create the device ID.
+ *
+ * @param DevType   The specified device type. 0: Simulator, 1: EtherCAT.
+ * @param DevIndex  The specified index of device which is set to 0.
+ * @param PRetDevID [Output] The device ID (DevID) after the function is called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, Advanced System Initializeation.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceCreate( I32_T DevType, I32_T DevIndex, I32_T *PRetDevID );
+/**
+ * @brief Delete the device ID.
+ *
+ * @param DevID     Device ID
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, Advanced System Initializeation.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceDelete( I32_T DevID );
+/**
+ * @brief Load the device configurations
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function will load the device configurations in accordance with the file, `NexMotionLibConfig.ini`.
+ * The file, `NexMotionLibConfig.ini`, is saved in the default path, `C:\NEXCOBOT`. Users must not create the file, nor modify the file name or content in order to avoid the loading error. NMC_DeviceLoadIniConfig() will search the file, `NexMotionLibConfig.ini`, in the following path in order:
+ * ```
+ * NexMotion.dll folder
+ * C:\NEXCOBOT
+ * C:\Windows\System32
+ * ```
+ * To specify a new path for the file, `NexMotionLibConfig.ini`, NMC_SetIniPath() can be called.
+ * After NMC_DeviceLoadIniConfig() is called successfully, the device is in the ready state and ready to start.
+ *
+ * \b Reference: <br>
+ * NMC_SetIniPath()
+ */
 RTN_ERR FNTYPE NMC_DeviceLoadIniConfig( I32_T DevID );
+/**
+ * @brief Reset the device configurations.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * NMC_DeviceResetConfig() is used to reset the device configurations. After the function is called successfully, the device will return to the init state. If the device is in the operation state, the fuction shall not be called.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceResetConfig( I32_T DevID );
+/**
+ * @brief Start the device (Blocking call).
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * If the device is in the ready state, the function can be called to start the device. After the function is called and returned successfully, the device is in operation state.
+ * Please refer to the section, Advanced System Initialization.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceStart( I32_T DevID );
+/**
+ * @brief Stop the device (Blocking call).
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * If the device is in the operation state, the function can be called to stop the device. After the function is called and returned successfully, the device is in ready state.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceStop( I32_T DevID );
+/**
+ * @brief Request the device start (Non-blocking call).
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * If the device is in the ready state, the function can be called to send the request for device start, and the function will be returned immediately. NMC_DeviceGetState(), can be used to used to read the device state, in order to check if the device is not in the operation state.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceStartRequest( I32_T DevID );
+/**
+ * @brief Request the device stop (Non-blocking call).
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * If the device is in the operation state, the function can be called to send the request for device stop, and the function will be returned immediately. NMC_DeviceGetState(), can be used to used to read the device state, in order to check if the device is not in the ready state.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceStopRequest( I32_T DevID );
+/**
+ * @brief Get the device state.
+ *
+ * @param DevID           Device ID (DevID)
+ * @param PRetDeviceState Return the state of the device after called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceGetState( I32_T DevID, I32_T *PRetDeviceState );
 
 // System parameter setting APIs
@@ -200,8 +329,51 @@ RTN_ERR FNTYPE NMC_WriteOutputI16( I32_T DevID, U32_T OffsetByte, I16_T I16Value
 RTN_ERR FNTYPE NMC_WriteOutputI32( I32_T DevID, U32_T OffsetByte, I32_T I32Value );
 
 // Read axis/group number APIs
+/**
+ * @brief Get the axis quantity.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param PRetAxisCount The quantity of axis started will be returned after the function is called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * After the configuration file is loaded, the function can be called to confirm the quantity of axis started. After NMC_DeviceResetConfig() is called to reset the device configurations, the quantity of axis is 0.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceGetAxisCount( I32_T DevID, I32_T *PRetAxisCount );
+/**
+ * @brief Get the quantity of group.
+ *
+ * @param DevID           Device ID (DevID)
+ * @param PRetGroupCount  The quantity of group started will be returned after the function is called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * After the configuration file is loaded, the function can be called to confirm the quantity of group started. After NMC_DeviceResetConfig() is called to reset the device configurations, the quantity of group is 0.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceGetGroupCount( I32_T DevID, I32_T *PRetGroupCount );
+/**
+ * @brief Get the quantity of group axis.
+ *
+ * @param DevID               Device ID (DevID)
+ * @param GroupIndex          Group Index
+ * @param PRetGroupAxisCount  The quantity of group axis will be returned after the function is called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * After the configuration file is loaded, the function can be called to confirm the actual quantity of group axis.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceGetGroupAxisCount( I32_T DevID, I32_T GroupIndex, I32_T *PRetGroupAxisCount );
 
 // Read axis/group description APIs
@@ -210,7 +382,35 @@ RTN_ERR FNTYPE NMC_GroupGetDescription( I32_T DevID, I32_T GroupIndex, U32_T Des
 
 // All axes and groups enable/disable APIs
 RTN_ERR FNTYPE NMC_DeviceResetStateAll( I32_T DevID );
+/**
+ * @brief Enable all axes and groups in the system.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called after the device is started.
+ * After the function is called, all axes and groups will be enabled (servo on). The start procedure will enable all axes and then all groups in order. The procedure will stop for any failure and return the error immediately.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceEnableAll( I32_T DevID );
+/**
+ * @brief Disable all axes and groups in the system.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called after the device is started.
+ * After the function is called, all axes and groups will be disabled (servo off). The stop procedure will disable all axes and then all groups in order. The procedure will stop for any failure and return the error immediately.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceDisableAll( I32_T DevID );
 
 // All axes and groups motion termination APIs
@@ -226,9 +426,105 @@ RTN_ERR FNTYPE NMC_AxisGetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum
 // Axis state control APIs
 RTN_ERR FNTYPE NMC_AxisEnable( I32_T DevID, I32_T AxisIndex );
 RTN_ERR FNTYPE NMC_AxisDisable( I32_T DevID, I32_T AxisIndex );
+/**
+ * @brief Get the status of the axis
+ *
+ * @param DevID           Device ID (DevID)
+ * @param AxisIndex       Axis Index
+ * @param PRetAxisStatus  Return the axis status
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0; I32_T status = 0;
+ * ret = NMC_AxisGetStatus( 0, 0, &status );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisGetState()
+ */
 RTN_ERR FNTYPE NMC_AxisGetStatus( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisStatus );
+/**
+ * @brief Get the state of the axis
+ *
+ * @param DevID         Device ID (DevID)
+ * @param AxisIndex     Axis Index
+ * @param PRetAxisState Return the axis state.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. The function can be called in a periodic procedure to confirm the current axis state.
+ * 2. Before being in motion or executing the Homing procedure, the axis shall be excitation. After NMC_AxisEnable() is called, NMC_AxisGetState() can be called to confirm the axis is excitation.
+ * 3. If the axis is in the error state or not stopped normally, and NMC_AxisResetState() is called, NMC_AxisGetState() can be called to confirm the axis error state is resolved.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * I32_T state = 0;
+ * ret = NMC_AxisGetState( 0, 0, &state );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisGetStatus()
+ * NMC_AxisEnable()
+ * NMC_AxisResetState()
+ */
 RTN_ERR FNTYPE NMC_AxisGetState( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisState );
+/**
+ * @brief Reset the state of the axis.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis Index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. If an axis is in the error state, or an aix is requested with a forced stop command and has stopped, the function can be called to reset the axis to the nonexcitation state or the normal excitation state. NMC_AxisGetState() can be called to confirm the axis is normal.
+ * 2. If the axis drive is in the alarm state and the function is called, the device will reset the alarm automatically. After the error is resolved, the axis state will trafer to the nonexcitation state from the error state (AXIS_STATE_ERROR).
+ * 3. If an axis is requested with a forced stop command and has stopped, the function can be called to reset the axis to nonexcitation state (AXIS_STATE_STAND_STILL).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisResetState( 0, 0 );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisGetState()
+ * NMC_AxisResetDriveAlm()
+ */
 RTN_ERR FNTYPE NMC_AxisResetState( I32_T DevID, I32_T AxisIndex );
+/**
+ * @brief Reset the axis servo alarm.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex The index of the axis will be reset.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. When an alarm of axis drive is issued, the drive will automatically release the excitation in general. After the error is resolved, the function can be called to reset the alarm, and NMC_AxisGetStatus() can be called to get the axis status for the confirmation of alarm reset.
+ * 2. Unless all drive alarms can be reseted with the function, some drive alarms shall be reseted by means of reengerization.
+ * 3. After the function is called to reset the drive alarms successfully, the axis state can not be reset from the error state, unless NMC_AxisResetState() is called to reset the axis to the nonexcitation (AXIS_STATE_DISABLE).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisResetDriveAlm( 0, 0 );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisGetStatus()
+ * NMC_AxisResetState()
+ */
 RTN_ERR FNTYPE NMC_AxisResetDriveAlm( I32_T DevID, I32_T AxisIndex );
 RTN_ERR FNTYPE NMC_AxisGetDriveAlmCode( I32_T DevID, I32_T AxisIndex, I32_T *PRetAlmCode );
 
@@ -277,9 +573,65 @@ RTN_ERR FNTYPE NMC_GroupAxGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
 RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetStatusInBit );
+/**
+ * @brief Get the state of group. Please refer to the below table for details.
+ *
+ * | Value  | State | Description  |
+ * | :----: | :---- | :---- |
+ * | 0      | GROUP_DISABLE     | A group axis is disabled.    |
+ * | 1      | GROUP_STAND_STILL | A group axes are enabled.    |
+ * | 2      | GROUP_STOPPED     | After NMC_GroupStop() is called, the group is stopped.  |
+ * | 3      | GROUP_STOPPING    | After NMC_GroupStop() is called, the group is stopping. |
+ * | 4      | GROUP_MOVING      | A group is moving.    |
+ * | 5      | GROUP_HOMING      | A group is homing.    |
+ * | 6      | GROUP_ERROR_STOP  | An error is occured in a group axis.    |
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param PRetState   [Input] A pointer variable, [Output] Group state
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T state = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetState( devID, groupIndex, &state );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupGetState( I32_T DevID, I32_T GroupIndex, I32_T *PRetState );
 RTN_ERR FNTYPE NMC_GroupResetState( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupResetDriveAlm( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex );
+/**
+ * @brief Reset all group servo alarms.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group Index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupResetDriveAlmAll( devID, groupIndex );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupResetDriveAlmAll( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupGetDriveAlmCode( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T *PRetAlmCode );
 
