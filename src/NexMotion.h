@@ -68,7 +68,7 @@ const char* FNTYPE NMC_GetErrorDescription( RTN_ERR ErrorCode, _opt_null_ char *
 
 
 // Controller initialization APIs
-/**
+/*!
  * @brief Open up the device (Blocking call).
  *
  * @param DevType The specified device type. 0: Simulator, 1: EtherCAT
@@ -85,7 +85,7 @@ const char* FNTYPE NMC_GetErrorDescription( RTN_ERR ErrorCode, _opt_null_ char *
  *  NMC_DeviceShutdown()
  */
 RTN_ERR FNTYPE NMC_DeviceOpenUp( I32_T DevType, I32_T DevIndex, I32_T *PRetDevID );
-/**
+/*!
  * @brief Shut down the device (Blocking call).
  *
  * @param DevID The device ID of the machine that request to be shutdown.
@@ -100,7 +100,7 @@ RTN_ERR FNTYPE NMC_DeviceOpenUp( I32_T DevType, I32_T DevIndex, I32_T *PRetDevID
  *  NMC_DeviceOpenUp()
  */
 RTN_ERR FNTYPE NMC_DeviceShutdown( I32_T DevID );
-/**
+/*!
  * @brief Request the device open up (Non-blocking call).
  *
  * @param DevType   The specified device type
@@ -116,7 +116,7 @@ RTN_ERR FNTYPE NMC_DeviceShutdown( I32_T DevID );
  * NMC_DeviceWaitOpenUpRequest()
  */
 RTN_ERR FNTYPE NMC_DeviceOpenUpRequest( I32_T DevType, I32_T DevIndex );
-/**
+/*!
  * @brief Wait for device open up (Blocking call).
  *
  * @param WaitMs    Waiting time for device open up (unit: ms). It can be set to the NMC_WAIT_TIME_INFINITE (0xFFFFFFFF) to wait for the completion of open up.
@@ -132,7 +132,7 @@ RTN_ERR FNTYPE NMC_DeviceOpenUpRequest( I32_T DevType, I32_T DevIndex );
  * NMC_DeviceOpenUpRequest()
  */
 RTN_ERR FNTYPE NMC_DeviceWaitOpenUpRequest( U32_T WaitMs, I32_T *PRetDevID  );
-/**
+/*!
  * @brief Request the device shut down (Non-blocking call).
  *
  * @param DevID The device ID of the machine that request to be shutdown.
@@ -141,7 +141,7 @@ RTN_ERR FNTYPE NMC_DeviceWaitOpenUpRequest( U32_T WaitMs, I32_T *PRetDevID  );
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  */
 RTN_ERR FNTYPE NMC_DeviceShutdownRequest( I32_T DevID );
-/**
+/*!
  * @brief Wait for device shut down (Blocking call).
  *
  * @param DevID   The device ID of the machine that request to be shutdown.
@@ -165,7 +165,7 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerDisable( I32_T DevID );
 RTN_ERR FNTYPE NMC_DeviceWatchdogTimerReset( I32_T DevID );
 
 // Advanced controller initialization APIs
-/**
+/*!
  * @brief Create the device ID.
  *
  * @param DevType   The specified device type. 0: Simulator, 1: EtherCAT.
@@ -181,7 +181,7 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerReset( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceCreate( I32_T DevType, I32_T DevIndex, I32_T *PRetDevID );
-/**
+/*!
  * @brief Delete the device ID.
  *
  * @param DevID     Device ID
@@ -195,7 +195,7 @@ RTN_ERR FNTYPE NMC_DeviceCreate( I32_T DevType, I32_T DevIndex, I32_T *PRetDevID
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceDelete( I32_T DevID );
-/**
+/*!
  * @brief Load the device configurations
  *
  * @param DevID Device ID (DevID)
@@ -218,7 +218,7 @@ RTN_ERR FNTYPE NMC_DeviceDelete( I32_T DevID );
  * NMC_SetIniPath()
  */
 RTN_ERR FNTYPE NMC_DeviceLoadIniConfig( I32_T DevID );
-/**
+/*!
  * @brief Reset the device configurations.
  *
  * @param DevID Device ID (DevID)
@@ -232,7 +232,7 @@ RTN_ERR FNTYPE NMC_DeviceLoadIniConfig( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceResetConfig( I32_T DevID );
-/**
+/*!
  * @brief Start the device (Blocking call).
  *
  * @param DevID Device ID (DevID)
@@ -247,7 +247,7 @@ RTN_ERR FNTYPE NMC_DeviceResetConfig( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceStart( I32_T DevID );
-/**
+/*!
  * @brief Stop the device (Blocking call).
  *
  * @param DevID Device ID (DevID)
@@ -261,7 +261,7 @@ RTN_ERR FNTYPE NMC_DeviceStart( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceStop( I32_T DevID );
-/**
+/*!
  * @brief Request the device start (Non-blocking call).
  *
  * @param DevID Device ID (DevID)
@@ -275,7 +275,7 @@ RTN_ERR FNTYPE NMC_DeviceStop( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceStartRequest( I32_T DevID );
-/**
+/*!
  * @brief Request the device stop (Non-blocking call).
  *
  * @param DevID Device ID (DevID)
@@ -289,7 +289,7 @@ RTN_ERR FNTYPE NMC_DeviceStartRequest( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceStopRequest( I32_T DevID );
-/**
+/*!
  * @brief Get the device state.
  *
  * @param DevID           Device ID (DevID)
@@ -329,7 +329,7 @@ RTN_ERR FNTYPE NMC_WriteOutputI16( I32_T DevID, U32_T OffsetByte, I16_T I16Value
 RTN_ERR FNTYPE NMC_WriteOutputI32( I32_T DevID, U32_T OffsetByte, I32_T I32Value );
 
 // Read axis/group number APIs
-/**
+/*!
  * @brief Get the axis quantity.
  *
  * @param DevID         Device ID (DevID)
@@ -344,7 +344,7 @@ RTN_ERR FNTYPE NMC_WriteOutputI32( I32_T DevID, U32_T OffsetByte, I32_T I32Value
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceGetAxisCount( I32_T DevID, I32_T *PRetAxisCount );
-/**
+/*!
  * @brief Get the quantity of group.
  *
  * @param DevID           Device ID (DevID)
@@ -359,7 +359,7 @@ RTN_ERR FNTYPE NMC_DeviceGetAxisCount( I32_T DevID, I32_T *PRetAxisCount );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceGetGroupCount( I32_T DevID, I32_T *PRetGroupCount );
-/**
+/*!
  * @brief Get the quantity of group axis.
  *
  * @param DevID               Device ID (DevID)
@@ -382,7 +382,7 @@ RTN_ERR FNTYPE NMC_GroupGetDescription( I32_T DevID, I32_T GroupIndex, U32_T Des
 
 // All axes and groups enable/disable APIs
 RTN_ERR FNTYPE NMC_DeviceResetStateAll( I32_T DevID );
-/**
+/*!
  * @brief Enable all axes and groups in the system.
  *
  * @param DevID Device ID (DevID)
@@ -397,7 +397,7 @@ RTN_ERR FNTYPE NMC_DeviceResetStateAll( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceEnableAll( I32_T DevID );
-/**
+/*!
  * @brief Disable all axes and groups in the system.
  *
  * @param DevID Device ID (DevID)
@@ -426,7 +426,7 @@ RTN_ERR FNTYPE NMC_AxisGetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum
 // Axis state control APIs
 RTN_ERR FNTYPE NMC_AxisEnable( I32_T DevID, I32_T AxisIndex );
 RTN_ERR FNTYPE NMC_AxisDisable( I32_T DevID, I32_T AxisIndex );
-/**
+/*!
  * @brief Get the status of the axis
  *
  * @param DevID           Device ID (DevID)
@@ -448,7 +448,7 @@ RTN_ERR FNTYPE NMC_AxisDisable( I32_T DevID, I32_T AxisIndex );
  * NMC_AxisGetState()
  */
 RTN_ERR FNTYPE NMC_AxisGetStatus( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisStatus );
-/**
+/*!
  * @brief Get the state of the axis
  *
  * @param DevID         Device ID (DevID)
@@ -476,7 +476,7 @@ RTN_ERR FNTYPE NMC_AxisGetStatus( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisS
  * NMC_AxisResetState()
  */
 RTN_ERR FNTYPE NMC_AxisGetState( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisState );
-/**
+/*!
  * @brief Reset the state of the axis.
  *
  * @param DevID     Device ID (DevID)
@@ -501,7 +501,7 @@ RTN_ERR FNTYPE NMC_AxisGetState( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisSt
  * NMC_AxisResetDriveAlm()
  */
 RTN_ERR FNTYPE NMC_AxisResetState( I32_T DevID, I32_T AxisIndex );
-/**
+/*!
  * @brief Reset the axis servo alarm.
  *
  * @param DevID     Device ID (DevID)
@@ -551,8 +551,99 @@ RTN_ERR FNTYPE NMC_AxisHaltAll( I32_T DevID );
 RTN_ERR FNTYPE NMC_AxisStopAll( I32_T DevID );
 
 // Axis profile change on the fly APIs
+/*!
+ * @brief Override the velocity of a single axis.
+ *
+ * @param DevID     Device ID (Dev ID)
+ * @param AxisIndex Axis index
+ * @param TargetVel Target velocity (Unit: user unit/sec)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. The function can only be called to change the target velocity after the axis point-to-point motion (NMC_AxisPtp) or the axis JOG motion (NMC_AxisJog) is enabled.
+ * 2. The target velocity input through the function will be effective to the current motion only, not to modify the axis parameter AXP_VM.
+ * 3. If the JOG motion is enabled, the input target velocity can be reached, and the bit 8 of axis status will become to 1.
+ * 4. If the point-to-point motion is enabled, the input target velocity may not be reached. To meet the specified target position and acceleration/deceleration, the drive will plan the practical velocity curve based on the input target velocity.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T maxVel = 100.0;
+ * ret = NMC_AxisJog( 0, 0, 1, &maxVel ); // Enable the axis JOG motion at target velocity 100.
+ * Sleep(100);
+ * ret = NMC_AxisVelOverride( 0, 0, 50.0 ); // Decrease the target velocity to 50.
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisPtp()
+ * NMC_AxisJog()
+ */
 RTN_ERR FNTYPE NMC_AxisVelOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetVel );
+/*!
+ * @brief Override the acceleration of a single axis.
+ *
+ * @param DevID     Device ID (Dev ID)
+ * @param AxisIndex Axis index
+ * @param TargetVel Target acceleration
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. The function can only be called to change the target acceleration after the axis point-to-point motion (NMC_AxisPtp) or the axis JOG motion (NMC_AxisJog) is enabled.
+ * 2. The input acceleration will be set to the axis parameter AXP_ACC.
+ * 3. If the axis has reached the target velocity (bit 12 of axis status is 1), there is no any impact of the input acceleration on the current motion.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * I32_T status = 0;
+ * F64_T maxVel = 50.0;
+ * ret = NMC_AxisJog( 0, 0, 1, &maxVel ); // Enable the axis JOG motion at target velocity 50.
+ * Sleep(100);
+ * ret = NMC_AxisGetStatus( 0, 0, &status );
+ * if( !( status & 0x1000 ) )
+ * {
+ * ret = NMC_AxisAccOverride ( 0, 0, 100.0 ); // // Change the acceleration to 100.
+ * }
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisPtp()
+ * NMC_AxisJog()
+ */
 RTN_ERR FNTYPE NMC_AxisAccOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetAcc );
+/*!
+ * @brief Override the deceleration of a single axis.
+ *
+ * @param DevID     Device ID (Dev ID)
+ * @param AxisIndex Axis index
+ * @param TargetVel Target deceleration
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. The function can only be called to change the target deceleration after the axis point-to-point motion (NMC_AxisPtp) or the normal stop (NMC_AxisHalt) is enabled.
+ * 2. The input deceleration will be set to the axis parameter AXP_DEC.
+ * 3. If the axis point-to-point is enabled and the axis velocity is changed from the target velocity to the configured end velocity gradually (bit 11 of axis status is 1), there is no any impact of the input deceleration on the current motion.
+ * 4. If the normal stop of axis (NMC_AxisHalt) is enabled and the axis has not stopped, the input deceleration will impact on the current motion
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * I32_T status = 0;
+ * F64_T maxVel = 50.0;
+ * ret = NMC_AxisPtp( 0, 0, 100, 0 ); // Enable the axis point-to-point motion at the target velocity based on the AXP_VM.
+ * ret = NMC_AxisDecOverride ( 0, 0, 100.0 ); // Change the deceleration to 100.0
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisPtp()
+ * NMC_AxisJog()
+ */
 RTN_ERR FNTYPE NMC_AxisDecOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetDec );
 
 // Axis velocity ratio setting APIs
@@ -560,31 +651,252 @@ RTN_ERR FNTYPE NMC_AxisSetSpeedRatio( I32_T DevID, I32_T AxisIndex, F64_T Percen
 RTN_ERR FNTYPE NMC_AxisGetSpeedRatio( I32_T DevID, I32_T AxisIndex, F64_T *PPercentage );
 
 // Group parameter setting APIs
+/*!
+ * @brief Set the Group Parameters (I32_T, data type).
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group Index
+ * @param ParamNum      Parameter Number
+ * @param SubIndex      Parameter sub-index
+ * @param ParaValueI32  [Input] Value to be set (signed integer).
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T paramNum = 0x30; // The set command is an absolute or incremental parameter
+ * I32_T subIndex = 0;
+ * I32_T paraValueI32 = 1; // The command is incremental
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupSetParamI32( devID, groupIndex, paramNum, subIndex, paraValueI32 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupSetParamI32( I32_T DevID, I32_T GroupIndex, I32_T ParamNum, I32_T SubIndex, I32_T ParaValueI32 );
+/*!
+ * @brief Get the Group Parameters (I32_T, data type).
+ *
+ * @param DevID             Device ID (DevID)
+ * @param GroupIndex        Group Index
+ * @param ParamNum          Parameter Number
+ * @param SubIndex          Parameter sub-index
+ * @param PRetParaValueI32  [Input] A pointer variable, [Output] Value of the parameter
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T paramNum = 0x30; // The get command is an absolute or incremental parameter
+ * I32_T subIndex = 0;
+ * I32_T paraValueI32 = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetParamI32( devID, groupIndex, paramNum, subIndex, &paraValueI32 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetParamI32( I32_T DevID, I32_T GroupIndex, I32_T ParamNum, I32_T SubIndex, I32_T *PRetParaValueI32 );
+/*!
+ * @brief Set the group parameters (F64_T, data type).
+ *
+ * @param DevID         Device ID (Dev ID)
+ * @param GroupIndex    Group Index
+ * @param ParamNum      Parameter number
+ * @param SubIndex      Parameter sub-index
+ * @param ParaValueF64  [Input] Value to be set (double precision float)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T paramNum = 0x21; // Set the deceleration to stop motion.
+ * I32_T subIndex = 0;
+ * F64_T paraValueF64 = 80.5; // Value of the deceleration to stop motion.
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupSetParamF64( devID, groupIndex, paramNum, subIndex, paraValueF64 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupSetParamF64( I32_T DevID, I32_T GroupIndex, I32_T ParamNum, I32_T SubIndex, F64_T ParaValueF64 );
+/*!
+ * @brief Get the group parameters (F64_T, data type).
+ *
+ * @param DevID             Device ID (Dev ID)
+ * @param GroupIndex        Group Index
+ * @param ParamNum          Parameter number
+ * @param SubIndex          Parameter sub-index
+ * @param PRetParaValueF64  [Output] Value to be returned (double precision float)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T paramNum = 0x21; // Set the deceleration to stop motion.
+ * I32_T subIndex = 0;
+ * F64_T paraValueF64 = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetParamF64( devID, groupIndex, paramNum, subIndex, &paraValueF64 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T ParamNum, I32_T SubIndex, F64_T *PRetParaValueF64 );
+/*!
+ * @brief Set the parameters of group axis (I32_T, data type)
+ *
+ * @param DevID           Device ID (Dev ID)
+ * @param GroupIndex      Group Index
+ * @param GroupAxisIndex  Group Axis Index
+ * @param ParamNum        Parameter Number
+ * @param SubIndex        Parameter Sub-Index
+ * @param ParaValueI32    [Input] Value to be set (signed integer)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T groupAxisIndex = 2;
+ * I32_T paramNum = 0x30; // The set command is an absolute or incremental parameter
+ * I32_T subIndex = 0;
+ * I32_T paraValueI32 = 1; // The command is incremental
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupAxSetParamI32( devID, groupIndex, groupAxisIndex, paramNum, subIndex, paraValueI32 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupAxSetParamI32( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T ParamNum, I32_T SubIndex, I32_T ParaValueI32 );
+/*!
+ * @brief Get the parameters of group axis (I32_T, data type).
+ *
+ * @param DevID             Device ID (Dev ID)
+ * @param GroupIndex        Group index
+ * @param GroupAxisIndex    Group axis index
+ * @param ParamNum          Parameter number
+ * @param SubIndex          Parameter sub-index
+ * @param PRetParaValueI32  [Output] Value to be returned (signed integer)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T groupAxisIndex = 2
+ * I32_T paramNum = 0x30; // The get command is an absolute or incremental parameter
+ * I32_T subIndex = 0;
+ * I32_T paraValueI32 = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupAxGetParamI32( devID, groupIndex, groupAxisIndex, paramNum, subIndex, &paraValueI32 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupAxGetParamI32( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T ParamNum, I32_T SubIndex, I32_T *PRetParaValueI32 );
+/*!
+ * @brief Set the parameters of group axis (F64_T, data type)
+ *
+ * @param DevID           Device ID (Dev ID)
+ * @param GroupIndex      Group Index
+ * @param GroupAxisIndex  Group Axis Index
+ * @param ParamNum        Parameter Number
+ * @param SubIndex        Parameter Sub-Index
+ * @param ParaValueF64    [Input] Value to be set (double precision float)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T groupAxisIndex = 2;
+ * I32_T paramNum = 0x21; // Set the deceleration to stop motion.
+ * I32_T subIndex = 0;
+ * F64_T paraValueF64 = 80.5; // Value of the deceleration to stop motion.
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupAxSetParamF64( devID, groupIndex, groupAxisIndex, paramNum, subIndex, paraValueF64 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupAxSetParamF64( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T ParamNum, I32_T SubIndex, F64_T ParaValueF64 );
+/*!
+ * @brief Get the parameters of group axis (F64_T, data type).
+ *
+ * @param DevID             Device ID (Dev ID)
+ * @param GroupIndex        Group index
+ * @param GroupAxisIndex    Group axis index
+ * @param ParamNum          Parameter number
+ * @param SubIndex          Parameter sub-index
+ * @param PRetParaValueF64  [Output] Value to be returned (double precision float)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T groupAxisIndex = 2;
+ * I32_T paramNum = 0x21; // Set the deceleration to stop motion.
+ * I32_T subIndex = 0;
+ * F64_T paraValueF64 = 0; // Value of the deceleration to stop motion.
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupAxGetParamF64( devID, groupIndex, groupAxisIndex, paramNum, subIndex, &paraValueF64 );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupAxGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T ParamNum, I32_T SubIndex, F64_T *PRetParaValueF64 );
 
 // Group state control APIs
 RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetStatusInBit );
-/**
+/*!
  * @brief Get the state of group. Please refer to the below table for details.
  *
- * | Value  | State | Description  |
- * | :----: | :---- | :---- |
- * | 0      | GROUP_DISABLE     | A group axis is disabled.    |
- * | 1      | GROUP_STAND_STILL | A group axes are enabled.    |
+ * | Value  | State             | Description                                             |
+ * | :----: | :----             | :----                                                   |
+ * | 0      | GROUP_DISABLE     | A group axis is disabled.                               |
+ * | 1      | GROUP_STAND_STILL | A group axes are enabled.                               |
  * | 2      | GROUP_STOPPED     | After NMC_GroupStop() is called, the group is stopped.  |
  * | 3      | GROUP_STOPPING    | After NMC_GroupStop() is called, the group is stopping. |
- * | 4      | GROUP_MOVING      | A group is moving.    |
- * | 5      | GROUP_HOMING      | A group is homing.    |
- * | 6      | GROUP_ERROR_STOP  | An error is occured in a group axis.    |
+ * | 4      | GROUP_MOVING      | A group is moving.                                      |
+ * | 5      | GROUP_HOMING      | A group is homing.                                      |
+ * | 6      | GROUP_ERROR_STOP  | An error is occured in a group axis.                    |
  *
  * @param DevID       Device ID (DevID)
  * @param GroupIndex  Group index
@@ -610,7 +922,7 @@ RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetSta
 RTN_ERR FNTYPE NMC_GroupGetState( I32_T DevID, I32_T GroupIndex, I32_T *PRetState );
 RTN_ERR FNTYPE NMC_GroupResetState( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupResetDriveAlm( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex );
-/**
+/*!
  * @brief Reset all group servo alarms.
  *
  * @param DevID       Device ID (DevID)
