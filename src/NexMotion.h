@@ -20,6 +20,14 @@
 
 
 // Version and error read APIs
+/*! \addtogroup System_API
+ *  System APIs
+ *  @{
+ */
+/*! \addtogroup Version_Error_Read
+ *  Version and Error Information Functions
+ *  @{
+ */
 /*!
  * @brief Return the version number of the Library: Major.Minor.Stage.Build
  *
@@ -65,9 +73,23 @@ void    FNTYPE NMC_GetLibVersionString( char *PRetVersionString, U32_T StringSiz
  * @return The error code description. It will be NULL if the ErrorCode is undefined
  */
 const char* FNTYPE NMC_GetErrorDescription( RTN_ERR ErrorCode, _opt_null_ char *PRetErrorDesc, U32_T StringSize );
+/*!
+ *  @}
+ */
+/*!
+ *  @}
+ */
 
 
 // Controller initialization APIs
+/*! \addtogroup System_API
+ *  System APIs
+ *  @{
+ */
+/*! \addtogroup Device_Open_Shutdown
+ *  Device Open up and Shut Down
+ *  @{
+ */
 /*!
  * @brief Open up the device (Blocking call).
  *
@@ -157,6 +179,12 @@ RTN_ERR FNTYPE NMC_DeviceShutdownRequest( I32_T DevID );
  * NMC_DeviceShutdownRequest()
  */
 RTN_ERR FNTYPE NMC_DeviceWaitShutdownRequest( I32_T DevID, U32_T WaitMs );
+/*!
+ *  @}
+ */
+/*!
+ *  @}
+ */
 
 
 // Watchdog APIs
@@ -305,8 +333,56 @@ RTN_ERR FNTYPE NMC_DeviceStopRequest( I32_T DevID );
 RTN_ERR FNTYPE NMC_DeviceGetState( I32_T DevID, I32_T *PRetDeviceState );
 
 // System parameter setting APIs
+/*!
+ * @brief Set device parameters.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param ParamNum  Parameter Number
+ * @param SubIndex  Parameter Sub-index
+ * @param ParaValue Value to be set
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, System Parameters.
+ *
+ * \b Reference: <br>
+ * Please refer to the section, System Parameters.
+ */
 RTN_ERR FNTYPE NMC_DeviceSetParam( I32_T DevID, I32_T ParamNum, I32_T SubIndex, I32_T ParaValue );
+/*!
+ * @brief Get device parameters.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param ParamNum      Parameter Number
+ * @param SubIndex      Parameter Sub-index
+ * @param PRetParaValue [Output] The value to be returned after the function is called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, System Parameters.
+ *
+ * \b Reference: <br>
+ * Please refer to the section, System Parameters.
+ */
 RTN_ERR FNTYPE NMC_DeviceGetParam( I32_T DevID, I32_T ParamNum, I32_T SubIndex, I32_T *PRetParaValue );
+/*!
+ * @brief Set the path of the ini file.
+ *
+ * @param PIniPath  The ini file to be set. it shall be a C string, and can be set to NULL(0) to reset the path to the default value.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * During the starting, the system will load the configurations in accordance with the file, NexMotionLibConfig.ini. Also, the function can be called to specify the ini file path. The default path is `C:\NEXCOM\`.
+ *
+ * \b Reference: <br>
+ * NMC_DeviceOpenUp() and NMC_DeviceOpenUpRequest()
+ */
 RTN_ERR FNTYPE NMC_SetIniPath( _opt_null_ const char *PIniPath );
 
 // I/O access APIs
@@ -377,7 +453,39 @@ RTN_ERR FNTYPE NMC_DeviceGetGroupCount( I32_T DevID, I32_T *PRetGroupCount );
 RTN_ERR FNTYPE NMC_DeviceGetGroupAxisCount( I32_T DevID, I32_T GroupIndex, I32_T *PRetGroupAxisCount );
 
 // Read axis/group description APIs
+/*!
+ * @brief Read the name description information of the specified axis
+ *
+ * @param DevID               Device ID (DevID)
+ * @param AxisIndex           The specified axis index to be read from
+ * @param DescStrSize         C-style string buff size, in byte
+ * @param PRetAxisDescription Given C-style string buff and return description
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * This function is used to read the name description of the specified axis. The information source is based on the NCF file loaded byh the system, so it must be loaded before it can be read normally. In other words, the system state must be in READY state.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_AxisGetDescription( I32_T DevID, I32_T AxisIndex, U32_T DescStrSize, char *PRetAxisDescription );
+/*!
+ * @brief Read the name desciption information of the specified group
+ *
+ * @param DevID                 Device ID (DevID)
+ * @param GroupIndex            The specified group index to be read from
+ * @param DescStrSize           C-style string buff size, in byte
+ * @param PRetGroupDescription  Given C-style string buff and return description
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * This function is used to read the name description of the specified group. The information source is based on the NCF file loaded byh the system, so it must be loaded before it can be read normally. In other words, the system state must be in READY state.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupGetDescription( I32_T DevID, I32_T GroupIndex, U32_T DescStrSize, char *PRetGroupDescription );
 
 // All axes and groups enable/disable APIs
@@ -414,9 +522,41 @@ RTN_ERR FNTYPE NMC_DeviceEnableAll( I32_T DevID );
 RTN_ERR FNTYPE NMC_DeviceDisableAll( I32_T DevID );
 
 // All axes and groups motion termination APIs
+/*!
+ * @brief Holt all axes and groups in the system (Stand still state).
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called after the device is started.
+ * After the function is called, all axes and groups will be halted. The halt procedure will halt all axes and then all groups in order. The procedure will stop for any failure and return the error immediately.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceHaltAll( I32_T DevID );
+/*!
+ * @brief Stop all axes and groups in the system (Stopped state).
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called after the device is started.
+ * After the function is called, all axes and groups will be stopped. The stop procedure will stop all axes and then all groups in order. The procedure will stop for any failure and return the error immediately.
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceStopAll( I32_T DevID );
 
+/*! \addtogroup Axis_API
+ *  Axis APIs
+ *  @{
+ */
 // Axis parameter setting APIs
 RTN_ERR FNTYPE NMC_AxisSetParamI32( I32_T DevID, I32_T AxisIndex, I32_T ParamNum, I32_T SubIndex, I32_T ParaValueI32 );
 RTN_ERR FNTYPE NMC_AxisGetParamI32( I32_T DevID, I32_T AxisIndex, I32_T ParamNum, I32_T SubIndex, I32_T *PRetParaValueI32 );
@@ -424,7 +564,54 @@ RTN_ERR FNTYPE NMC_AxisSetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum
 RTN_ERR FNTYPE NMC_AxisGetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum, I32_T SubIndex, F64_T *PRetParaValueF64 );
 
 // Axis state control APIs
+/*! \addtogroup Axis_State_Control
+ *  Axis State Control Functions
+ *  @{
+ */
+/*!
+ * @brief Enable an axis.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. Before the axis motion, the function shall be called to drive the axis into the excitation.
+ * 2. After the axis is excitation, the function will return successfully.
+ * 3. If the axis is in the error state, the function will return the error code. After the error is resolved and the NMC_AxisResetState() is called, the function can be called to drive the axis into the excitation again.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisEnable(0, 0);
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisDisable(), NMC_AxisGetState(), and NMC_AxisResetState()
+ */
 RTN_ERR FNTYPE NMC_AxisEnable( I32_T DevID, I32_T AxisIndex );
+/*!
+ * @brief Disable an axis.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisDisable(0, 0);
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisEnable() and NMC_AxisGetState()
+ */
 RTN_ERR FNTYPE NMC_AxisDisable( I32_T DevID, I32_T AxisIndex );
 /*!
  * @brief Get the status of the axis
@@ -526,7 +713,27 @@ RTN_ERR FNTYPE NMC_AxisResetState( I32_T DevID, I32_T AxisIndex );
  * NMC_AxisResetState()
  */
 RTN_ERR FNTYPE NMC_AxisResetDriveAlm( I32_T DevID, I32_T AxisIndex );
+/*!
+ * @brief Get the axis servo alarm code.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param AxisIndex   Axis index
+ * @param PRetAlmCode [Output] The value of alarm code.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * NMC_AxisGetStatus(), NMC_AxisResetState()
+ */
 RTN_ERR FNTYPE NMC_AxisGetDriveAlmCode( I32_T DevID, I32_T AxisIndex, I32_T *PRetAlmCode );
+/*!
+ *  @}
+ */
 
 // Axis motion profile read APIs
 RTN_ERR FNTYPE NMC_AxisGetCommandPos( I32_T DevID, I32_T AxisIndex, F64_T *PRetCmdPos );
@@ -551,6 +758,10 @@ RTN_ERR FNTYPE NMC_AxisHaltAll( I32_T DevID );
 RTN_ERR FNTYPE NMC_AxisStopAll( I32_T DevID );
 
 // Axis profile change on the fly APIs
+/*! \addtogroup Axis_Motion_Change
+ *  Axis Motion Change Functions. Change Axis profile on the fly.
+ *  @{
+ */
 /*!
  * @brief Override the velocity of a single axis.
  *
@@ -586,7 +797,7 @@ RTN_ERR FNTYPE NMC_AxisVelOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetVe
  *
  * @param DevID     Device ID (Dev ID)
  * @param AxisIndex Axis index
- * @param TargetVel Target acceleration
+ * @param TargetAcc Target acceleration
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -611,8 +822,6 @@ RTN_ERR FNTYPE NMC_AxisVelOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetVe
  * @endcode
  *
  * \b Reference: <br>
- * NMC_AxisPtp()
- * NMC_AxisJog()
  */
 RTN_ERR FNTYPE NMC_AxisAccOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetAcc );
 /*!
@@ -620,7 +829,7 @@ RTN_ERR FNTYPE NMC_AxisAccOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetAc
  *
  * @param DevID     Device ID (Dev ID)
  * @param AxisIndex Axis index
- * @param TargetVel Target deceleration
+ * @param TargetDec Target deceleration
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -641,14 +850,18 @@ RTN_ERR FNTYPE NMC_AxisAccOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetAc
  * @endcode
  *
  * \b Reference: <br>
- * NMC_AxisPtp()
- * NMC_AxisJog()
  */
 RTN_ERR FNTYPE NMC_AxisDecOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetDec );
+/*!
+ *  @}
+ */
 
 // Axis velocity ratio setting APIs
 RTN_ERR FNTYPE NMC_AxisSetSpeedRatio( I32_T DevID, I32_T AxisIndex, F64_T Percentage );
 RTN_ERR FNTYPE NMC_AxisGetSpeedRatio( I32_T DevID, I32_T AxisIndex, F64_T *PPercentage );
+/*!
+ *  @}
+ */
 
 // Group parameter setting APIs
 /*!
