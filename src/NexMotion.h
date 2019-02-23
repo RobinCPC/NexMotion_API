@@ -19,11 +19,11 @@
 #include "NexMotionDef.h"
 
 
-// Version and error read APIs
 /*! \addtogroup System_API
  *  System APIs
  *  @{
  */
+// Version and error read APIs
 /*! \addtogroup Version_Error_Read
  *  Version and Error Information Functions
  *  @{
@@ -76,16 +76,9 @@ const char* FNTYPE NMC_GetErrorDescription( RTN_ERR ErrorCode, _opt_null_ char *
 /*!
  *  @}
  */
-/*!
- *  @}
- */
 
 
 // Controller initialization APIs
-/*! \addtogroup System_API
- *  System APIs
- *  @{
- */
 /*! \addtogroup Device_Open_Shutdown
  *  Device Open up and Shut Down
  *  @{
@@ -863,7 +856,15 @@ RTN_ERR FNTYPE NMC_AxisGetSpeedRatio( I32_T DevID, I32_T AxisIndex, F64_T *PPerc
  *  @}
  */
 
+/*! \addtogroup Group_API
+ *  Group APIs
+ *  @{
+ */
 // Group parameter setting APIs
+/*! \addtogroup Group_Config
+ *  Group Configuration Functions
+ *  @{
+ */
 /*!
  * @brief Set the Group Parameters (I32_T, data type).
  *
@@ -1093,8 +1094,15 @@ RTN_ERR FNTYPE NMC_GroupAxSetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupAxGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T ParamNum, I32_T SubIndex, F64_T *PRetParaValueF64 );
+/*!
+ *  @}
+ */
 
 // Group state control APIs
+/*! \addtogroup Group_State_Control
+ *  Group State Control Functions
+ *  @{
+ */
 RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetStatusInBit );
@@ -1159,6 +1167,9 @@ RTN_ERR FNTYPE NMC_GroupResetDriveAlm( I32_T DevID, I32_T GroupIndex, I32_T Grou
  */
 RTN_ERR FNTYPE NMC_GroupResetDriveAlmAll( I32_T DevID, I32_T GroupIndex );
 RTN_ERR FNTYPE NMC_GroupGetDriveAlmCode( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T *PRetAlmCode );
+/*!
+ *  @}
+ */
 
 // Group velocity ratio setting APIs
 RTN_ERR FNTYPE NMC_GroupSetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T Percentage );
@@ -1186,13 +1197,201 @@ RTN_ERR FNTYPE NMC_GroupHaltAll( I32_T DevID );
 RTN_ERR FNTYPE NMC_GroupStopAll( I32_T DevID );
 
 // Group motion profile read APIs
+/*! \addtogroup Group_Motion_Status
+ *  Group Motion Status Functions
+ *  @{
+ */
+/*!
+ * @brief Get the command position of a group axis in the axis coordinate system (ACS).
+ *
+ * @param DevID              Device ID (DevID)
+ * @param GroupIndex         Group index
+ * @param[out] PRetCmdPosAcs [Input] A pointer variable, [Output] The command position of the specified group axis.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * Pos_T cmdPosAcs = {0};
+ * RTN_ERR ret = 0;
+ *
+ * ret = NMC_GroupGetCommandPosAcs(devID, groupIndex, &cmdPosAcs);
+ * if(ret != 0) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetCommandPosAcs( I32_T DevID, I32_T GroupIndex, Pos_T *PRetCmdPosAcs );
+/*!
+ * @brief Get the actual position of a group axis in the axis coordinate system (ACS). The actual value is converted from the count value of the encoder based on the gear ratio or the lead screw pitch in the axis coordinate system (ACS).
+ *
+ * @param DevID              Device ID (DevID)
+ * @param GroupIndex         Group index
+ * @param[out] PRetActPosAcs [Input] A pointer variable, [Output] The actual position of each group axis.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * Pos_T actPosAcs = { 0 };
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetActualPosAcs( devID, groupIndex, &actPosAcs );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetActualPosAcs( I32_T DevID, I32_T GroupIndex, Pos_T *PRetActPosAcs );
+/*!
+ * @brief Get the command position of a group axis in the Cartesian coordinate system (PCS).
+ *
+ * @param DevID              Device ID (DevID)
+ * @param GroupIndex         Group index
+ * @param[out] PRetCmdPosPcs [Input] A pointer variable, [Output] The command position of the specified group axis.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * Pos_T cmdPosPcs = { 0 };
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetCommandPosPcs( devID, groupIndex, &cmdPosPcs );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetCommandPosPcs( I32_T DevID, I32_T GroupIndex, Pos_T *PRetCmdPosPcs );
+/*!
+ * @brief Get the actual position of a group axis in the Cartesian coordinate system (PCS). The actual value is converted from the count value of the encoder based on the gear ratio or the lead screw pitch in the Cartesian coordinate system (PCS).
+ *
+ * @param DevID              Device ID (DevID)
+ * @param GroupIndex         Group index
+ * @param[out] PRetActPosPcs [Input] A pointer variable, [Output] The actual position of each group axis.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * Pos_T actPosPcs = { 0 };
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetActualPosPcs( devID, groupIndex, &actPosPcs );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetActualPosPcs( I32_T DevID, I32_T GroupIndex, Pos_T *PRetActPosPcs );
+/*!
+ * @brief Get the command position of a group. The returned value is specified depended on the coordinate system.
+ *
+ * @param DevID            Device ID (DevID)
+ * @param GroupIndex       Group index
+ * @param CoordSys         Specified the coordinate system ( 0:MCS, 1:PCS, 2:ACS )
+ * @param[out] PRetCmdPos  [Input] A pointer variable, [Output] The command position depended on the specified coordinate system
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T coordSys = 2; // Get the command position in the axis coordinate system
+ * Pos_T cmdPos = { 0 };
+ * RTN_ERR ret = 0;
+ *
+ * ret = NMC_GroupGetCommandPos( devID, groupIndex, coordSys, &cmdPos );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetCommandPos( I32_T DevID, I32_T GroupIndex, I32_T CoordSys, Pos_T *PRetCmdPos );
+/*!
+ * @brief Get the actual position of a group. The returned value is specified depended on the coordinate system.
+ *
+ * @param DevID            Device ID (DevID)
+ * @param GroupIndex       Group index
+ * @param CoordSys         Specified the coordinate system ( 0:MCS, 1:PCS, 2:ACS )
+ * @param[out] PRetActPos  [Input] A pointer variable, [Output] The command position depended on the specified coordinate system
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T coordSys = 2; // Get the actual position in the axis coordinate system
+ * Pos_T actPos = { 0 };
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetActualPos( devID, groupIndex, coordSys, &actPos );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetActualPos( I32_T DevID, I32_T GroupIndex, I32_T CoordSys, Pos_T *PRetActPos );
+/*!
+ * @brief Get the size of buffer space of group motion command.
+ *
+ * @param DevID              Device ID (DevID)
+ * @param GroupIndex         Group index
+ * @param[out] PRetFreeSpace [Input] A pointer variable, [Output] The free size of the motion buffer
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T freeSpace = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetMotionBuffSpace( devID, groupIndex, &freeSpace );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetMotionBuffSpace( I32_T DevID, I32_T GroupIndex, I32_T *PRetFreeSpace );
+/*!
+ *  @}
+ */
 
 // Group homing oparation APIs
 RTN_ERR FNTYPE NMC_GroupSetHomePos( I32_T DevID, I32_T GroupIndex, I32_T GroupAxesIdxMask, const Pos_T *PHomePosAcs );
@@ -1222,6 +1421,9 @@ RTN_ERR FNTYPE NMC_ToolCalib_Ori      ( const Pos_T *PMcsKinOrg, const Pos_T *PM
 RTN_ERR FNTYPE NMC_BaseCalib_1p( const Pos_T *PRefBaseP1, CoordTrans_T *PRetBaseCoordTrans );
 RTN_ERR FNTYPE NMC_BaseCalib_2p( const Pos_T *PRefBaseP1, const Pos_T *PRefBaseP2, CoordTrans_T *PRetBaseCoordTrans );
 RTN_ERR FNTYPE NMC_BaseCalib_3p( const Pos_T *PRefBaseP1, const Pos_T *PRefBaseP2, const Pos_T *PRefBaseP3, CoordTrans_T *PRetBaseCoordTrans );
+/*!
+ *  @}
+ */
 
 
 // Message output
