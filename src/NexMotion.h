@@ -740,8 +740,56 @@ RTN_ERR FNTYPE NMC_AxisPtp( I32_T DevID, I32_T AxisIndex, F64_T TargetPos, _opt_
 RTN_ERR FNTYPE NMC_AxisJog( I32_T DevID, I32_T AxisIndex, I32_T Dir, _opt_null_ const F64_T *PMaxVel );
 
 // Axis homing control APIs
+/*! \addtogroup Axis_Homing
+ *  Axis Returns to Home Functions
+ *  @{
+ */
+/*!
+ * @brief Set the origin of a single axis in the axis coordination system.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis Index
+ * @param HomePos   The value to set the origin in the axis coordinate system (ACS).
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_AxisSetHomePos( I32_T DevID, I32_T AxisIndex, F64_T HomePos );
+/**
+ * @brief Drive an axis to move to the origin (by driver).
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis Index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. Before the axis motion, the function may be called to execute the homing procedure of axis in general, in order to drive the axis returns to the origin.
+ * 2. The parameters related to homing are defined in the axis parameter table, including the homing methods, acceleration, velocity, offset, etc. Among these parameters, the methods shall be determined depended the methods supported by the drive.
+ * 3. In case of any error occurred in the axis homing procedure, the bit 7 of the axis status will become to 1, and the axis will transfer to error state (AXIS_STATE_ERROR). In the case, after the axis stops completely (which can be determined by checking the bit 9 of axis status is 1), NMC_AxisResetDriveAlm() or NMC_AxisResetState() can be called to reset the axis to the normal state.
+ * 4. After the axis completes the homing procedure, the bit18 of axis status will become to 1, and axis will transfer to normal excitation (AXIS_STATE_STAND_STILL).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisHomeDrive( 0, 0 );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_AxisHomeDrive( I32_T DevID, I32_T AxisIndex );
+/*!
+ *  @}
+ */
 
 
 // Axis motion termination APIs
@@ -1394,8 +1442,64 @@ RTN_ERR FNTYPE NMC_GroupGetMotionBuffSpace( I32_T DevID, I32_T GroupIndex, I32_T
  */
 
 // Group homing oparation APIs
+/*! \addtogroup Group_Homing
+ *  Group Returns to Home Functions
+ *  @{
+ */
+/*!
+ * @brief Set the origin of a group axis in the axis coordination system.
+ *
+ * @param DevID             Device ID (DevID)
+ * @param GroupIndex        Group Index
+ * @param GroupAxesIdxMask  The group axis index mask is specified toexecute the motion.
+ * @param PHomePosAcs       A pointer variable to set the origin in the axis coordinate system (ACS).
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Group Axis                    | 8     | 7      | 6      | 5      | 4      | 3      | 2      | 1      |
+ * | :----:                        | :---- | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
+ * | Bit index                     | 7     | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
+ * | The power is the index of bit | 2^7   | 2^6    | 2^5    | 2^4    | 2^3    | 2^2    | 2^1    | 2^0    |
+ *
+ * The usage of the group axis index mask (GroupAxesIdxMask) is described as follows:
+ * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is 20 + 22 + 27 = 133.
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupSetHomePos( I32_T DevID, I32_T GroupIndex, I32_T GroupAxesIdxMask, const Pos_T *PHomePosAcs );
-RTN_ERR FNTYPE NMC_GroupAxesHomeDrive( I32_T DevID, I32_T GroupIndex, I32_T GroupAxesIdxMask  );
+/*!
+ * @brief Drive a group to move to the origin.
+ *
+ * @param DevID             Device ID (DevID)
+ * @param GroupIndex        Group Index
+ * @param GroupAxesIdxMask  The group axis index mask is specified to execute the motion.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Group Axis                    | 8     | 7      | 6      | 5      | 4      | 3      | 2      | 1      |
+ * | :----:                        | :---- | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
+ * | Bit index                     | 7     | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
+ * | The power is the index of bit | 2^7   | 2^6    | 2^5    | 2^4    | 2^3    | 2^2    | 2^1    | 2^0    |
+ *
+ * The usage of the group axis index mask (GroupAxesIdxMask) is described as follows:
+ * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is 20 + 22 + 27 = 133.
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
+RTN_ERR FNTYPE NMC_GroupAxesHomeDrive( I32_T DevID, I32_T GroupIndex, I32_T GroupAxesIdxMask );
+/*!
+ *  @}
+ */
 
 // 2D cartesian space (MCS,PCS) interpolation
 RTN_ERR FNTYPE NMC_GroupLineXY( I32_T DevID, I32_T GroupIndex, _opt_null_ const F64_T *PX, _opt_null_ const F64_T *PY, const F64_T _opt_null_ *PMaxVel );
