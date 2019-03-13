@@ -175,10 +175,6 @@ RTN_ERR FNTYPE NMC_DeviceWaitShutdownRequest( I32_T DevID, U32_T WaitMs );
 /*!
  *  @}
  */
-/*!
- *  @}
- */
-
 
 // Watchdog APIs
 RTN_ERR FNTYPE NMC_DeviceWatchdogTimerEnable( I32_T DevID, U32_T TimeoutMs, I32_T Mode );
@@ -186,6 +182,10 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerDisable( I32_T DevID );
 RTN_ERR FNTYPE NMC_DeviceWatchdogTimerReset( I32_T DevID );
 
 // Advanced controller initialization APIs
+/*! \addtogroup Advanced_Device_Open_Shutdown
+ *  Advanced Device Open up and Shut Down
+ *  @{
+ */
 /*!
  * @brief Create the device ID.
  *
@@ -324,8 +324,15 @@ RTN_ERR FNTYPE NMC_DeviceStopRequest( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceGetState( I32_T DevID, I32_T *PRetDeviceState );
+/*!
+ *  @}
+ */
 
 // System parameter setting APIs
+/*! \addtogroup System_Config
+ *  System Configuration Functions
+ *  @{
+ */
 /*!
  * @brief Set device parameters.
  *
@@ -377,6 +384,9 @@ RTN_ERR FNTYPE NMC_DeviceGetParam( I32_T DevID, I32_T ParamNum, I32_T SubIndex, 
  * NMC_DeviceOpenUp() and NMC_DeviceOpenUpRequest()
  */
 RTN_ERR FNTYPE NMC_SetIniPath( _opt_null_ const char *PIniPath );
+/*!
+ *  @}
+ */
 
 // I/O access APIs
 RTN_ERR FNTYPE NMC_GetInputMemorySize ( I32_T DevID, U32_T *PRetSizeByte );
@@ -398,6 +408,10 @@ RTN_ERR FNTYPE NMC_WriteOutputI16( I32_T DevID, U32_T OffsetByte, I16_T I16Value
 RTN_ERR FNTYPE NMC_WriteOutputI32( I32_T DevID, U32_T OffsetByte, I32_T I32Value );
 
 // Read axis/group number APIs
+/*! \addtogroup Axis_Group_Quantity
+ *  Read Axis or Group Quantity
+ *  @{
+ */
 /*!
  * @brief Get the axis quantity.
  *
@@ -444,8 +458,15 @@ RTN_ERR FNTYPE NMC_DeviceGetGroupCount( I32_T DevID, I32_T *PRetGroupCount );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceGetGroupAxisCount( I32_T DevID, I32_T GroupIndex, I32_T *PRetGroupAxisCount );
+/*!
+ *  @}
+ */
 
 // Read axis/group description APIs
+/*! \addtogroup Axis_Group_Description
+ *  Read Axis or Group Description
+ *  @{
+ */
 /*!
  * @brief Read the name description information of the specified axis
  *
@@ -480,8 +501,15 @@ RTN_ERR FNTYPE NMC_AxisGetDescription( I32_T DevID, I32_T AxisIndex, U32_T DescS
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupGetDescription( I32_T DevID, I32_T GroupIndex, U32_T DescStrSize, char *PRetGroupDescription );
+/*!
+ *  @}
+ */
 
 // All axes and groups enable/disable APIs
+/*! \addtogroup Device_Enable_Disable
+ *  Enable and Disable Functions for All Axes and Groups
+ *  @{
+ */
 RTN_ERR FNTYPE NMC_DeviceResetStateAll( I32_T DevID );
 /*!
  * @brief Enable all axes and groups in the system.
@@ -513,8 +541,15 @@ RTN_ERR FNTYPE NMC_DeviceEnableAll( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceDisableAll( I32_T DevID );
+/*!
+ *  @}
+ */
 
 // All axes and groups motion termination APIs
+/*! \addtogroup Device_Motion_Termination
+ *  Halt and Stop Functions for All Axes and Groups
+ *  @{
+ */
 /*!
  * @brief Holt all axes and groups in the system (Stand still state).
  *
@@ -545,6 +580,13 @@ RTN_ERR FNTYPE NMC_DeviceHaltAll( I32_T DevID );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_DeviceStopAll( I32_T DevID );
+/*!
+ *  @}
+ */
+/*!
+ *  @}
+ */
+
 
 /*! \addtogroup Axis_API
  *  Axis APIs
@@ -736,8 +778,86 @@ RTN_ERR FNTYPE NMC_AxisGetActualVel( I32_T DevID, I32_T AxisIndex, F64_T *PRetAc
 RTN_ERR FNTYPE NMC_AxisGetMotionBuffSpace(  I32_T DevID, I32_T AxisIndex, I32_T *PRetFreeSpace );
 
 // Axis motion control APIs
+/*! \addtogroup Axis_Motion_Control
+ *  Axis Motion Control Functions
+ *  @{
+ */
+/*!
+ * @brief Execute Point-To-Point Motion according with target position.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis index
+ * @param TargetPos Taget Position (Unit: user unit). The value will be interpreted to absolute or relative distance based on the axis parameter `0x30` (absolute or relative programming).
+ * @param PMaxVel   Input the target velocity with a pointer variable. Moreover, input 0 directly for no target velocity, and the driver can plan the motion based on the velocity configuratio of the axis parameter `AXP_VM`.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. The function can be called for point-to-point motion if the axis is excitation.
+ * 2. If the axis is homing, the function will return the error code.
+ * 3. If the axis is in the axis state_STATE_STOPPING, AXIS_STATE_STOPPED or AXIS_STATE_ERROR, the function will return the error code. After NMC_AxisResetState() is called to reset the axis to normal excitation (AXIS_STATE_STAND_STILL), the function can be called for point-to-point motion successfully.
+ * 4. If the axis is executing other motions, it will execute the corresponding behavior depended on the axis parameter AXP_BUFF_PARAM after the function is called.
+ * 5. The function can be called to enable the point-to-point motion. After the motion completely, the axis will move to the input target position. If the axis parameter 0x30 (Absolute or relative programming) is set to 1, the target position and the relative distance from the current position shall be input in the function. If the relative distance is set to 0, the target position will be set as an absolute position.
+ * 6. If the axis is excuting the point-to-point motion, the axis state will transfer to AXIS_STATE_DISCRETE_MOTION. After the axis moves to the target position and there is no successive motion, the bit 9 of axis status will become to 1, and the axis will transfer to the normal excitation (AXIS_STATE_STAND_STILL).
+ * 7. The drive will plan the velocity curve depended on the axis parameters, AXP_PROF_TYPE, AXP_ACC, AXP_DEC and AXP_JERK.
+ * 8. The maximum velocity can be input with the pointer variable, PMaxVel. Then the corresponding axis parameter AXP_VM will be modified to the input value, and the velocity plan will be performed accordingly.
+ * 9. If the pointer variable, PMaxVel, is set to 0, the drive will perform the velocity plan based on the axis parameter AXP_VM as the target velocity.
+ * 10. If the axis state is AXIS_STATE_STAND_STILL, the function will enable the point-to-point motion immediately after called whether the content of axis parameter AXP_BUFF_PARAM.
+ * 11. After the function is called and if the axis state is AXIS_STATE_WAIT_SYNC and the axis parameter AXP_BUFF_PARAM is aborting, the motions stored in the motion queue will be removed. Then the point-to-point motion will be stored into the motion queue and wait for trigger signal.
+ * 12. If the axis has not reach the target position during the point-to-point motion, NMC_AxisHalt() can be called to stop the motion.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisPtp( 0, 0, 100, 0 ) // Plan the motion based on the velocity configuration of the axis parameter AXP_VM
+ * @endcode
+ *
+ * \b Reference: <br>
+ * 1. NMC_AxisSetParamI32(), NMC_AxisSetParamF64()
+ * 2. NMC_AxisResetState()
+ * 3. NMC_AxisGetStatus()
+ * 4. NMC_AxisHalt()
+ */
 RTN_ERR FNTYPE NMC_AxisPtp( I32_T DevID, I32_T AxisIndex, F64_T TargetPos, _opt_null_ const F64_T *PMaxVel );
+/*!
+ * @brief Execute Point-To-Point Motion according with target (or default) velocity.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis Index
+ * @param Dir       Direction. 1:Forward, -1:Reverse
+ * @param PMaxVel   Input target velocity with a pointer variable. Moreover, input 0 directly for no target velocity, and the driver will get the configuration in axis parameter `AXP_VM` as the target velocity.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. The function can be called for point-to-point motion if the axis is excitation.
+ * 2. If the axis is homing, the function will return the error code.
+ * 3. If the axis is in the axis state `AXIS_STATE_STOPPING`, `AXIS_STATE_STOPPED` or `AXIS_STATE_ERROR`, the function will return the error code. After NMC_AxisResetState() is called to reset the axis to normal excitation (`AXIS_STATE_STAND_STILL`), the function can be called for JOG motion successfully.
+ * 4. After the function is called, the drive will increase/decrease the velocity to the target velocity in accordance with the configuration in the axis parameter `AXP_ACC`, and the axis state will transfer to `AXIS_STATE_CONTINUOUS_MOTION`.
+ * 5. After the target velocity is input with the pointer variable PMaxVel, the axis parameter `AXP_VM` will be modified accordingly. The input target velocity can be 0.
+ * 6. After the function is called and the target velocity is reached, the bit 8 of the axis status becomes to 0, and the motion is continued at the target velocity.
+ * 7. If the axis is executing other motions, it will execute the corresponding behavior depended on the axis parameter `AXP_BUFF_PARAM` after the function is called.
+ * 8. After the function is called, NMC_AxisHalt() can be called to stop the motion.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T maxVel = 100;
+ * ret = NMC_AxisJog( 0, 0, -1, &maxVel ); // Set the axis move reversely. Modify the axis parameter AXP_VM to 100 as the target velocity for the velocity plan.
+ * @endcode
+ *
+ * \b Reference: <br>
+ * 1. NMC_AxisSetParamI32(), NMC_AxisSetParamF64()
+ * 2. NMC_AxisResetState()
+ * 3. NMC_AxisGetStatus()
+ * 4. NMC_AxisHalt()
+ */
 RTN_ERR FNTYPE NMC_AxisJog( I32_T DevID, I32_T AxisIndex, I32_T Dir, _opt_null_ const F64_T *PMaxVel );
+/*!
+ *  @}
+ */
 
 // Axis homing control APIs
 /*! \addtogroup Axis_Homing
@@ -762,7 +882,7 @@ RTN_ERR FNTYPE NMC_AxisJog( I32_T DevID, I32_T AxisIndex, I32_T Dir, _opt_null_ 
  * None.
  */
 RTN_ERR FNTYPE NMC_AxisSetHomePos( I32_T DevID, I32_T AxisIndex, F64_T HomePos );
-/**
+/*!
  * @brief Drive an axis to move to the origin (by driver).
  *
  * @param DevID     Device ID (DevID)
@@ -793,10 +913,107 @@ RTN_ERR FNTYPE NMC_AxisHomeDrive( I32_T DevID, I32_T AxisIndex );
 
 
 // Axis motion termination APIs
+/*! \addtogroup Axis_Motion_Status
+ *  Axis Motion Status Functions
+ *  @{
+ */
+/*!
+ * @brief The function can be called to halt the axis motion.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. When an axis is executing the point-to-point motion or JOG motion, the function can be called to stop the axis motion. The drive will decrease the velocity from the configuration in the axis parameter AXP_DEC to this in the AXP_V_BASE.
+ * 2. If the axis is homing, the function will return the error code.
+ * 3. If the axis is in the axis state_STATE_STOPPING, AXIS_STATE_STOPPED or AXIS_STATE_ERROR, the function will return the error code.
+ * 4. If the axis is in the axis state_STATE_DISABLE or AXIS_STATE_STAND_STILL, the function will not return any error code.
+ * 5. If the axis parameter AXP_BUFF_PARAM is set to aborting, the function can be called to stop the axis motion normally. If the axis parameter AXP_BUFF_PARAM is set to buffered, the function can be called to wait the bit 8 of axis status to 1 (the completion of the previous motion) and then to stop the axis motion normally.
+ * 6. After the function is called and the motion is stopped successfully, the axis state will transfer to AXIS_STATE_DISCRETE_MOTION. After the axis is stopped, the bit 8 and 9 of axis status will become 1, and the axis state will transfer to normal excitation (AXIS_STATE_STAND_STILL).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisHalt( 0, 0 );
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_AxisHalt( I32_T DevID, I32_T AxisIndex );
+/*!
+ * @brief The function can be called to stop the axis motion.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param AxisIndex Axis index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. Whether an axis is executing each type of motion and such axis motion shall be stopped for some undesired cases, the function can be called to perform the forced stop procedure. The drive will decrease the velocity from the configuration in the axis parameter AXP_STOP_PROF_DEC to this in the AXP_V_BASE.
+ * 2. If the axis is homing, the function will return the error code.
+ * 3. After the function is called to perform the forced stop procedure and the axis has not stopped, the axis state will transfer to AXIS_STATE_STOPPING. After the axis is stopped, the bit 9 of axis status will become 1, and the axis state will transfer to AXIS_STATE_STOPPED.
+ * 4. If the axis state is AXIS_STATE_STAND_STILL, it will transfer to AXIS_STATE_STOPPED after the function is called.
+ * 5. After the function is called to perform the forced stop procedure and the axis has stopped, the axis is prohibited to execute any axis motion, until NMC_AxisResetState() is called to reset the axis to normal excitation (AXIS_STATE_STAND_STILL).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisStop( 0, 0 );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisResetState()
+ */
 RTN_ERR FNTYPE NMC_AxisStop( I32_T DevID, I32_T AxisIndex );
+/*!
+ * @brief The function can be called to halt the motions of all axes in a specified device normally.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The usage is similar to this of NMC_AxisHalt(). The function can be called to stop the motions of all axes in a specified device normally.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisHaltAll( 0 );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisHalt()
+ */
 RTN_ERR FNTYPE NMC_AxisHaltAll( I32_T DevID );
+/*!
+ * @brief The function can be called to stop the motions of all axes in a specified device forcedly.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The usage is similar to this of NMC_AxisStop(). The function can be called to stop the motions of all axes in a specified device forcedly.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * ret = NMC_AxisStopAll( 0 );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisStop()
+ */
 RTN_ERR FNTYPE NMC_AxisStopAll( I32_T DevID );
+/*!
+ *  @}
+ */
 
 // Axis profile change on the fly APIs
 /*! \addtogroup Axis_Motion_Change
