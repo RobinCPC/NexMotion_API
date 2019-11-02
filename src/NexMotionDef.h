@@ -422,10 +422,18 @@ typedef struct
     RCfg_T  rCfg;
 } RCPos_T;
 
+/*! @struct CoordTrans_T     NexMotionDef.h
+ *  @brief  The data structure to descibe the transformmed reslationship between two coordinate system.
+ *
+ *  It is used to describe the coordinate transformation between two coordinate systems: (x, y, z, roll, pitch, yaw)
+ */
 typedef struct
 {
     // To describe the coordinate transformation between two coordinate systems: (x, y, z, roll, pitch, yaw)
     // (x,y,z) for translation, (r,p,y) for rotation
+    /*! pose[0-2] define the relative translation distance in x, y, and z axis.
+     *  pose[3-5] define the relative rotation angle in x, y, and z axis.
+     */
     F64_T pose[NMC_MAX_POSE_DATA_SIZE];
 } CoordTrans_T;
 

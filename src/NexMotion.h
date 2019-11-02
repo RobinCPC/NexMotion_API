@@ -1456,10 +1456,120 @@ RTN_ERR FNTYPE NMC_GroupPtpCart( I32_T DevID, I32_T GroupIndex, I32_T CartAxis, 
 RTN_ERR FNTYPE NMC_GroupPtpCartAll( I32_T DevID, I32_T GroupIndex, I32_T CartAxesMask, const Pos_T *PTargetPos );
 
 // Group motion termination APIs
+/*! \addtogroup Group_Halt_and_Stop
+ *  Group Halt and Stop Functions
+ *  @{
+ */
+/*!
+ * @brief Halt a group (Stand still state). The API will decrease the velocity for each type of motion, and
+ *        the [group state](@ref NMC_GroupGetState) will transfer from GROUP_MOVING to GROUP_STOPPING during the velocity decreasing,
+ *        and to the GROUP_STAND_STILL when the velocity is 0.
+ *        The API shall specify the motion stop in accompanying the buffer mode. If the buffer mode is aborting,
+ *        the current motion will decrease the velocity immediately. If the buffer mode is buffered, the API will
+ *        be added into the motion buffer and will not be effective immediately.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group Index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T dev ID = 0;
+ * I32_T groupIndex = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_ GroupHalt( devID, gro upIndex );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_GroupGetState()
+ */
 RTN_ERR FNTYPE NMC_GroupHalt( I32_T DevID, I32_T GroupIndex );
+/*!
+ * @brief Stop a group (Stop state). The API will decrease the velocity for each type of motion, and the [group state](@ref NMC_GroupGetState)
+ *        will transfer from GROUP_MOVING to GROUP_ST OPPING during the velocity decreasing, and to the GROUP_STAND_STOPPED when the velocity is 0.
+ *        To execute a new motion, NMC_GroupResetState() shall be called to reset the group state GROUP_STOPPED.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group Index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T dev ID = 0;
+ * I32_T groupIndex = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupStop( devID, groupIndex );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_GroupGetState()
+ */
 RTN_ERR FNTYPE NMC_GroupStop( I32_T DevID, I32_T GroupIndex );
+/*!
+ * @brief Halt all groups (Stand still state). The API will decrease the velocity for each type of motion, and the
+ *        [group state](@ref NMC_GroupGetState) will transfer from GROUP_MOVING to GROUP_STOPPING during the velocity decreasing,
+ *        and to the GROUP_STAND_STILL when the velocity is 0.
+ *        The API shall specify the motion stop in accompanying the buffer mode. If the buffer mode is aborting,
+ *        the current moti on will decrease the velocity immediately. If the buffer mode is buffered, the API will
+ *        be added into the motion buffer and will not be effective immediately.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID =
+ * RTN_ERR ret =
+ * r et = NMC_GroupHaltAll( devID );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_GroupGetState()
+ */
 RTN_ERR FNTYPE NMC_GroupHaltAll( I32_T DevID );
+/*!
+ * @brief Stop all groups (Stop state). The API will decrease the velocity for each type of motion, and
+ *        the [group state](@ref NMC_GroupGetState) will transfer from GROUP_MOVING to GROUP_STOPPING during the velocity decreasing, and to
+ *        the GROUP_STAND_S TOPPED when the velocity is 0.
+ *        To execute a new motion, NMC_GroupResetState() shall be called to reset the group state GROUP_STOPPED.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * RTN_ERR ret =
+ * ret = NMC_GroupStopAll( devID );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_GroupGetState()
+ */
 RTN_ERR FNTYPE NMC_GroupStopAll( I32_T DevID );
+/*!
+ *  @}
+ */
 
 // Group motion profile read APIs
 /*! \addtogroup Group_Motion_Status
@@ -1739,9 +1849,67 @@ RTN_ERR FNTYPE NMC_ToolCalib_4pWithOri( const Pos_T *PMcsKinP1, const Pos_T *PMc
 RTN_ERR FNTYPE NMC_ToolCalib_Ori      ( const Pos_T *PMcsKinOrg, const Pos_T *PMcsKinMinusZAxisPt, const Pos_T *PMcsKinYZPt, CoordTrans_T *PRetToolCoordTrans );
 
 // Base calibration
+/*! \addtogroup Group_Base_Calibration
+ *  Fuctions for the group to calibration its base coordination
+ *  @{
+ */
+/*!
+ * @brief Base teaching - 1 point method
+ *
+ * @param PRefBaseP1          The position used in the first step.
+ * @param PRetBaseCoordTrans  Return the relationship respected to reference coordinate convertion.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_BaseCalib_1p( const Pos_T *PRefBaseP1, CoordTrans_T *PRetBaseCoordTrans );
+/*!
+ * @brief Base teaching - 2 points method
+ *
+ * @param PRefBaseP1          The position used in the first step.
+ * @param PRefBaseP2          The position used in the second step.
+ * @param PRetBaseCoordTrans  Return the relationship respected to reference coordinate convertion.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_BaseCalib_2p( const Pos_T *PRefBaseP1, const Pos_T *PRefBaseP2, CoordTrans_T *PRetBaseCoordTrans );
+/*!
+ * @brief Base teaching - 3 point method
+ *
+ * @param PRefBaseP1          The position used in the first step.
+ * @param PRefBaseP2          The position used in the second step.
+ * @param PRefBaseP3          The position used in the third step.
+ * @param PRetBaseCoordTrans  Return the relationship respected to reference coordinate convertion.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_BaseCalib_3p( const Pos_T *PRefBaseP1, const Pos_T *PRefBaseP2, const Pos_T *PRefBaseP3, CoordTrans_T *PRetBaseCoordTrans );
+/*!
+ *  @}
+ */
 /*!
  *  @}
  */
