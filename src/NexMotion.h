@@ -31,10 +31,10 @@
 /*!
  * @brief Return the version number of the Library: Major.Minor.Stage.Build
  *
- * @param PRetMajor [Input] A pointer variable, [Output] The major version number. Input NULL(0) can ignore the parameter.
- * @param PRetMinor [Input] A pointer variable, [Output] The minor version number. Input NULL(0) can ignore the parameter.
- * @param PRetStage [Input] A pointer variable, [Output] The stage of version number. Input NULL(0) can ignore the parameter. The return value 1 ~ 4 indicate the trial versions, and the 5 indicates the official release version.
- * @param PRetBuild [Input] A pointer variable, [Output] The build of version number. Input NULL(0) can ignore the parameter.
+ * @param[out] PRetMajor [Input] A pointer variable, [Output] The major version number. Input NULL(0) can ignore the parameter.
+ * @param[out] PRetMinor [Input] A pointer variable, [Output] The minor version number. Input NULL(0) can ignore the parameter.
+ * @param[out] PRetStage [Input] A pointer variable, [Output] The stage of version number. Input NULL(0) can ignore the parameter. The return value 1 ~ 4 indicate the trial versions, and the 5 indicates the official release version.
+ * @param[out] PRetBuild [Input] A pointer variable, [Output] The build of version number. Input NULL(0) can ignore the parameter.
  *
  * @return The version number will be returned with the data type of I32_T. The return value means: Version = (Major×10,000,000) + (Minor×100,000) + (Stage×10,000) + Build
  *
@@ -86,9 +86,9 @@ const char* FNTYPE NMC_GetErrorDescription( RTN_ERR ErrorCode, _opt_null_ char *
 /*!
  * @brief Open up the device (Blocking call).
  *
- * @param DevType The specified device type. 0: Simulator, 1: EtherCAT
- * @param DevIndex The specified index of device which is set to 0
- * @param PRetDevID [Output] The device ID (DevID) after the function is called successfully
+ * @param      DevType The specified device type. 0: Simulator, 1: EtherCAT
+ * @param      DevIndex The specified index of device which is set to 0
+ * @param[out] PRetDevID [Output] The device ID (DevID) after the function is called successfully
  *
  * @return Return an error code.
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h
@@ -134,8 +134,8 @@ RTN_ERR FNTYPE NMC_DeviceOpenUpRequest( I32_T DevType, I32_T DevIndex );
 /*!
  * @brief Wait for device open up (Blocking call).
  *
- * @param WaitMs    Waiting time for device open up (unit: ms). It can be set to the NMC_WAIT_TIME_INFINITE (0xFFFFFFFF) to wait for the completion of open up.
- * @param PRetDevID [Output] The device ID (DevID) after the function is called successfully.
+ * @param      WaitMs    Waiting time for device open up (unit: ms). It can be set to the NMC_WAIT_TIME_INFINITE (0xFFFFFFFF) to wait for the completion of open up.
+ * @param[out] PRetDevID [Output] The device ID (DevID) after the function is called successfully.
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -189,9 +189,9 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerReset( I32_T DevID );
 /*!
  * @brief Create the device ID.
  *
- * @param DevType   The specified device type. 0: Simulator, 1: EtherCAT.
- * @param DevIndex  The specified index of device which is set to 0.
- * @param PRetDevID [Output] The device ID (DevID) after the function is called successfully.
+ * @param      DevType   The specified device type. 0: Simulator, 1: EtherCAT.
+ * @param      DevIndex  The specified index of device which is set to 0.
+ * @param[out] PRetDevID [Output] The device ID (DevID) after the function is called successfully.
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -354,10 +354,10 @@ RTN_ERR FNTYPE NMC_DeviceSetParam( I32_T DevID, I32_T ParamNum, I32_T SubIndex, 
 /*!
  * @brief Get device parameters.
  *
- * @param DevID         Device ID (DevID)
- * @param ParamNum      Parameter Number
- * @param SubIndex      Parameter Sub-index
- * @param PRetParaValue [Output] The value to be returned after the function is called successfully.
+ * @param      DevID         Device ID (DevID)
+ * @param      ParamNum      Parameter Number
+ * @param      SubIndex      Parameter Sub-index
+ * @param[out] PRetParaValue [Output] The value to be returned after the function is called successfully.
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -753,7 +753,7 @@ RTN_ERR FNTYPE NMC_AxisResetDriveAlm( I32_T DevID, I32_T AxisIndex );
  *
  * @param DevID       Device ID (DevID)
  * @param AxisIndex   Axis index
- * @param PRetAlmCode [Output] The value of alarm code.
+ * @param[out] PRetAlmCode [Output] The value of alarm code.
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1165,7 +1165,7 @@ RTN_ERR FNTYPE NMC_GroupSetParamI32( I32_T DevID, I32_T GroupIndex, I32_T ParamN
  * @param GroupIndex        Group Index
  * @param ParamNum          Parameter Number
  * @param SubIndex          Parameter sub-index
- * @param PRetParaValueI32  [Input] A pointer variable, [Output] Value of the parameter
+ * @param[out] PRetParaValueI32  [Input] A pointer variable, [Output] Value of the parameter
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1221,7 +1221,7 @@ RTN_ERR FNTYPE NMC_GroupSetParamF64( I32_T DevID, I32_T GroupIndex, I32_T ParamN
  * @param GroupIndex        Group Index
  * @param ParamNum          Parameter number
  * @param SubIndex          Parameter sub-index
- * @param PRetParaValueF64  [Output] Value to be returned (double precision float)
+ * @param[out] PRetParaValueF64  [Output] Value to be returned (double precision float)
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1275,12 +1275,12 @@ RTN_ERR FNTYPE NMC_GroupAxSetParamI32( I32_T DevID, I32_T GroupIndex, I32_T Grou
 /*!
  * @brief Get the parameters of group axis (I32_T, data type).
  *
- * @param DevID             Device ID (Dev ID)
- * @param GroupIndex        Group index
- * @param GroupAxisIndex    Group axis index
- * @param ParamNum          Parameter number
- * @param SubIndex          Parameter sub-index
- * @param PRetParaValueI32  [Output] Value to be returned (signed integer)
+ * @param      DevID             Device ID (Dev ID)
+ * @param      GroupIndex        Group index
+ * @param      GroupAxisIndex    Group axis index
+ * @param      ParamNum          Parameter number
+ * @param      SubIndex          Parameter sub-index
+ * @param[out] PRetParaValueI32  [Output] Value to be returned (signed integer)
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1333,12 +1333,12 @@ RTN_ERR FNTYPE NMC_GroupAxSetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
 /*!
  * @brief Get the parameters of group axis (F64_T, data type).
  *
- * @param DevID             Device ID (Dev ID)
- * @param GroupIndex        Group index
- * @param GroupAxisIndex    Group axis index
- * @param ParamNum          Parameter number
- * @param SubIndex          Parameter sub-index
- * @param PRetParaValueF64  [Output] Value to be returned (double precision float)
+ * @param      DevID             Device ID (Dev ID)
+ * @param      GroupIndex        Group index
+ * @param      GroupAxisIndex    Group axis index
+ * @param      ParamNum          Parameter number
+ * @param      SubIndex          Parameter sub-index
+ * @param[out] PRetParaValueF64  [Output] Value to be returned (double precision float)
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1386,7 +1386,7 @@ RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetSta
  *
  * @param DevID       Device ID (DevID)
  * @param GroupIndex  Group index
- * @param PRetState   [Input] A pointer variable, [Output] Group state
+ * @param[out] PRetState   [Input] A pointer variable, [Output] Group state
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1437,8 +1437,63 @@ RTN_ERR FNTYPE NMC_GroupGetDriveAlmCode( I32_T DevID, I32_T GroupIndex, I32_T Gr
  */
 
 // Group velocity ratio setting APIs
+/*! \addtogroup Group_Speed_Config
+ *  Group Speed Ratio Configuration Functions
+ *  @{
+ */
+/**
+ * @brief Set the speed percentage of a group from 0.0 to 100.0%.
+ *
+ * @param DevID       Decice ID (DevID)
+ * @param GroupIndex  Group Inex
+ * @param Percentage  Speed percentage to be set (0 to 100 %)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T percentage = 100.0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupSetSpeedRatio( devID, groupIndex, percentag e );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupSetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T Percentage );
+/**
+ * @brief Get the speed percentage of a group from 0.0 to 100.0%.
+ *
+ * @param DevID            Decice ID (DevID)
+ * @param GroupIndex       Group Inex
+ * @param[out] Percentage  [Input] A pointer variable, [Output] Velocity percentage.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T percentage = 0.0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetSpeedRatio( devID, groupIndex, &percentag e );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupGetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T *PRetPercentage );
+/*!
+ *  @}
+ */
 
 // Group axis point to point motion in ACS
 RTN_ERR FNTYPE NMC_GroupPtpAcs( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, F64_T AcsPos, _opt_null_ const F64_T *PAcsMaxVel );
