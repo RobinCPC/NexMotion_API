@@ -5,8 +5,10 @@
 
 ![](images/NexCOBOT_logo.png)
 
-* 1. Programming Principles
-* 2. Device Parameters
+* 1. [Programming Principles](@ref ProgrammingPrinciples)
+
+  - 1.1 [System Operations](@ref SystemOperations)
+* 2. [Device Parameters](@ref DeviceParameters)
 * 3. [C/C++ Library](@ref NexMotion.h)
     * [3.1. API Overview](@ref NexMotion.h)
     * [3.2. System APIs](@ref System_API)

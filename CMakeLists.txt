@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(NexMotion_API)
+project(NexMotion)
 # The project version number.
 set(VERSION_MAJOR   1   CACHE STRING "Project major version number.")
 set(VERSION_MINOR   4   CACHE STRING "Project minor version number.")
