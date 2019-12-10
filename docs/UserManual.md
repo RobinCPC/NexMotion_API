@@ -15,7 +15,7 @@ The basic development procedure of the NexMotion application is described as fol
 5. Compile and debug the control program
 6. Test and fine tune the control program
 
-<img src="C:\Users\RobinChen\Documents\NexCOBOT\NexMotion_API\docs\images\ControlSystemExample.png" alt="Control System Example" style="zoom: 67%;" />
+   ![](images/ControlSystemExample.png)
 
 <center>Control Syetem Example (Device + Controller Systems)</center>
 The first 3 steps aim to confirm the following items:
@@ -47,7 +47,7 @@ the APIs with the prefix **NMC_Device** are the System Operations class, the API
 Group Control, and so on. Moreover, the extension applications can be developed by referring to the
 sample programs provided under the installation folder.
 
-<img src="C:\Users\RobinChen\Documents\NexCOBOT\NexMotion_API\docs\images\NexMotionStudioDevelopmentAndConfigurationTools.png" alt="NexMotion Studio Layout" style="zoom: 80%;" />
+![](images/NexMotionStudioDevelopmentAndConfigurationTools.png)
 
 <center>NexMotion Studio Development and Configuration Tools</center>
 ## 1.1. System Operations {#SystemOperations}
@@ -152,7 +152,7 @@ The separation initialization procedure shall call the 3 APIs in order:
 
 The purpose is transfer the [device state](@ref Device_State) to **「 OPERATION 」**. The below figure shows the device state transitions and related functions.
 
-<img src="C:\Users\RobinChen\Documents\NexCOBOT\NexMotion_API\docs\images\DeviceStateTransitions.png" alt="Device State Transistions"  />
+![](images/DeviceStateTransitions.png)
 
 <center>Device State Transitions</center>
 The device states can be getting by function [NMC_DeviceGetState()](@ref NMC_DeviceGetState)
@@ -163,10 +163,10 @@ The device states can be getting by function [NMC_DeviceGetState()](@ref NMC_Dev
 shall reset the value of timer within a specific period. Otherwise, if the timer reaches the configured
 time, the device will perform the corresponding actions for system shutdown automatically.
 ​	The function is a protective measure to avoid the application crash or the system failure due to
-oth er programs. In case of the system failure, the device will enable the shutdown process because
+other programs. In case of the system failure, the device will enable the shutdown process because
 the timer is timeout when application cannot be reset and. 
 
-​	If the timer is enabled during the debugging phase of development stage, the debug process may interr upt the program. Some undesired ( cases may occurred since the timer is timeout and the system is shut down. Therefore, it is recommended to disable the function at the development stage and enable the function after the development completion f or additional protection.
+​	If the timer is enabled during the debugging phase of development stage, the debug process may interrupt the program. Some undesired ( cases may occurred since the timer is timeout and the system is shut down. Therefore, it is recommended to disable the function at the development stage and enable the function after the development completion f or additional protection.
 ​	Generally, the watch dog timer is used by enabling a system timer interrupt or creating an
 independent thread. [NMC_DeviceWatchdogTimerEnable()](@ref NMC_DeviceWatchdogTimerEnable) is used to enable the watch dog timer , and
 [NMC_DeviceWatchdogTimerReset()](@ref NMC_DeviceWatchdogTimerReset) is used to reset such timer. The reset may be two times or more
@@ -264,7 +264,9 @@ axis.
 ​	NexMotion can define some axes as a group. A group represents a mechanism or a robot with a
 specified structural relationship. Now, NexMotion can support these industrial robots as follows:
 
-<img src="C:\Users\RobinChen\Documents\NexCOBOT\NexMotion_API\docs\images\IndustrialRobotTypes.png" alt="Supported Industrial Robot Types" style="zoom: 67%;" />
+![](images/IndustrialRobotTypes.png)
+
+<center>Industrial Robot Types</center>
 
 
 
