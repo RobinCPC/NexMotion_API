@@ -39,15 +39,6 @@ matrix:
             - graphviz
             - g++-6
 
-    - os: osx
-      osx_image: xcode9.2
-      compiler: clang
-
-    allow_failures:
-    - os: osx
-      osx_image: xcode9.2
-      compiler: clang
-
 before_install:
     # linux
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
