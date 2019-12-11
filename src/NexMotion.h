@@ -10,6 +10,9 @@
 #ifndef __NEXMOTION_H
 #define __NEXMOTION_H
 
+/*!
+ * @brief define marco FNTYPE as __stdcall
+ */
 #define FNTYPE  __stdcall
 
 #ifdef __cplusplus
@@ -33,10 +36,10 @@
  *
  * @param[out] PRetMajor [Input] A pointer variable, [Output] The major version number. Input NULL(0) can ignore the parameter.
  * @param[out] PRetMinor [Input] A pointer variable, [Output] The minor version number. Input NULL(0) can ignore the parameter.
- * @param[out] PRetStage [Input] A pointer variable, [Output] The stage of version number. Input NULL(0) can ignore the parameter. The return value 1 ~ 4 indicate the trial versions, and the 5 indicates the official release version.
+ * @param[out] PRetStage [Input] A pointer variable, [Output] The stage of version number. Input NULL(0) can ignore the parameter. The return value 1 to 4 indicate the trial versions, and the 5 indicates the official release version.
  * @param[out] PRetBuild [Input] A pointer variable, [Output] The build of version number. Input NULL(0) can ignore the parameter.
  *
- * @return The version number will be returned with the data type of I32_T. The return value means: Version = (Major×10,000,000) + (Minor×100,000) + (Stage×10,000) + Build
+ * @return The version number will be returned with the data type of I32_T. The return value means: Version = (Majorx10,000,000) + (Minorx100,000) + (Stagex10,000) + Build
  *
  * \b Examples:
  * @code{.h}
@@ -177,9 +180,57 @@ RTN_ERR FNTYPE NMC_DeviceWaitShutdownRequest( I32_T DevID, U32_T WaitMs );
  */
 
 // Watchdog APIs
+/*! \addtogroup Watch_Dog_Functions
+ *  Functions for watch dog feature
+ *  @{
+ */
+/*!
+ * @brief Enable the watch dog timer.
+ *
+ * @param DevID     Device ID (DevID)
+ * @param TimeoutMs Timeout value for the watch dog timer. Unit: milliseconds. Range: 20 to 200000 ms.
+ * @param Mode      Time out mode. 0: Device will transfer to ready state if the device in the operation state.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, [Watch Dog Timer](@ref WatchDogTimer)
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceWatchdogTimerEnable( I32_T DevID, U32_T TimeoutMs, I32_T Mode );
+/*!
+ * @brief Disable the watch dog timer.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, [Watch Dog Timer](@ref WatchDogTimer)
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceWatchdogTimerDisable( I32_T DevID );
+/*!
+ * @brief Reset the watch dog timer.
+ *
+ * @param DevID Device ID (DevID)
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, [Watch Dog Timer](@ref WatchDogTimer)
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_DeviceWatchdogTimerReset( I32_T DevID );
+/*!
+ *  @}
+ */
 
 // Advanced controller initialization APIs
 /*! \addtogroup Advanced_Device_Open_Shutdown
@@ -226,11 +277,11 @@ RTN_ERR FNTYPE NMC_DeviceDelete( I32_T DevID );
  *
  * \b Usage: <br>
  * The function will load the device configurations in accordance with the file, `NexMotionLibConfig.ini`.
- * The file, `NexMotionLibConfig.ini`, is saved in the default path, `C:\NEXCOBOT`. Users must not create the file, nor modify the file name or content in order to avoid the loading error. NMC_DeviceLoadIniConfig() will search the file, `NexMotionLibConfig.ini`, in the following path in order:
+ * The file, `NexMotionLibConfig.ini`, is saved in the default path, `C:\\NEXCOBOT`. Users must not create the file, nor modify the file name or content in order to avoid the loading error. NMC_DeviceLoadIniConfig() will search the file, `NexMotionLibConfig.ini`, in the following path in order:
  * ```
  * NexMotion.dll folder
- * C:\NEXCOBOT
- * C:\Windows\System32
+ * C:\\NEXCOBOT
+ * C:\\Windows\System32
  * ```
  * To specify a new path for the file, `NexMotionLibConfig.ini`, NMC_SetIniPath() can be called.
  * After NMC_DeviceLoadIniConfig() is called successfully, the device is in the ready state and ready to start.
@@ -1471,7 +1522,7 @@ RTN_ERR FNTYPE NMC_GroupSetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T Perc
  *
  * @param DevID            Decice ID (DevID)
  * @param GroupIndex       Group Inex
- * @param[out] Percentage  [Input] A pointer variable, [Output] Velocity percentage.
+ * @param[out] PRetPercentage  [Input] A pointer variable, [Output] Velocity percentage.
  *
  * @return Return an error code. <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.

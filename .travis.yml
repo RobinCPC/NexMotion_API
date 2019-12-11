@@ -14,7 +14,7 @@ matrix:
     - os: linux
       compiler: gcc
       env: MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-      dist: trusty
+      dist: xenial
       addons:
         apt:
           sources:
@@ -28,7 +28,7 @@ matrix:
     - os: linux
       compiler: gcc
       env: MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-      dist: trusty
+      dist: xenial
       addons:
         apt:
           sources:

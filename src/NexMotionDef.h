@@ -20,7 +20,7 @@
  */
 
 //! Wait functions timeout
-#define NMC_WAIT_TIME_INFINITE              (0xFFFFFFFF)
+#define NMC_WAIT_TIME_INFINITE              (0xFFFFFFFF)  //!< Waiting for the completion of the function execution.
 
 /*! \addtogroup Device_State
  *  State definition of devices. NMC_DeviceGetState()
@@ -248,14 +248,14 @@
  *  Group axis index definition
  *  @{
  */
-#define NMC_GROUP_AXIS_X                    (0)
-#define NMC_GROUP_AXIS_Y                    (1)
-#define NMC_GROUP_AXIS_Z                    (2)
-#define NMC_GROUP_AXIS_A                    (3)
-#define NMC_GROUP_AXIS_B                    (4)
-#define NMC_GROUP_AXIS_C                    (5)
-#define NMC_GROUP_AXIS_U                    (6)
-#define NMC_GROUP_AXIS_V                    (7)
+#define NMC_GROUP_AXIS_X                    (0) //!< X axis of the coordinate system
+#define NMC_GROUP_AXIS_Y                    (1) //!< Y axis of the coordinate system
+#define NMC_GROUP_AXIS_Z                    (2) //!< Z axis of the coordinate system
+#define NMC_GROUP_AXIS_A                    (3) //!< A axis of the coordinate system
+#define NMC_GROUP_AXIS_B                    (4) //!< B axis of the coordinate system
+#define NMC_GROUP_AXIS_C                    (5) //!< C axis of the coordinate system
+#define NMC_GROUP_AXIS_U                    (6) //!< U axis of the coordinate system
+#define NMC_GROUP_AXIS_V                    (7) //!< V axis of the coordinate system
 /*!
  *  @}
  */
@@ -264,15 +264,15 @@
  *  Group axis mask definition
  *  @{
  */
-#define NMC_GROUP_AXIS_MASK_X               (0x00000001)
-#define NMC_GROUP_AXIS_MASK_Y               (0x00000002)
-#define NMC_GROUP_AXIS_MASK_Z               (0x00000004)
-#define NMC_GROUP_AXIS_MASK_A               (0x00000008)
-#define NMC_GROUP_AXIS_MASK_B               (0x00000010)
-#define NMC_GROUP_AXIS_MASK_C               (0x00000020)
-#define NMC_GROUP_AXIS_MASK_U               (0x00000040)
-#define NMC_GROUP_AXIS_MASK_V               (0x00000080)
-#define NMC_GROUP_AXIS_MASK_ALL             (0x000000FF)
+#define NMC_GROUP_AXIS_MASK_X               (0x00000001)  //!< The mask for X axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_Y               (0x00000002)  //!< The mask for Y axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_Z               (0x00000004)  //!< The mask for Z axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_A               (0x00000008)  //!< The mask for A axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_B               (0x00000010)  //!< The mask for B axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_C               (0x00000020)  //!< The mask for C axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_U               (0x00000040)  //!< The mask for U axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_V               (0x00000080)  //!< The mask for V axis of the coordinate system
+#define NMC_GROUP_AXIS_MASK_ALL             (0x000000FF)  //!< The mask for all axes of the coordinate system
 /*!
  *  @}
  */
@@ -346,7 +346,7 @@
  */
 
 
-/*! @struct Pos_T     NexMotionDef.h
+/*! @struct Pos_T
  *  @brief  The general data types related to motion, which is defined in NexMotionDef.h
  *
  *  It is used to describe the coordinate position of group, and can be ACS
@@ -365,7 +365,7 @@ typedef struct
 } Pos_T;
 
 
-/*! @struct Xyz_T     NexMotionDef.h
+/*! @struct Xyz_T
  *  @brief  The data types related to motion in Cartesian system,
  *          which is defined in NexMotionDef.h.
  *
@@ -382,7 +382,7 @@ typedef struct
 } Xyz_T;
 
 
-/*! @struct APos_T     NexMotionDef.h
+/*! @struct APos_T
  *  @brief  The data types related to motion in Axis system,
  *          which is defined in NexMotionDef.h.
  *
@@ -395,7 +395,7 @@ typedef struct
 } APos_T;
 
 
-/*! @struct CPos_T     NexMotionDef.h
+/*! @struct CPos_T
  *  @brief  The data types related to pose in Cartesian space,
  *          which is defined in NexMotionDef.h.
  *
@@ -422,7 +422,7 @@ typedef struct
     RCfg_T  rCfg;
 } RCPos_T;
 
-/*! @struct CoordTrans_T     NexMotionDef.h
+/*! @struct CoordTrans_T
  *  @brief  The data structure to descibe the transformmed reslationship between two coordinate system.
  *
  *  It is used to describe the coordinate transformation between two coordinate systems: (x, y, z, roll, pitch, yaw)
@@ -449,7 +449,7 @@ typedef struct
 typedef void(*PF_NmcHookAPI)( const void *FPFuncAddress , const char *PFuncName, RTN_ERR ReturnCode, void *PUserData );
 
 #pragma  pack(push, 1)
-/*! @struct NmcTime_T     NexMotionDef.h
+/*! @struct NmcTime_T
  *  @brief  A data structure is used to describe the system time.
  *
  */
@@ -465,7 +465,7 @@ typedef struct
 } NmcTime_T;
 
 
-/*! @struct NmcMsg_T     NexMotionDef.h
+/*! @struct NmcMsg_T
  *  @brief  A data structure is used to describe the system message.
  *
  */
@@ -483,6 +483,10 @@ typedef struct
 #pragma pack(pop)
 
 
+/*! @struct MemEntryInfo_T
+ * @brief A data structure is used to describe the information of memory entry
+ * @todo update with more detial.
+ */
 typedef struct
 {
     U32_T bitStartOffset;

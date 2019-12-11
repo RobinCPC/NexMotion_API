@@ -18,6 +18,7 @@ The basic development procedure of the NexMotion application is described as fol
    ![](images/ControlSystemExample.png)
 
 <center>Control Syetem Example (Device + Controller Systems)</center>
+
 The first 3 steps aim to confirm the following items:
 1. The installation and wiring of the controlled system, such as the installation of the servo motor,
 the operations of the I/O devices, etc., and
@@ -50,6 +51,7 @@ sample programs provided under the installation folder.
 ![](images/NexMotionStudioDevelopmentAndConfigurationTools.png)
 
 <center>NexMotion Studio Development and Configuration Tools</center>
+
 ## 1.1. System Operations {#SystemOperations}
 
 The section describes the following items:
@@ -94,7 +96,7 @@ including:
 3. Open up the device communication.
 
 The above processes may cost several seconds. After the function returns successfully, the following
-processes can send commands to the axes or groups. In addition, the Library also supports a non blocked function, [NMC_DeviceOpenUpRequest()](@ref NMC_DeviceOpenUpRequest). The function can return immediately after called. The device can also receive the same commands and perform the above open up processes. After completing these processes, the [device state](@ref Device_State) will transfer to **「 OPERATION 」** , and [NMC_DeviceGetState()](@ref NMC_DeviceGetState) can be used to check the state by polling or [NMC_DeviceWaitOpenUpRequest()](@ref NMC_DeviceWaitOpenUpRequest) can be used to wait for the open up completion.
+processes can send commands to the axes or groups. In addition, the Library also supports a non blocked function, [NMC_DeviceOpenUpRequest()](@ref NMC_DeviceOpenUpRequest). The function can return immediately after called. The device can also receive the same commands and perform the above open up processes. After completing these processes, the [device state](@ref Device_State) will transfer to **OPERATION** , and [NMC_DeviceGetState()](@ref NMC_DeviceGetState) can be used to check the state by polling or [NMC_DeviceWaitOpenUpRequest()](@ref NMC_DeviceWaitOpenUpRequest) can be used to wait for the open up completion.
 
 ### 1.1.2. Device Shutdown
 
@@ -118,26 +120,26 @@ int main()
     {
         // Error handling
     }
-    
+
     ret = NMC_DeviceLoadIniConfig( devID );
-    if ( ret != E RR_NEXMOTION_SUCCESS )
+    if ( ret != ERR_NEXMOTION_SUCCESS )
     {
         // Error
     }
-    
+
     // Do something here...
     // Parameter
-    
+
     ret = NMC_DeviceStart( devID );
     if ( ret != ERR_NEXMOTION_SUCCESS)
     {
         // Error
     }
-    
+
     // Device is start up successfully.
     // Do something...
     // ...
-    
+
     NMC_DeviceShutdown( devID );
     return 0;
 }
@@ -150,24 +152,25 @@ The separation initialization procedure shall call the 3 APIs in order:
 
 3. [NMC_DeviceStart()](@ref NMC_DeviceStart)
 
-The purpose is transfer the [device state](@ref Device_State) to **「 OPERATION 」**. The below figure shows the device state transitions and related functions.
+The purpose is transfer the [device state](@ref Device_State) to **OPERATION**. The below figure shows the device state transitions and related functions.
 
 ![](images/DeviceStateTransitions.png)
 
 <center>Device State Transitions</center>
+
 The device states can be getting by function [NMC_DeviceGetState()](@ref NMC_DeviceGetState)
 
-### 1.1.4. Watch Dog Timer
+### 1.1.4. Watch Dog Timer  {#WatchDogTimer}
 
-​	The watch dog timer is a dedicated timer of the device. After the timer starts, the application
+  The watch dog timer is a dedicated timer of the device. After the timer starts, the application
 shall reset the value of timer within a specific period. Otherwise, if the timer reaches the configured
 time, the device will perform the corresponding actions for system shutdown automatically.
-​	The function is a protective measure to avoid the application crash or the system failure due to
+  The function is a protective measure to avoid the application crash or the system failure due to
 other programs. In case of the system failure, the device will enable the shutdown process because
-the timer is timeout when application cannot be reset and. 
+the timer is timeout when application cannot be reset and.
 
-​	If the timer is enabled during the debugging phase of development stage, the debug process may interrupt the program. Some undesired ( cases may occurred since the timer is timeout and the system is shut down. Therefore, it is recommended to disable the function at the development stage and enable the function after the development completion f or additional protection.
-​	Generally, the watch dog timer is used by enabling a system timer interrupt or creating an
+  If the timer is enabled during the debugging phase of development stage, the debug process may interrupt the program. Some undesired ( cases may occurred since the timer is timeout and the system is shut down. Therefore, it is recommended to disable the function at the development stage and enable the function after the development completion f or additional protection.
+  Generally, the watch dog timer is used by enabling a system timer interrupt or creating an
 independent thread. [NMC_DeviceWatchdogTimerEnable()](@ref NMC_DeviceWatchdogTimerEnable) is used to enable the watch dog timer , and
 [NMC_DeviceWatchdogTimerReset()](@ref NMC_DeviceWatchdogTimerReset) is used to reset such timer. The reset may be two times or more
 as frequent as the configured time. [NMC_DeviceWatchdogTimerDisable()](@ref NMC_DeviceWatchdogTimerDisable) is used to disable the timer.
@@ -190,11 +193,11 @@ DWORD WINAPI WatchDogTimerResetThread(_In_ LPVOID lpParameter )
     DWORD sleepMs = timeoutMs / 2;
     NMC_DeviceWatchdogTimerEnable( devId, timeoutMs, 0);
     while ( gThreadCtrl == 1)
-	{    
+    {
         NMC_DeviceWatchdogTimerReset( devId );
-    	Sleep( sleepMs );
-	}
-    NMC_DeviceWat chdogTimerDisable( devId );
+        Sleep( sleepMs );
+    }
+    NMC_DeviceWatchdogTimerDisable( devId );
     return 0;
 }
 
@@ -206,7 +209,7 @@ int main()
     I32_T devID;
     HANDLE threadHandle;
     ret = NMC_DeviceOpenUp( devType, devIndex, &devID );
-    if ( ret != ERR_NEXMOT ION_SUCCESS )
+    if ( ret != ERR_NEXMOTION_SUCCESS )
     {
         // Error handling ...
     }
@@ -221,9 +224,9 @@ int main()
     // Try to stop WDT thread
     gThreadCtrl = 0;
     WaitForSingleObject( threadHandle, INFINITE );
-    
+
     NMC_DeviceShutdown( devID );
-    
+
     return 0;
 }
 ```
@@ -239,7 +242,7 @@ trace.
 
 ## 1.2. I/O Control {#IO_Control}
 
-​	NexMotion provides flexible and high velocity I/O control as the memory access. Developer s
+  NexMotion provides flexible and high velocity I/O control as the memory access. Developer s
 shall map the memory address of I/O devices onto the virtual memory with NexMotion Studio, and
 then they can control or get/set the I/O devices by accessing the memory. Please refer to the
 NexMotion Studio user manual for the configurations.
@@ -248,7 +251,7 @@ NexMotion Studio user manual for the configurations.
 
 ## 1.3. Axis Control {#AxisControl}
 
-​	Different from the group axis for coordination operations in the mechanism, the single axis
+  Different from the group axis for coordination operations in the mechanism, the single axis
 described in the section is independent for the corresponding to the mechanical structure.
 Functionally, the contents of this section are mainly divided into three major parts. The first part is the
 axis configurations, including the unit and the software limit protection configurations. The second
@@ -261,7 +264,7 @@ axis.
 
 ## 1.4. Group Control {#GroupControl}
 
-​	NexMotion can define some axes as a group. A group represents a mechanism or a robot with a
+  NexMotion can define some axes as a group. A group represents a mechanism or a robot with a
 specified structural relationship. Now, NexMotion can support these industrial robots as follows:
 
 ![](images/IndustrialRobotTypes.png)
@@ -272,7 +275,7 @@ specified structural relationship. Now, NexMotion can support these industrial r
 
 ### 1.4.1. Group Configuration {#GroupCofig}
 
-​	The mechanism configuration file can be imported with the NexMotion Studio through the steps
+  The mechanism configuration file can be imported with the NexMotion Studio through the steps
 as follows:
 
 1. Import a Mechanical Description ( NMD ) file with the NexMotion Studio.
