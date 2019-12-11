@@ -52,6 +52,7 @@ before_install:
       fi
 
 script:
+  - echo "" > .nojekyll
   - mkdir build && cd build
   - cmake .. -DCMAKE_BUILD_TYPE=Release
   - make
