@@ -52,11 +52,13 @@ before_install:
       fi
 
 script:
-  - echo "" > .nojekyll
   - mkdir build && cd build
   - cmake .. -DCMAKE_BUILD_TYPE=Release
   - make
   - make install
+  # create a .nojekyll file to allow filenames starting with an underscore to be seen on the gh-pages site.
+  - cd ..
+  - echo "" > ./docs/html/.nojekyll
 
 deploy:
   provider: pages
