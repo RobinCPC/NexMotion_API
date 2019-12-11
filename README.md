@@ -26,7 +26,9 @@ make Doxygen
 * cmake >= 3.2
 * make  >= 4.1
 * gcc/g++
+
 Optional for building document
+
 * doxygen
 * graphviz
 
