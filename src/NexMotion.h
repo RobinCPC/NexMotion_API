@@ -440,10 +440,109 @@ RTN_ERR FNTYPE NMC_SetIniPath( _opt_null_ const char *PIniPath );
  */
 
 // I/O access APIs
+/*! \addtogroup IO_Control_Functions
+ *  I/O Control Functions
+ *  @{
+ */
 RTN_ERR FNTYPE NMC_GetInputMemorySize ( I32_T DevID, U32_T *PRetSizeByte );
 RTN_ERR FNTYPE NMC_GetOutputMemorySize( I32_T DevID, U32_T *PRetSizeByte );
+/*!
+ * @brief Read the mapped input (Input) memory.
+ *
+ * @param DevID       Device ID (DEVID)
+ * @param OffsetByte  Memory offset (byte) from 0.
+ * @param SizeByte    Size of the memory to be read.
+ * @param PRetValue   The contents within the specified memory segment will be saved into the variable after the function is called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the [I/O Control](@ref IO_Control) chapter for information on how to map I/O to the controller's internal I/O memory.
+ * This function can be called after the controller is started.
+ * Suppose an I/O device sets its DI-0 to DI-15 to the first Byte and the second Byte of the I/O Input memory.
+ * I want to read the value of the fourth DI input (DI-3). Please refer to the following example
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret;
+ * U32_T offsetByte = 0;
+ * U32_T sizeByte = 2;
+ * U16_T diValue = 0;
+ * U16_T di_03;
+ *
+ * ret = NMC_ReadInputMemory( devId, offsetByte, sizeByte, &diValue );
+ * di_03 = ( diValue >> 3 ) & 1;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_ReadInputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeByte, void *PRetValue );
+/*!
+ * @brief Read the mapped output (Output) memory
+ *
+ * @param DevID       Device ID (DevID)
+ * @param OffsetByte  Memory offset (byte) from 0.
+ * @param SizeByte    Size of the memory to be read.
+ * @param PRetValue   The contents within the specified memory segment will be saved into the variable after the function is called successfully.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the [I/O Control](@ref IO_Control) chapter for information on how to map I/O to the controller's internal I/O memory.
+ * This function can be called after the controller is started.
+ * Suppose an I/O device sets its DO-0 to DO-15 to the first Byte and the second Byte of the I/O output memory.
+ * I want to read the value of the fourth DO output (DO-3). Please refer to the following example:
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret;
+ * U32_T offsetByte = 0;
+ * U32_T sizeByte = 2;
+ * U16_T doValue = 0;
+ * U16_T do_03;
+ * ret = NMC_ReadOutputMemory( devId, offsetByte, sizeByte, &doValue );
+ * do_03 = ( doValue >> 3 ) & 1;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_ReadOutputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeByte, void *PRetValue );
+/*!
+ * @brief Write the mapped output (Output) memory.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param OffsetByte  Memory offset (byte) from 0.
+ * @param SizeByte    Size of the memory to be read.
+ * @param PValue      set the value into output memory
+ *
+ * @todo Update the description of PValue
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the [I/O Control](@ref IO_Control) chapter for information on how to map I/O to the controller's internal I/O memory.
+ * This function can be called after the controller is started.
+ * Suppose an I/O device has its DO-0 to DO-15 set to the first Byte and the second Byte of the I/O output memory.
+ * I want to set the value of the fourth output point (DO 3). Refer to the following example:
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret;
+ * U32_T offsetByte = 0;
+ * U32_T sizeByte = 2;
+ * U16_T doValue = 0;
+ * U16_T do_03;
+ * NMC_ReadOutputMemory( devId, offsetByte, sizeByte, &doValue );
+ * doValue = doValue | ( ( 1 << 3 ) ); // Set bit 3 ON
+ * //doValue = doValue & (~( 1 << 3 ) ); // Set bit 3 OFF
+ * NMC_WriteOutputMemory( devId, offsetByte, sizeByte, &doValue );
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_WriteOutputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeByte, const void *PValue );
 RTN_ERR FNTYPE NMC_ReadInputBit( I32_T DevID, U32_T OffsetByte, U32_T BitIndex, BOOL_T *PRetBitValue );
 RTN_ERR FNTYPE NMC_ReadInputI8( I32_T DevID, U32_T OffsetByte, I8_T *PRetI8Value );
@@ -457,6 +556,9 @@ RTN_ERR FNTYPE NMC_WriteOutputBit( I32_T DevID, U32_T OffsetByte, U32_T BitIndex
 RTN_ERR FNTYPE NMC_WriteOutputI8( I32_T DevID, U32_T OffsetByte, I8_T I8Value );
 RTN_ERR FNTYPE NMC_WriteOutputI16( I32_T DevID, U32_T OffsetByte, I16_T I16Value );
 RTN_ERR FNTYPE NMC_WriteOutputI32( I32_T DevID, U32_T OffsetByte, I32_T I32Value );
+/*!
+ *  @}
+ */
 
 // Read axis/group number APIs
 /*! \addtogroup Axis_Group_Quantity
@@ -1419,8 +1521,95 @@ RTN_ERR FNTYPE NMC_GroupAxGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
  *  Group State Control Functions
  *  @{
  */
+/**
+ * @brief Enable all group axes (Servo On). If all group axes are enabled successfully, the [group state](@ref NMC_GroupGetState) will transfer from GROUP_DISABLE to GROUP_ENABLE
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group Index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupEnable( devID, groupIndex );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
+/**
+ * @brief Disable all group axes ( Servo Off ). If all group axes are disabled successfully, the [group state](@ref NMC_GroupGetState) will transfer to GROUP_DISABLE.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group index
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32 _T devID = 0;
+ * I32_T groupIndex = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupDisable( devID, groupIndex );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
+/**
+ * @brief Get the group status by bit. The meanings of the bits are describe as follows. if the bit values is 1, the event is triggered.
+ *
+ * | bit   | Description                  |
+ * | :---: | :----                        |
+ * |0      |Trigger the external emergency switch|
+ * |1      |Drive alarm|
+ * |2      |Over the positive limit of hardware|
+ * |3      |Over the negative limit of hardware|
+ * |4      |Over the positive limit of soft ware|
+ * |5      |Over the negative limit of software|
+ * |6      |All groups enabled (i.e. all group state are GROUP_STAND_STILL)|
+ * |7      |A group axis error (i.e. a group axis state is GROUP_ERROR_STOP)|
+ * |9      |No position change for all group axes|
+ * |10     |The (line or arc) motion in the Cartesian coordinate system is accelerated (or decelerated) to the maximum velocity. The bit is 0 in case of the PTP or JOG motion.|
+ * |11     |The (line or arc) motion in the Cartesian coordinate system is decelerated to the target velocity or 0. The bit is 0 in case of the PTP or JOG motion.|
+ * |12     |The (line or arc) motion in the Cartesian coordinate system is executed at the maximum velocity. The bit is 0 in case of the PTP or JOG motion.|
+ * |13     |The group is in motion (i.e. the group state is GROUP_MOVING , GROUP_HOMING or GROUP_STOPPING)|
+ * |14     |The group is stopped (i.e. the group state is GROUP_STOPPED)|
+ *
+ * @param DevID           Device ID (DevID)
+ * @param GroupIndex      Group index
+ * @param[out] PRetStatusInBit  [Input]A pointer variable,[Output] Status by bit.
+ *
+ * @return Return an error code. <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T group Index = 0;
+ * I32_T statusInBit = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetStatus( devID, groupIndex, &statusInBit );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ *
+ * @todo add link to `group status` in brief. Refer to pdf manual.
+ */
 RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetStatusInBit );
 /*!
  * @brief Get the state of group. Please refer to the below table for details.

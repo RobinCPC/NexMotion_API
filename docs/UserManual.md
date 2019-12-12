@@ -15,9 +15,11 @@ The basic development procedure of the NexMotion application is described as fol
 5. Compile and debug the control program
 6. Test and fine tune the control program
 
-   ![](images/ControlSystemExample.png)
 
-<center>Control Syetem Example (Device + Controller Systems)</center>
+
+![Control Syetem Example (Device + Controller Systems)](images/ControlSystemExample.png)
+
+
 
 The first 3 steps aim to confirm the following items:
 1. The installation and wiring of the controlled system, such as the installation of the servo motor,
@@ -48,9 +50,9 @@ the APIs with the prefix **NMC_Device** are the System Operations class, the API
 Group Control, and so on. Moreover, the extension applications can be developed by referring to the
 sample programs provided under the installation folder.
 
-![](images/NexMotionStudioDevelopmentAndConfigurationTools.png)
+![NexMotion Studio Development and Configuration Tools](images/NexMotionStudioDevelopmentAndConfigurationTools.png)
 
-<center>NexMotion Studio Development and Configuration Tools</center>
+
 
 ## 1.1. System Operations {#SystemOperations}
 
@@ -154,9 +156,9 @@ The separation initialization procedure shall call the 3 APIs in order:
 
 The purpose is transfer the [device state](@ref Device_State) to **OPERATION**. The below figure shows the device state transitions and related functions.
 
-![](images/DeviceStateTransitions.png)
+![Device State Transitions](images/DeviceStateTransitions.png)
 
-<center>Device State Transitions</center>
+
 
 The device states can be getting by function [NMC_DeviceGetState()](@ref NMC_DeviceGetState)
 
@@ -235,17 +237,33 @@ int main()
 
 ### 1.1.5. Debugging
 
-To assist developers to debug the application, there are two measures, system messages and API
+  To assist developers to debug the application, there are two measures, system messages and API
 trace.
 
 
 
 ## 1.2. I/O Control {#IO_Control}
 
-  NexMotion provides flexible and high velocity I/O control as the memory access. Developer s
+  NexMotion provides flexible and high velocity I/O control as the memory access. Developers
 shall map the memory address of I/O devices onto the virtual memory with NexMotion Studio, and
 then they can control or get/set the I/O devices by accessing the memory. Please refer to the
 NexMotion Studio user manual for the configurations.
+
+
+![I/O Memory Mapping](images/IO_MemoryMapping.png)
+
+
+
+![NexMotion Studio I/O Memory setting screen](images/IO_MemorySettingScreen.png)
+
+
+
+After configurations, the following functions can be used to access or control the I/O devices:
+1. [NMC_ReadInputMemory()](@ref NMC_ReadInputMemory)
+2. [NMC_ReadOutputMemory()](@ref NMC_ReadOutputMemory), and
+3. [NMC_WriteOutputMemory()](@ref NMC_WriteOutputMemory)
+
+Note: The update rate of I/O memoryThe update rate of I/O memory is once per 10 ms (100Hz). Therefore, the functions may not is once per 10 ms (100Hz). Therefore, the functions may not support responses immediately if the frequency of digital output calling is higher than 100Hz.support responses immediately if the frequency of digital output calling is higher than 100Hz.
 
 
 
@@ -267,9 +285,7 @@ axis.
   NexMotion can define some axes as a group. A group represents a mechanism or a robot with a
 specified structural relationship. Now, NexMotion can support these industrial robots as follows:
 
-![](images/IndustrialRobotTypes.png)
-
-<center>Industrial Robot Types</center>
+![Industrial Robot Types](images/IndustrialRobotTypes.png)
 
 
 
