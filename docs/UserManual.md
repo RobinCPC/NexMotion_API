@@ -313,6 +313,111 @@ A group can also be defined by manual. First, a similar mechanism configuration 
 
 
 
+![Import a Robot Data with a NMD file](images/ImortRobotDataWithNMD.png)
+
+
+
+### 1.4.2 Coordinate System {#Coord_Sys}
+
+To control the position of each axis or each tool center point (TCP) in a group (or called a robot),
+NexMotion supports three coordinate systems to describe the position, including:
+
+1. Axis Coordinate System (ACS),
+
+2. Machine Coordinate S ystem (MCS ) or so called Geodetic Coordinate System, and
+
+3. Product Coordinate System ( PCS).
+
+
+These coordinate systems are shown as the below figure:
+
+![Definitions of ACS, MCS and PCS](images/DefCoordinateSystem.png)
+
+NexMotion supports the built in unit conversion of these coordinate systems. Developers can define
+the conversions through the parameter configurations. The unit conversions of these coordinate
+systems are shown as the below figure.
+
+![Unit Conversions](images/UnitConversions.png)
+
+
+
+The parameters related to the conversions are described in the following table:
+
+|         Conversion Type         |                   Parameter Type                   | Description                                                  |
+| :-----------------------------: | :------------------------------------------------: | ------------------------------------------------------------ |
+|         Unit Conversion         |          Group axis parameters 0x00~0x06           | Set the conversion between the pulse of servo and the physical unit of axis coordinate system (ACS) |
+| Mechanism kinematics conversion |  [Group parameters](@ref GroupParameters)   0x00   | Set the conversion between the axis coordinate system (ACS) and the machine coordinate system (MCS) |
+|  Coordinate system conversion   | [Group Parameters](@ref GroupParameters)  0xC0~ DF | Set the conversion between the machine coordinate system (MCS ) and the product coordinate system (PCS) |
+|    TCP coordinate conversion    | [Group Parameters](@ref GroupParameters)  0x80~8F  | Set the conversion between the tool and the tool center point (TCP) |
+
+NexMotion defines the data structure 「 [Pos_T](@ref Pos_T) 」 and 「 [Xyz_T](@ref Xyz_T) 」 to describe the coordinate
+information. The Pos_T describes the coordinates of ACS, MCS and PCS, and the Xyz_T describes the
+positions at the x -, y- and z-axis of MCS and PCS.
+
+
+
+#### 1.4.2.6 Base Configuration {#BaseConfiguration}
+
+Setting Base is to define the PCS coordinate system. The advantage is that all target
+positions are relative to the reference coordinate system (Base). When the reference
+coordinate system change, only the reference coordinate system needs to be reset, then the
+target position can be used without teach again.
+
+The advantages of coordinate conversion of NexMotion PCS are as follows:
+
+* Support up to 32 set of base
+* Have hierarchy setting, up to 3 level
+
+![](images/BaseHierarch1.png)
+
+
+
+Base having a hierarchical set, as shown above, Base0 is relative to MCS, and Base1 and Base2 are relative to Base0. When Base0 changes, Base1 and Base2 will also change.
+
+![](images/BaseHierarch2.png)
+
+
+
+The setting method is to set the [group parameter](@ref GroupParameters) `0xC0` to `0xDF`. Defined as follows:
+
+| Param. Num. | Sub. Index | Data Type | Description                                |
+| ----------- | :--------: | :-------: | ------------------------------------------ |
+| 0xC0 ~ 0xDF |     0      |   F64_T   | Offset along reference base x-axis         |
+|             |     1      |   F64_T   | Offset along reference base y-axis         |
+|             |     2      |   F64_T   | Offset along reference base z-axis         |
+|             |     3      |   F64_T   | Rotation angle about reference base z-axis |
+|             |     4      |   F64_T   | Rotation angle about reference base y-axis |
+|             |     5      |   F64_T   | Rotation angle about reference PCS x-axis  |
+|             |     6      |   I32_T   | Reference base index                       |
+
+For example:
+The coordinate origin of the Base (Index = 0) is 10 units of x-axis, 15 units of y-axis, 5
+units of Z-axis with respect to the MCS coordinate system and the Base0 coordinate system
+is rotated 90 degrees with respect to the Z-axis of the MCS.
+
+![](images/BaseConfigExample.png)
+
+Group setting parameters and setting values are as follows:
+
+| Num. | Sub  | Value  | Description                                |
+| ---- | ---- | ------ | ------------------------------------------ |
+| 0xC0 | 0    | **10** | Offset along reference base x-axis         |
+|      | 1    | **15** | Offset along reference base y-axis         |
+|      | 2    | **5**  | Offset along reference base z-axis         |
+|      | 3    | **90** | Rotation angle about reference base z-axis |
+|      | 4    | **0**  | Rotation angle about reference base y-axis |
+|      | 5    | **0**  | Rotation angle about reference PCS x-axis  |
+|      | 6    | **-1** | Reference base index                       |
+
+If the motion command does not specifically specify the Base index, the system will refer to the
+[group parameter](@ref GroupParameters) 0x48:0 setting as the Base used by the current system.
+
+| Param. Num. | Sub Index. | Data Type | Description                            |
+| ----------- | ---------- | --------- | -------------------------------------- |
+| 0x48        | 0          | I32_T     | Base index selection for motion target |
+
+
+
 
 
 
@@ -335,4 +440,23 @@ cannot be effective immediately.
 (\*3): The configurable range is depended on the controller
 
 (\*4): Read only.
+
+
+
+## 2.2. Axis Parameters {#AxisParameters}
+
+TODO: add table
+
+
+
+## 2.3. Group Parameters {#GroupParameters}
+
+| Num. | Sub  | Type  | Description                            | Value Description                                            | Common |
+| ---- | ---- | ----- | -------------------------------------- | ------------------------------------------------------------ | ------ |
+| 0x00 | 0    | I32_T | Kinematics type                        | 0:Linear (2~8 Axes)<br/> 1:Articulated Robot (AR6)<br/> 2:Delta<br/> 3:SCARA |        |
+| 0x00 | 1    | F64_T | Kinematics parameter 1~48              | Refer to kinematics chapter                                  |        |
+| 0x48 | 0    | I32_T | Base index selection for motion target | value = -1 :No base assignment (MCS)<br/> value = 0~31: base 0~31 |        |
+| 0x48 | 1    | I32_T | Base index selection for read position | value = -2 : Parameter disable<br> value = -1 :No base assignment<br> value = 0~31: base 0~31 |        |
+
+TODO: update table
 
