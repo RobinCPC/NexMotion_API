@@ -1527,7 +1527,7 @@ RTN_ERR FNTYPE NMC_GroupAxGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * @param DevID       Device ID (DevID)
  * @param GroupIndex  Group Index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1550,7 +1550,7 @@ RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
  * @param DevID       Device ID (DevID)
  * @param GroupIndex  Group index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1568,7 +1568,7 @@ RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
  */
 RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
 /**
- * @brief Get the group status by bit. The meanings of the bits are describe as follows. if the bit values is 1, the event is triggered.
+ * @brief Get the [group status](@ref Group_Status) by bit. The meanings of the bits are describe as follows. if the bit values is 1, the event is triggered.
  *
  * | bit   | Description                  |
  * | :---: | :----                        |
@@ -1591,7 +1591,7 @@ RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
  * @param GroupIndex      Group index
  * @param[out] PRetStatusInBit  [Input]A pointer variable,[Output] Status by bit.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1608,7 +1608,6 @@ RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
  *
  * \b Reference: <br>
  *
- * @todo add link to `group status` in brief. Refer to pdf manual.
  */
 RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetStatusInBit );
 /*!
@@ -1628,7 +1627,7 @@ RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetSta
  * @param GroupIndex  Group index
  * @param[out] PRetState   [Input] A pointer variable, [Output] Group state
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1646,7 +1645,56 @@ RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetSta
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupGetState( I32_T DevID, I32_T GroupIndex, I32_T *PRetState );
+/**
+ * @brief Reset the [group state](@ref Group_State) . It can reset the group state from GROUP_STOPPED to GROUP_STAND_STILL.
+ * If the group state is GROUP_ERROR_STOP and the API is called, all drive alarms will be reset automatically.
+ * Then the group state will transfer to GROUP_STAND_STILL after all drive alarms are reset.
+ *
+ * @param DevID Device ID (DevID)
+ * @param GroupIndex  Group index
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * RTN_ERR ret = 0;
+ *
+ * ret = NMC_GroupResetState( devID, groupIndex );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupResetState( I32_T DevID, I32_T GroupIndex );
+/**
+ * @brief Reset the group servo alarm.
+ *
+ * @param DevID Device ID (DevID)
+ * @param GroupIndex Group index
+ * @param GroupAxisIndex The index of the group axis which alarm to be reset.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID =
+ * I32_T groupIndex = 0;
+ * I32_T groupAxisIndex = 0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupResetDriveAlm( devID, groupIndex, groupAxisInde x );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_GroupResetDriveAlm( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex );
 /*!
  * @brief Reset all group servo alarms.
@@ -1654,7 +1702,7 @@ RTN_ERR FNTYPE NMC_GroupResetDriveAlm( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * @param DevID       Device ID (DevID)
  * @param GroupIndex  Group Index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1671,6 +1719,27 @@ RTN_ERR FNTYPE NMC_GroupResetDriveAlm( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupResetDriveAlmAll( I32_T DevID, I32_T GroupIndex );
+/**
+ * @brief Get alarm code fo Drive
+ *
+ * @param DevID Device ID (DevID)
+ * @param GroupIndex Group index
+ * @param GroupAxisIndex Group axis index
+ * @param[out] PRetAlmCode  The alarm code.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ *
+ * @todo Add more description. The original definition is empty in official pdf manual.
+ */
 RTN_ERR FNTYPE NMC_GroupGetDriveAlmCode( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T *PRetAlmCode );
 /*!
  *  @}
