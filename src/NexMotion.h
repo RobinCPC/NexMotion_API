@@ -1805,8 +1805,84 @@ RTN_ERR FNTYPE NMC_GroupGetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T *PRe
  */
 
 // Group axis point to point motion in ACS
+/*! \addtogroup Group_P2P_Motion_ACS
+ *  Group Speed Ratio Configuration Functions
+ *  @{
+ */
+/*!
+ * @brief Enable the point-to-point motion for a group axis in the a xis coordinate system (ACS). The default
+ * maximum velocity will refer to the value in the input parameters. If required, the maximum velocity
+ * can be set in the API, and the specified value will be stored in the corresponding parameters
+ * automatically.
+ *
+ * @param DevID Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param GroupAxisIndex  The group axis index to be driven a motion
+ * @param AcsPos  The point position to be reached
+ * @param PAcsMaxVel  A pointer variable which can specify the maximum velocity. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T groupAxisIndex = 2;
+ * F64_T acsPos = 35.5;
+ * F64_T acsMaxVel = 80.0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupPtpAcs( devID, groupIndex, groupAxisIndex, acsPos, &acsMaxVel );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupPtpAcs( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, F64_T AcsPos, _opt_null_ const F64_T *PAcsMaxVel );
+/*!
+ * @brief Enable the point-to-point motion for multiple group axes in the a xis coordinate system (ACS). The
+ * specified group axes will start the motion and reach the target position at the same time.
+ *
+ * @param DevID Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param GroupAxesIdxMask  The group axis index mask is specified to execute the motion. Please refer to the below table.
+ * @param PAcsPos A pointer variable to set the target position.
+ *
+ * | Group Axis                    | 8     | 7      | 6      | 5      | 4      | 3      | 2      | 1      |
+ * | :----:                        | :---- | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
+ * | Bit index                     | 7     | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
+ * | The power is the index of bit | 2^7   | 2^6    | 2^5    | 2^4    | 2^3    | 2^2    | 2^1    | 2^0    |
+ *
+ * The usage of the group axis index mask (GroupAxesIdxMask) is described as follows:
+ * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is 20 + 22 + 27 = 133.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T groupAxes IdxMask = 133; // Move the 1st , 3rd and 8th axes.
+ * Pos_T acsPos = { 10, 20, 30, 40, 50, 60, 70 };
+ * RTN_ERR ret = 0;
+ *
+ * ret = NMC_GroupPtpAcsAll( devID, groupIndex, groupAxesIdxMask, &acsPos );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupPtpAcsAll( I32_T DevID, I32_T GroupIndex, I32_T GroupAxesIdxMask, const Pos_T *PAcsPos );
+/*!
+ *  @}
+ */
 
 // Group axis jog motion in ACS
 RTN_ERR FNTYPE NMC_GroupJogAcs( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T Dir, _opt_null_ const F64_T *PAcsMaxVel  );

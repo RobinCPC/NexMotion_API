@@ -499,27 +499,35 @@ typedef struct
 /////////////////////////////////////////////////////////////////////
 //                      Obsolete definition
 /////////////////////////////////////////////////////////////////////
-#define MAX_POS_SIZE                        (NMC_MAX_POS_SIZE)
-#define MAX_XYZ_SIZE                        (NMC_MAX_XYZ_SIZE)
+/*! \addtogroup Obsolete_Definition
+ *  Obsolete definition
+ *  @{
+ */
+//! Pos_T array size definition
+#define MAX_POS_SIZE                        (NMC_MAX_POS_SIZE)  //!< Pos_T array size definition
+#define MAX_XYZ_SIZE                        (NMC_MAX_XYZ_SIZE)  //!< Xyz_T array size definition
 
 // Group axis index definition
-#define GROUP_AXIS_X                        (0)
-#define GROUP_AXIS_Y                        (1)
-#define GROUP_AXIS_Z                        (2)
-#define GROUP_AXIS_A                        (3)
-#define GROUP_AXIS_B                        (4)
-#define GROUP_AXIS_C                        (5)
-#define GROUP_AXIS_U                        (6)
-#define GROUP_AXIS_V                        (7)
+#define GROUP_AXIS_X                        (0) //!< X axis of the coordinate system
+#define GROUP_AXIS_Y                        (1) //!< Y axis of the coordinate system
+#define GROUP_AXIS_Z                        (2) //!< Z axis of the coordinate system
+#define GROUP_AXIS_A                        (3) //!< A axis of the coordinate system
+#define GROUP_AXIS_B                        (4) //!< B axis of the coordinate system
+#define GROUP_AXIS_C                        (5) //!< C axis of the coordinate system
+#define GROUP_AXIS_U                        (6) //!< U axis of the coordinate system
+#define GROUP_AXIS_V                        (7) //!< V axis of the coordinate system
 
 // Group axis mask definition
-#define GROUP_AXIS_MASK_X                   (0x00000001)
-#define GROUP_AXIS_MASK_Y                   (0x00000002)
-#define GROUP_AXIS_MASK_Z                   (0x00000004)
-#define GROUP_AXIS_MASK_A                   (0x00000008)
-#define GROUP_AXIS_MASK_B                   (0x00000010)
-#define GROUP_AXIS_MASK_C                   (0x00000020)
-#define GROUP_AXIS_MASK_U                   (0x00000040)
-#define GROUP_AXIS_MASK_V                   (0x00000080)
+#define GROUP_AXIS_MASK_X                   (0x00000001)  //!< The mask for X axis of the coordinate system
+#define GROUP_AXIS_MASK_Y                   (0x00000002)  //!< The mask for Y axis of the coordinate system
+#define GROUP_AXIS_MASK_Z                   (0x00000004)  //!< The mask for Z axis of the coordinate system
+#define GROUP_AXIS_MASK_A                   (0x00000008)  //!< The mask for A axis of the coordinate system
+#define GROUP_AXIS_MASK_B                   (0x00000010)  //!< The mask for B axis of the coordinate system
+#define GROUP_AXIS_MASK_C                   (0x00000020)  //!< The mask for C axis of the coordinate system
+#define GROUP_AXIS_MASK_U                   (0x00000040)  //!< The mask for U axis of the coordinate system
+#define GROUP_AXIS_MASK_V                   (0x00000080)  //!< The mask for V axis of the coordinate system
+/*!
+ *  @}
+ */
 
 #endif
