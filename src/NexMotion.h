@@ -746,10 +746,117 @@ RTN_ERR FNTYPE NMC_DeviceStopAll( I32_T DevID );
  *  @{
  */
 // Axis parameter setting APIs
+/*! \addtogroup Axis_Config
+ *  Axis Configuration Functions
+ *  @{
+ */
+/*!
+ * @brief Set the axis parameters (I_32T data type)
+ *
+ * @param DevID             Device ID (DevID)
+ * @param AxisIndex         Axis index
+ * @param ParamNum          Parameter number
+ * @param SubIndex          Parameter Sub-index
+ * @param[in] ParaValueI32  [Input] Value to be set (siged integer)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ * The device will load the configurations in according with the configuration file during starting. The
+ * function can be used to set some axis parameters. A suitable function shall be selected depended
+ * on the data type of the parameters (I32_T).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ */
 RTN_ERR FNTYPE NMC_AxisSetParamI32( I32_T DevID, I32_T AxisIndex, I32_T ParamNum, I32_T SubIndex, I32_T ParaValueI32 );
+/*!
+ * @brief Get the axis parameters (I_32T data type)
+ *
+ * @param DevID                 Device ID (DevID)
+ * @param AxisIndex             Axis index
+ * @param ParamNum              Parameter number
+ * @param SubIndex              Parameter Sub-index
+ * @param[out] PRetParaValueI32 [Output] Value to be returned (signed integer)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ * The device will load the configurations in according with the configuration file during starting. The
+ * function can be used to get some axis parameters. A suitable function shall be selected depended
+ * on the data type of the parameters (I32_T).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ */
 RTN_ERR FNTYPE NMC_AxisGetParamI32( I32_T DevID, I32_T AxisIndex, I32_T ParamNum, I32_T SubIndex, I32_T *PRetParaValueI32 );
+/*!
+ * @brief Set the axis patameters (F64_T data type)
+ *
+ * @param DevID             Device ID (DevID)
+ * @param AxisIndex         Axis index
+ * @param ParamNum          Parameter number
+ * @param SubIndex          Parameter Sub-index
+ * @param[in] ParaValueF64  [Input] Value to be set (double precision float)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ * The device will load the configurations in according with the configuration file during starting. The
+ * function can be used to set some axis parameters. A suitable function shall be selected depended
+ * on the data type of the parameters (F64_T).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ */
 RTN_ERR FNTYPE NMC_AxisSetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum, I32_T SubIndex, F64_T ParaValueF64 );
+/*!
+ * @brief Get the axis parameters (F64_T data type)
+ *
+ * @param DevID             Device ID (DevID)
+ * @param AxisIndex         Axis index
+ * @param ParamNum          Parameter number
+ * @param SubIndex          Parameter Sub-index
+ * @param[out] ParaValueF64 [Output] Value to be returned (double precision float)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ * The device will load the configurations in according with the configuration file during starting. The
+ * function can be used to get some axis parameters. A suitable function shall be selected depended
+ * on the data type of the parameters (F64_T).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * Please refer to the section: [Axis Parameters](@ref AxisParameters).
+ */
 RTN_ERR FNTYPE NMC_AxisGetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum, I32_T SubIndex, F64_T *PRetParaValueF64 );
+/*!
+ *  @}
+ */
 
 // Axis state control APIs
 /*! \addtogroup Axis_State_Control
