@@ -22,6 +22,7 @@ matrix:
           packages:
             - cmake
             - doxygen
+            - doxygen-latex
             - graphviz
             - g++-5
 
@@ -36,6 +37,7 @@ matrix:
           packages:
             - cmake
             - doxygen
+            - doxygen-latex
             - graphviz
             - g++-6
 

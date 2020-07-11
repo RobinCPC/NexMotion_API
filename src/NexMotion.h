@@ -1629,7 +1629,7 @@ RTN_ERR FNTYPE NMC_GroupAxGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
  *  Group State Control Functions
  *  @{
  */
-/**
+/*!
  * @brief Enable all group axes (Servo On). If all group axes are enabled successfully, the [group state](@ref NMC_GroupGetState) will transfer from GROUP_DISABLE to GROUP_ENABLE
  *
  * @param DevID       Device ID (DevID)
@@ -1652,7 +1652,7 @@ RTN_ERR FNTYPE NMC_GroupAxGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
-/**
+/*!
  * @brief Disable all group axes ( Servo Off ). If all group axes are disabled successfully, the [group state](@ref NMC_GroupGetState) will transfer to GROUP_DISABLE.
  *
  * @param DevID       Device ID (DevID)
@@ -1675,7 +1675,7 @@ RTN_ERR FNTYPE NMC_GroupEnable( I32_T DevID, I32_T GroupIndex );
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupDisable( I32_T DevID, I32_T GroupIndex );
-/**
+/*!
  * @brief Get the [group status](@ref Group_Status) by bit. The meanings of the bits are describe as follows. if the bit values is 1, the event is triggered.
  *
  * | bit   | Description                  |
@@ -1753,7 +1753,7 @@ RTN_ERR FNTYPE NMC_GroupGetStatus( I32_T DevID, I32_T GroupIndex, I32_T *PRetSta
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupGetState( I32_T DevID, I32_T GroupIndex, I32_T *PRetState );
-/**
+/*!
  * @brief Reset the [group state](@ref Group_State) . It can reset the group state from GROUP_STOPPED to GROUP_STAND_STILL.
  * If the group state is GROUP_ERROR_STOP and the API is called, all drive alarms will be reset automatically.
  * Then the group state will transfer to GROUP_STAND_STILL after all drive alarms are reset.
@@ -1779,7 +1779,7 @@ RTN_ERR FNTYPE NMC_GroupGetState( I32_T DevID, I32_T GroupIndex, I32_T *PRetStat
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupResetState( I32_T DevID, I32_T GroupIndex );
-/**
+/*!
  * @brief Reset the group servo alarm.
  *
  * @param DevID Device ID (DevID)
@@ -1827,7 +1827,7 @@ RTN_ERR FNTYPE NMC_GroupResetDriveAlm( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupResetDriveAlmAll( I32_T DevID, I32_T GroupIndex );
-/**
+/*!
  * @brief Get alarm code fo Drive
  *
  * @param DevID Device ID (DevID)
@@ -1858,7 +1858,7 @@ RTN_ERR FNTYPE NMC_GroupGetDriveAlmCode( I32_T DevID, I32_T GroupIndex, I32_T Gr
  *  Group Speed Ratio Configuration Functions
  *  @{
  */
-/**
+/*!
  * @brief Set the speed percentage of a group from 0.0 to 100.0%.
  *
  * @param DevID       Decice ID (DevID)
@@ -1883,7 +1883,7 @@ RTN_ERR FNTYPE NMC_GroupGetDriveAlmCode( I32_T DevID, I32_T GroupIndex, I32_T Gr
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_GroupSetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T Percentage );
-/**
+/*!
  * @brief Get the speed percentage of a group from 0.0 to 100.0%.
  *
  * @param DevID            Decice ID (DevID)
