@@ -661,6 +661,7 @@ RTN_ERR FNTYPE NMC_GroupGetDescription( I32_T DevID, I32_T GroupIndex, U32_T Des
 // All axes and groups enable/disable APIs
 /*! \addtogroup Device_Enable_Disable
  *  Enable and Disable Functions for All Axes and Groups
+ *  @todo Add description for NMC_DeviceResetStateAll (empty in official pdf manual).
  *  @{
  */
 RTN_ERR FNTYPE NMC_DeviceResetStateAll( I32_T DevID );
@@ -831,11 +832,11 @@ RTN_ERR FNTYPE NMC_AxisSetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum
 /*!
  * @brief Get the axis parameters (F64_T data type)
  *
- * @param DevID             Device ID (DevID)
- * @param AxisIndex         Axis index
- * @param ParamNum          Parameter number
- * @param SubIndex          Parameter Sub-index
- * @param[out] ParaValueF64 [Output] Value to be returned (double precision float)
+ * @param DevID                 Device ID (DevID)
+ * @param AxisIndex             Axis index
+ * @param ParamNum              Parameter number
+ * @param SubIndex              Parameter Sub-index
+ * @param[out] PRetParaValueF64 [Output] Value to be returned (double precision float)
  *
  * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1913,7 +1914,7 @@ RTN_ERR FNTYPE NMC_GroupGetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T *PRe
 
 // Group axis point to point motion in ACS
 /*! \addtogroup Group_P2P_Motion_ACS
- *  Group Speed Ratio Configuration Functions
+ *  Group Point-to-Point Motion Function. (Axis Coordinate System)
  *  @{
  */
 /*!
@@ -1958,13 +1959,13 @@ RTN_ERR FNTYPE NMC_GroupPtpAcs( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIn
  * @param GroupAxesIdxMask  The group axis index mask is specified to execute the motion. Please refer to the below table.
  * @param PAcsPos A pointer variable to set the target position.
  *
- * | Group Axis                    | 8     | 7      | 6      | 5      | 4      | 3      | 2      | 1      |
- * | :----:                        | :---- | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
- * | Bit index                     | 7     | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
- * | The power is the index of bit | 2^7   | 2^6    | 2^5    | 2^4    | 2^3    | 2^2    | 2^1    | 2^0    |
+ * | Group Axis                    | 8         | 7         | 6         | 5         | 4         | 3         | 2         | 1         |
+ * | :----:                        | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                     | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
  *
  * The usage of the group axis index mask (GroupAxesIdxMask) is described as follows:
- * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is 20 + 22 + 27 = 133.
+ * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is \f$2^0\f$ + \f$2^2\f$ + \f$2^7\f$ = 133.
  *
  * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
@@ -1992,15 +1993,127 @@ RTN_ERR FNTYPE NMC_GroupPtpAcsAll( I32_T DevID, I32_T GroupIndex, I32_T GroupAxe
  */
 
 // Group axis jog motion in ACS
+/*! \addtogroup Group_Jog_Motion_ACS
+ *  Group Axis Jog Motion Function. (Axis Coordinate System)
+ *  @{
+ */
+/*!
+ * @brief Enable the JOG motion for a group axis in the axis coordinate system (ACS). The default maximum velocity
+ * will refer to the value in the input parameters. If required, the maximum velocity can be set in the API, and
+ * the specified value will be stored in the corresponding parameters automatically.
+ *
+ * @param DevID           Device ID (DevID)
+ * @param GroupIndex      Group index
+ * @param GroupAxisIndex  Group axis index
+ * @param Dir             Rotation direction
+ * @param PAcsMaxVel      A pointer variable which can specify the maximum velocity. Input NULL (0) to igore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T groupAxisIndex = 2;
+ * I32_T dir =1;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupJogAcs( devID, groupIndex, groupAxisIndex, dir, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupJogAcs( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIndex, I32_T Dir, _opt_null_ const F64_T *PAcsMaxVel  );
+/*!
+ *  @}
+ */
 
 // Group axis jog motion in PCS
 RTN_ERR FNTYPE NMC_GroupJogTcpFrame( I32_T DevID, I32_T GroupIndex, I32_T CartAxis, I32_T Dir, _opt_null_ const F64_T *PMaxVel  );
 RTN_ERR FNTYPE NMC_GroupJogPcsFrame( I32_T DevID, I32_T GroupIndex, I32_T CartAxis, I32_T Dir, _opt_null_ const F64_T *PMaxVel  );
 
 // Group point to point motion in PCS
+/*! \addtogroup Group_P2P_Motion_PCS
+ *  Group Point-to-Point Motion Functions. (Cartesian Coordinate System)
+ *  @{
+ */
+/*!
+ * @brief Enable the point-to-point motion of group axis in the Cartesian coordinate system.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param CartAxis    The Coordinate axis index for the motion in the Cartesin coordinate system. Please refer to the below table.
+ * @param CartPos     The point position to be reached.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Cartesian Coordinate          | U     | V      | C      | B      | A      | Z      | Y      | X      |
+ * | :----:                        | :---- | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
+ * | Axis Value                    | 7     | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
+ *
+ * The usage of the coordinate axis index in the Cartesian coordinate system (CartAxis) is described as follows:
+ * If the motion is executed on the z-axis in the Cartesian coordinate system, the CartAxis is 2.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T cartAxis = 2;
+ * F64_T cartPos = 55.5;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupPtpCart( devID, groupIndex, cartAxis, cartPos );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupPtpCart( I32_T DevID, I32_T GroupIndex, I32_T CartAxis, F64_T CartPos );
+/*!
+ * @brief Enable the point-to-point motion of multiple group axes on the points in the Cartesian coordinate system.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group index
+ * @param CartAxesMask  The group axis index mask is specified to execute the point-to-point motion in the Cartesian coordinate system. Please refer to the below table.
+ * @param PTargetPos    A pointer variable to set the target position.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Cartesian Coordinate          | U         | V         | C         | B         | A         | Z         | Y         | X         |
+ * | :----:                        | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Axis Value/Bit index          | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
+ *
+ * The usage of the group axis index mask in the Cartesian coordinate system (CartAxesMask) is described as follows:
+ * If the group axes to be moved are the X-, Z- and A-axis, the GroupAxesIdxMask is \f$2^0\f$ + \f$2^2\f$ + \f$2^3\f$ = 13.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T cartAxesMask = 13;
+ * // Move the X-, Z- and A-axis
+ * Pos_T targetPos = { 10, 20, 30, 40, 50, 60, 70 };
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupPtpCartAll( devID, groupIndex, cartAxesMask, &targetPos );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupPtpCartAll( I32_T DevID, I32_T GroupIndex, I32_T CartAxesMask, const Pos_T *PTargetPos );
+/*!
+ *  @}
+ */
 
 // Group motion termination APIs
 /*! \addtogroup Group_Halt_and_Stop
@@ -2332,13 +2445,13 @@ RTN_ERR FNTYPE NMC_GroupGetMotionBuffSpace( I32_T DevID, I32_T GroupIndex, I32_T
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
- * | Group Axis                    | 8     | 7      | 6      | 5      | 4      | 3      | 2      | 1      |
- * | :----:                        | :---- | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
- * | Bit index                     | 7     | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
- * | The power is the index of bit | 2^7   | 2^6    | 2^5    | 2^4    | 2^3    | 2^2    | 2^1    | 2^0    |
+ * | Group Axis                    | 8         | 7         | 6         | 5         | 4         | 3         | 2         | 1         |
+ * | :----:                        | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                     | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
  *
  * The usage of the group axis index mask (GroupAxesIdxMask) is described as follows:
- * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is 20 + 22 + 27 = 133.
+ * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is \f$2^0\f$ + \f$2^2\f$ + \f$2^7\f$ = 133.
  *
  * \b Examples: <br>
  *
@@ -2357,13 +2470,13 @@ RTN_ERR FNTYPE NMC_GroupSetHomePos( I32_T DevID, I32_T GroupIndex, I32_T GroupAx
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
- * | Group Axis                    | 8     | 7      | 6      | 5      | 4      | 3      | 2      | 1      |
- * | :----:                        | :---- | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
- * | Bit index                     | 7     | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
- * | The power is the index of bit | 2^7   | 2^6    | 2^5    | 2^4    | 2^3    | 2^2    | 2^1    | 2^0    |
+ * | Group Axis                    | 8         | 7         | 6         | 5         | 4         | 3         | 2         | 1         |
+ * | :----:                        | :----     | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                     | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
  *
  * The usage of the group axis index mask (GroupAxesIdxMask) is described as follows:
- * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is 20 + 22 + 27 = 133.
+ * If the group axes to be moved are the 1st, 3rd and 8th axes, the GroupAxesIdxMask is \f$2^0\f$ + \f$2^2\f$ + \f$2^7\f$ = 133.
  *
  * \b Examples: <br>
  *

@@ -289,7 +289,7 @@ specified structural relationship. Now, NexMotion can support these industrial r
 
 
 
-### 1.4.1. Group Configuration {#GroupCofig}
+### 1.4.1. Group Configuration {#GroupCofiguration}
 
   The mechanism configuration file can be imported with the NexMotion Studio through the steps
 as follows:
@@ -317,16 +317,16 @@ A group can also be defined by manual. First, a similar mechanism configuration 
 
 
 
-### 1.4.2 Coordinate System {#Coord_Sys}
+### 1.4.2 Coordinate System {#CoordinateSystem}
 
 To control the position of each axis or each tool center point (TCP) in a group (or called a robot),
 NexMotion supports three coordinate systems to describe the position, including:
 
 1. Axis Coordinate System (ACS),
 
-2. Machine Coordinate S ystem (MCS ) or so called Geodetic Coordinate System, and
+2. Machine Coordinate System (MCS) or so called Geodetic Coordinate System, and
 
-3. Product Coordinate System ( PCS).
+3. Product Coordinate System (PCS).
 
 
 These coordinate systems are shown as the below figure:
@@ -346,8 +346,8 @@ The parameters related to the conversions are described in the following table:
 |         Conversion Type         |                   Parameter Type                   | Description                                                  |
 | :-----------------------------: | :------------------------------------------------: | ------------------------------------------------------------ |
 |         Unit Conversion         |          Group axis parameters 0x00~0x06           | Set the conversion between the pulse of servo and the physical unit of axis coordinate system (ACS) |
-| Mechanism kinematics conversion |  [Group parameters](@ref GroupParameters)   0x00   | Set the conversion between the axis coordinate system (ACS) and the machine coordinate system (MCS) |
-|  Coordinate system conversion   | [Group Parameters](@ref GroupParameters)  0xC0~ DF | Set the conversion between the machine coordinate system (MCS ) and the product coordinate system (PCS) |
+| Mechanism kinematics conversion | [Group parameters](@ref GroupParameters)   0x00    | Set the conversion between the axis coordinate system (ACS) and the machine coordinate system (MCS) |
+|  Coordinate system conversion   | [Group Parameters](@ref GroupParameters)  0xC0~ DF | Set the conversion between the machine coordinate system (MCS) and the product coordinate system (PCS) |
 |    TCP coordinate conversion    | [Group Parameters](@ref GroupParameters)  0x80~8F  | Set the conversion between the tool and the tool center point (TCP) |
 
 NexMotion defines the data structure 「 [Pos_T](@ref Pos_T) 」 and 「 [Xyz_T](@ref Xyz_T) 」 to describe the coordinate
@@ -418,7 +418,18 @@ If the motion command does not specifically specify the Base index, the system w
 
 
 
+#### 1.4.2.7 Base Calibration {#BaseCalibration}
 
+In addition to directly setting parameters, method of automatically calibration the teaching points is provided to set the Base.
+The automatic calibration methods include:
+* Base teaching -1p method
+* Base teaching -2p method
+* Base teaching -3p method
+
+Corresponding APIs setting can refer to 3.4.14 [Base Calibration Functions](@ref Group_Base_Calibration). As the name implies,
+1p method only needs to teach one point. The 2p method only needs to pay two points. The 3p method needs to teach three points.
+Among them, the difference between the 2p method and the 1p method is that the base taught by the 2p method has more rotation
+of the Z-axis, and the 3p method can arbitrarily define the X-Y-Z axis.
 
 
 # 2. Device Parameters {#DeviceParameters}
@@ -445,7 +456,29 @@ cannot be effective immediately.
 
 ## 2.2. Axis Parameters {#AxisParameters}
 
-TODO: add table
+| Param. Num. | Sub. Index | Data Type | Description                    | Range                     | Remark     |
+| :---------: | :--------: | --------- | :----------------------------- | :------------------------ | ---------- |
+|    0x00     |     0      | I32_T     | Mechanical pitch (unit/rev)    | 1~2147483647              | (\*1)      |
+|    0x01     |     0      | I32_T     | Mechanical revolution          | 1~2147483647              | (\*1)      |
+|    0x02     |     0      | I32_T     | Motor revolution               | 1~2147483647              | (\*1)      |
+|    0x03     |     0      | I32_T     | Encoder revolution (pulse/rev) | 1~2147483647              | (\*1)      |
+|    0x04     |     0      | I32_T     | Encoder direction              | 0:Not inverse, 1:Inverse  | (\*1)      |
+|    0x05     |     0      | I32_T     | Encoder type                   | 0:Incremental, 1:Absolute | (\*1)      |
+|    0x06     |     0      | I32_T     | Enable the encoder             | 0:Disable, 1:Enable       | (\*1)      |
+
+(\*1): The parameter is effective after the system is started. During the system starting , the parameter
+cannot be modified.
+
+(\*2): The parameter is effective after the function is enable. The modification in another period
+cannot be effective immediately.
+
+(\*3): The configurable range is depended on the controller
+
+(\*4): Read only.
+
+(\*5): The configurable range is depended on the controlled device.
+
+@todo Update 2.2 Axis paramters table
 
 
 
@@ -458,5 +491,5 @@ TODO: add table
 | 0x48 | 0    | I32_T | Base index selection for motion target | value = -1 :No base assignment (MCS)<br/> value = 0~31: base 0~31 |        |
 | 0x48 | 1    | I32_T | Base index selection for read position | value = -2 : Parameter disable<br> value = -1 :No base assignment<br> value = 0~31: base 0~31 |        |
 
-TODO: update table
+@todo Update 2.3 Group parameters table
 
