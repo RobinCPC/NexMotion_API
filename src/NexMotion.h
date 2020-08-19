@@ -58,12 +58,17 @@ I32_T   FNTYPE NMC_GetLibVersion( _opt_null_ I32_T *PRetMajor, _opt_null_ I32_T 
  *
  * @return  None
  *
+ * \b Usage: <br>
+ *
  * \b Examples:
  * @code{.h}
  * char versionString[32];
  * NMC_GetLibVersionString( versionString, 32 );
  * printf( "Library version = (%s) \n", versionString );
  * @endcode
+ *
+ * \b Reference: <br>
+ *
  */
 void    FNTYPE NMC_GetLibVersionString( char *PRetVersionString, U32_T StringSize );
 /*!
@@ -73,7 +78,16 @@ void    FNTYPE NMC_GetLibVersionString( char *PRetVersionString, U32_T StringSiz
  * @param PRetErrorDesc A char array which is 512 characters at least
  * @param StringSize    The size of input char array
  *
- * @return The error code description. It will be NULL if the ErrorCode is undefined
+ * @return The [error code](@ref Error_code) description. It will be NULL if the ErrorCode is undefined
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ *
  */
 const char* FNTYPE NMC_GetErrorDescription( RTN_ERR ErrorCode, _opt_null_ char *PRetErrorDesc, U32_T StringSize );
 /*!
@@ -93,7 +107,7 @@ const char* FNTYPE NMC_GetErrorDescription( RTN_ERR ErrorCode, _opt_null_ char *
  * @param      DevIndex The specified index of device which is set to 0
  * @param[out] PRetDevID [Output] The device ID (DevID) after the function is called successfully
  *
- * @return Return an error code.
+ * @return Return an [error code](@ref Error_code).
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h
  *
  * \b Usage: <br>
@@ -108,7 +122,7 @@ RTN_ERR FNTYPE NMC_DeviceOpenUp( I32_T DevType, I32_T DevIndex, I32_T *PRetDevID
  *
  * @param DevID The device ID of the machine that request to be shutdown.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h
  *
  * \b Usage: <br>
@@ -124,7 +138,7 @@ RTN_ERR FNTYPE NMC_DeviceShutdown( I32_T DevID );
  * @param DevType   The specified device type
  * @param DevIndex  The specified index of device which is set to 0
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -140,7 +154,7 @@ RTN_ERR FNTYPE NMC_DeviceOpenUpRequest( I32_T DevType, I32_T DevIndex );
  * @param      WaitMs    Waiting time for device open up (unit: ms). It can be set to the NMC_WAIT_TIME_INFINITE (0xFFFFFFFF) to wait for the completion of open up.
  * @param[out] PRetDevID [Output] The device ID (DevID) after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -155,7 +169,7 @@ RTN_ERR FNTYPE NMC_DeviceWaitOpenUpRequest( U32_T WaitMs, I32_T *PRetDevID  );
  *
  * @param DevID The device ID of the machine that request to be shutdown.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  */
 RTN_ERR FNTYPE NMC_DeviceShutdownRequest( I32_T DevID );
@@ -165,7 +179,7 @@ RTN_ERR FNTYPE NMC_DeviceShutdownRequest( I32_T DevID );
  * @param DevID   The device ID of the machine that request to be shutdown.
  * @param WaitMs  Waiting time for device open up (unit: ms). It can be set to the NMC_WAIT_TIME_INFINITE (0xFFFFFFFF) to wait for the completion of open up.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -191,7 +205,7 @@ RTN_ERR FNTYPE NMC_DeviceWaitShutdownRequest( I32_T DevID, U32_T WaitMs );
  * @param TimeoutMs Timeout value for the watch dog timer. Unit: milliseconds. Range: 20 to 200000 ms.
  * @param Mode      Time out mode. 0: Device will transfer to ready state if the device in the operation state.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -205,7 +219,7 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerEnable( I32_T DevID, U32_T TimeoutMs, I32_
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -219,7 +233,7 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerDisable( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -244,7 +258,7 @@ RTN_ERR FNTYPE NMC_DeviceWatchdogTimerReset( I32_T DevID );
  * @param      DevIndex  The specified index of device which is set to 0.
  * @param[out] PRetDevID [Output] The device ID (DevID) after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -258,7 +272,7 @@ RTN_ERR FNTYPE NMC_DeviceCreate( I32_T DevType, I32_T DevIndex, I32_T *PRetDevID
  *
  * @param DevID     Device ID
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -272,7 +286,7 @@ RTN_ERR FNTYPE NMC_DeviceDelete( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -295,7 +309,7 @@ RTN_ERR FNTYPE NMC_DeviceLoadIniConfig( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -309,7 +323,7 @@ RTN_ERR FNTYPE NMC_DeviceResetConfig( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -324,7 +338,7 @@ RTN_ERR FNTYPE NMC_DeviceStart( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -338,7 +352,7 @@ RTN_ERR FNTYPE NMC_DeviceStop( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -352,7 +366,7 @@ RTN_ERR FNTYPE NMC_DeviceStartRequest( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -367,7 +381,7 @@ RTN_ERR FNTYPE NMC_DeviceStopRequest( I32_T DevID );
  * @param DevID           Device ID (DevID)
  * @param PRetDeviceState Return the state of the device after called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -392,7 +406,7 @@ RTN_ERR FNTYPE NMC_DeviceGetState( I32_T DevID, I32_T *PRetDeviceState );
  * @param SubIndex  Parameter Sub-index
  * @param ParaValue Value to be set
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -410,7 +424,7 @@ RTN_ERR FNTYPE NMC_DeviceSetParam( I32_T DevID, I32_T ParamNum, I32_T SubIndex, 
  * @param      SubIndex      Parameter Sub-index
  * @param[out] PRetParaValue [Output] The value to be returned after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -425,7 +439,7 @@ RTN_ERR FNTYPE NMC_DeviceGetParam( I32_T DevID, I32_T ParamNum, I32_T SubIndex, 
  *
  * @param PIniPath  The ini file to be set. it shall be a C string, and can be set to NULL(0) to reset the path to the default value.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -444,7 +458,51 @@ RTN_ERR FNTYPE NMC_SetIniPath( _opt_null_ const char *PIniPath );
  *  I/O Control Functions
  *  @{
  */
+/*!
+ * @brief Get the size of mapped input(Input) memory.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param PRetSizeByte  The size of I/O output memory will be returned after the function is called successfully. Unit: byte.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * NMC_GetInputMemorySize() is used to read the accessible range of the I/O memory in the controller (0 to the return size, in bytes). Different controllers (different models) may have different I/O memory sizes that can be controlled,
+ * so this API can be used to confirm the actual reachable range.
+ *
+ * The function can be called after the device is started.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ *
+ */
 RTN_ERR FNTYPE NMC_GetInputMemorySize ( I32_T DevID, U32_T *PRetSizeByte );
+/**
+ * @brief Get the size of mapped output (Output) memory.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param PRetSizeByte  The size of I/O output memory will be returned after the function is called successfully. Unit: byte.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * NMC_GetOutputMemorySize () is used to read the accessible range of the I/O memory in the controller (0 to the return size, in bytes). Different controllers (different models) may have different I/O memory sizes that can be controlled,
+ * so this API can be used to confirm the actual reachable range.
+ *
+ * The function can be called after the device is started.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ *
+ */
 RTN_ERR FNTYPE NMC_GetOutputMemorySize( I32_T DevID, U32_T *PRetSizeByte );
 /*!
  * @brief Read the mapped input (Input) memory.
@@ -454,7 +512,7 @@ RTN_ERR FNTYPE NMC_GetOutputMemorySize( I32_T DevID, U32_T *PRetSizeByte );
  * @param SizeByte    Size of the memory to be read.
  * @param PRetValue   The contents within the specified memory segment will be saved into the variable after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -486,7 +544,7 @@ RTN_ERR FNTYPE NMC_ReadInputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeByt
  * @param SizeByte    Size of the memory to be read.
  * @param PRetValue   The contents within the specified memory segment will be saved into the variable after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -519,7 +577,7 @@ RTN_ERR FNTYPE NMC_ReadOutputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeBy
  *
  * @todo Update the description of PValue
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -544,14 +602,74 @@ RTN_ERR FNTYPE NMC_ReadOutputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeBy
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_WriteOutputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeByte, const void *PValue );
+/**
+ * @brief Read the mapped input memory by bit, word or dword.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param OffsetByte    Memory offset (byte) from 0
+ * @param BitIndex      Bit index in a byte, value must be 0~7
+ * @param[out] PRetBitValue  Return bit value (0 or 1)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called after the device is started.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_ReadInputBit( I32_T DevID, U32_T OffsetByte, U32_T BitIndex, BOOL_T *PRetBitValue );
 RTN_ERR FNTYPE NMC_ReadInputI8( I32_T DevID, U32_T OffsetByte, I8_T *PRetI8Value );
 RTN_ERR FNTYPE NMC_ReadInputI16( I32_T DevID, U32_T OffsetByte, I16_T *PRetI16Value );
 RTN_ERR FNTYPE NMC_ReadInputI32( I32_T DevID, U32_T OffsetByte, I32_T *PRetI32Value );
+/**
+ * @brief Read the mapped output memory by bit, word or dword.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param OffsetByte    Memory offset (byte) from 0
+ * @param BitIndex      Bit index in a byte, value must be 0~7
+ * @param[out] PRetBitValue  Return bit value (0 or 1)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called after the device is started.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_ReadOutputBit( I32_T DevID, U32_T OffsetByte, U32_T BitIndex, BOOL_T *PRetBitValue );
 RTN_ERR FNTYPE NMC_ReadOutputI8( I32_T DevID, U32_T OffsetByte, I8_T *PRetI8Value );
 RTN_ERR FNTYPE NMC_ReadOutputI16( I32_T DevID, U32_T OffsetByte, I16_T *PRetI16Value );
 RTN_ERR FNTYPE NMC_ReadOutputI32( I32_T DevID, U32_T OffsetByte, I32_T *PRetI32Value );
+/**
+ * @brief Write the mapped output memory by bit, word or dword.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param OffsetByte  Memory offset (byte) from 0
+ * @param BitIndex    Bit index in a byte, value must be 0~7
+ * @param BitValue    Bit value (0 or 1) to be set
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called after the device is started.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_WriteOutputBit( I32_T DevID, U32_T OffsetByte, U32_T BitIndex, BOOL_T BitValue );
 RTN_ERR FNTYPE NMC_WriteOutputI8( I32_T DevID, U32_T OffsetByte, I8_T I8Value );
 RTN_ERR FNTYPE NMC_WriteOutputI16( I32_T DevID, U32_T OffsetByte, I16_T I16Value );
@@ -571,7 +689,7 @@ RTN_ERR FNTYPE NMC_WriteOutputI32( I32_T DevID, U32_T OffsetByte, I32_T I32Value
  * @param DevID         Device ID (DevID)
  * @param PRetAxisCount The quantity of axis started will be returned after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -586,7 +704,7 @@ RTN_ERR FNTYPE NMC_DeviceGetAxisCount( I32_T DevID, I32_T *PRetAxisCount );
  * @param DevID           Device ID (DevID)
  * @param PRetGroupCount  The quantity of group started will be returned after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -602,7 +720,7 @@ RTN_ERR FNTYPE NMC_DeviceGetGroupCount( I32_T DevID, I32_T *PRetGroupCount );
  * @param GroupIndex          Group Index
  * @param PRetGroupAxisCount  The quantity of group axis will be returned after the function is called successfully.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -628,7 +746,7 @@ RTN_ERR FNTYPE NMC_DeviceGetGroupAxisCount( I32_T DevID, I32_T GroupIndex, I32_T
  * @param DescStrSize         C-style string buff size, in byte
  * @param PRetAxisDescription Given C-style string buff and return description
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -645,7 +763,7 @@ RTN_ERR FNTYPE NMC_AxisGetDescription( I32_T DevID, I32_T AxisIndex, U32_T DescS
  * @param DescStrSize           C-style string buff size, in byte
  * @param PRetGroupDescription  Given C-style string buff and return description
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -670,7 +788,7 @@ RTN_ERR FNTYPE NMC_DeviceResetStateAll( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -685,7 +803,7 @@ RTN_ERR FNTYPE NMC_DeviceEnableAll( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -709,7 +827,7 @@ RTN_ERR FNTYPE NMC_DeviceDisableAll( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -724,7 +842,7 @@ RTN_ERR FNTYPE NMC_DeviceHaltAll( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -870,7 +988,7 @@ RTN_ERR FNTYPE NMC_AxisGetParamF64( I32_T DevID, I32_T AxisIndex, I32_T ParamNum
  * @param DevID     Device ID (DevID)
  * @param AxisIndex Axis index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -894,7 +1012,7 @@ RTN_ERR FNTYPE NMC_AxisEnable( I32_T DevID, I32_T AxisIndex );
  * @param DevID     Device ID (DevID)
  * @param AxisIndex Axis index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -916,7 +1034,7 @@ RTN_ERR FNTYPE NMC_AxisDisable( I32_T DevID, I32_T AxisIndex );
  * @param AxisIndex       Axis Index
  * @param PRetAxisStatus  Return the axis status
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -938,7 +1056,7 @@ RTN_ERR FNTYPE NMC_AxisGetStatus( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisS
  * @param AxisIndex     Axis Index
  * @param PRetAxisState Return the axis state.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -965,7 +1083,7 @@ RTN_ERR FNTYPE NMC_AxisGetState( I32_T DevID, I32_T AxisIndex, I32_T *PRetAxisSt
  * @param DevID     Device ID (DevID)
  * @param AxisIndex Axis Index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -990,7 +1108,7 @@ RTN_ERR FNTYPE NMC_AxisResetState( I32_T DevID, I32_T AxisIndex );
  * @param DevID     Device ID (DevID)
  * @param AxisIndex The index of the axis will be reset.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1016,7 +1134,7 @@ RTN_ERR FNTYPE NMC_AxisResetDriveAlm( I32_T DevID, I32_T AxisIndex );
  * @param AxisIndex   Axis index
  * @param[out] PRetAlmCode [Output] The value of alarm code.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1051,7 +1169,7 @@ RTN_ERR FNTYPE NMC_AxisGetMotionBuffSpace(  I32_T DevID, I32_T AxisIndex, I32_T 
  * @param TargetPos Taget Position (Unit: user unit). The value will be interpreted to absolute or relative distance based on the axis parameter `0x30` (absolute or relative programming).
  * @param PMaxVel   Input the target velocity with a pointer variable. Moreover, input 0 directly for no target velocity, and the driver can plan the motion based on the velocity configuratio of the axis parameter `AXP_VM`.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1089,7 +1207,7 @@ RTN_ERR FNTYPE NMC_AxisPtp( I32_T DevID, I32_T AxisIndex, F64_T TargetPos, _opt_
  * @param Dir       Direction. 1:Forward, -1:Reverse
  * @param PMaxVel   Input target velocity with a pointer variable. Moreover, input 0 directly for no target velocity, and the driver will get the configuration in axis parameter `AXP_VM` as the target velocity.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1132,7 +1250,7 @@ RTN_ERR FNTYPE NMC_AxisJog( I32_T DevID, I32_T AxisIndex, I32_T Dir, _opt_null_ 
  * @param AxisIndex Axis Index
  * @param HomePos   The value to set the origin in the axis coordinate system (ACS).
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1149,7 +1267,7 @@ RTN_ERR FNTYPE NMC_AxisSetHomePos( I32_T DevID, I32_T AxisIndex, F64_T HomePos )
  * @param DevID     Device ID (DevID)
  * @param AxisIndex Axis Index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1176,6 +1294,7 @@ RTN_ERR FNTYPE NMC_AxisHomeDrive( I32_T DevID, I32_T AxisIndex );
 // Axis motion termination APIs
 /*! \addtogroup Axis_Motion_Status
  *  Axis Motion Status Functions
+ *  @todo This group name is duplicated in pdf manual. Check if need to rename.
  *  @{
  */
 /*!
@@ -1184,7 +1303,7 @@ RTN_ERR FNTYPE NMC_AxisHomeDrive( I32_T DevID, I32_T AxisIndex );
  * @param DevID     Device ID (DevID)
  * @param AxisIndex Axis index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1210,7 +1329,7 @@ RTN_ERR FNTYPE NMC_AxisHalt( I32_T DevID, I32_T AxisIndex );
  * @param DevID     Device ID (DevID)
  * @param AxisIndex Axis index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1235,7 +1354,7 @@ RTN_ERR FNTYPE NMC_AxisStop( I32_T DevID, I32_T AxisIndex );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1256,7 +1375,7 @@ RTN_ERR FNTYPE NMC_AxisHaltAll( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1288,7 +1407,7 @@ RTN_ERR FNTYPE NMC_AxisStopAll( I32_T DevID );
  * @param AxisIndex Axis index
  * @param TargetVel Target velocity (Unit: user unit/sec)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1318,7 +1437,7 @@ RTN_ERR FNTYPE NMC_AxisVelOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetVe
  * @param AxisIndex Axis index
  * @param TargetAcc Target acceleration
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1350,7 +1469,7 @@ RTN_ERR FNTYPE NMC_AxisAccOverride( I32_T DevID, I32_T AxisIndex, F64_T TargetAc
  * @param AxisIndex Axis index
  * @param TargetDec Target deceleration
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1400,7 +1519,7 @@ RTN_ERR FNTYPE NMC_AxisGetSpeedRatio( I32_T DevID, I32_T AxisIndex, F64_T *PPerc
  * @param SubIndex      Parameter sub-index
  * @param ParaValueI32  [Input] Value to be set (signed integer).
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1428,7 +1547,7 @@ RTN_ERR FNTYPE NMC_GroupSetParamI32( I32_T DevID, I32_T GroupIndex, I32_T ParamN
  * @param SubIndex          Parameter sub-index
  * @param[out] PRetParaValueI32  [Input] A pointer variable, [Output] Value of the parameter
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1456,7 +1575,7 @@ RTN_ERR FNTYPE NMC_GroupGetParamI32( I32_T DevID, I32_T GroupIndex, I32_T ParamN
  * @param SubIndex      Parameter sub-index
  * @param ParaValueF64  [Input] Value to be set (double precision float)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1484,7 +1603,7 @@ RTN_ERR FNTYPE NMC_GroupSetParamF64( I32_T DevID, I32_T GroupIndex, I32_T ParamN
  * @param SubIndex          Parameter sub-index
  * @param[out] PRetParaValueF64  [Output] Value to be returned (double precision float)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1513,7 +1632,7 @@ RTN_ERR FNTYPE NMC_GroupGetParamF64( I32_T DevID, I32_T GroupIndex, I32_T ParamN
  * @param SubIndex        Parameter Sub-Index
  * @param ParaValueI32    [Input] Value to be set (signed integer)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1543,7 +1662,7 @@ RTN_ERR FNTYPE NMC_GroupAxSetParamI32( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * @param      SubIndex          Parameter sub-index
  * @param[out] PRetParaValueI32  [Output] Value to be returned (signed integer)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1572,7 +1691,7 @@ RTN_ERR FNTYPE NMC_GroupAxGetParamI32( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * @param SubIndex        Parameter Sub-Index
  * @param ParaValueF64    [Input] Value to be set (double precision float)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1601,7 +1720,7 @@ RTN_ERR FNTYPE NMC_GroupAxSetParamF64( I32_T DevID, I32_T GroupIndex, I32_T Grou
  * @param      SubIndex          Parameter sub-index
  * @param[out] PRetParaValueF64  [Output] Value to be returned (double precision float)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Examples: <br>
@@ -1865,7 +1984,7 @@ RTN_ERR FNTYPE NMC_GroupGetDriveAlmCode( I32_T DevID, I32_T GroupIndex, I32_T Gr
  * @param GroupIndex  Group Inex
  * @param Percentage  Speed percentage to be set (0 to 100 %)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -1890,7 +2009,7 @@ RTN_ERR FNTYPE NMC_GroupSetSpeedRatio( I32_T DevID, I32_T GroupIndex, F64_T Perc
  * @param GroupIndex       Group Inex
  * @param[out] PRetPercentage  [Input] A pointer variable, [Output] Velocity percentage.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2131,7 +2250,7 @@ RTN_ERR FNTYPE NMC_GroupPtpCartAll( I32_T DevID, I32_T GroupIndex, I32_T CartAxe
  * @param DevID       Device ID (DevID)
  * @param GroupIndex  Group Index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2157,7 +2276,7 @@ RTN_ERR FNTYPE NMC_GroupHalt( I32_T DevID, I32_T GroupIndex );
  * @param DevID       Device ID (DevID)
  * @param GroupIndex  Group Index
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2185,7 +2304,7 @@ RTN_ERR FNTYPE NMC_GroupStop( I32_T DevID, I32_T GroupIndex );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2210,7 +2329,7 @@ RTN_ERR FNTYPE NMC_GroupHaltAll( I32_T DevID );
  *
  * @param DevID Device ID (DevID)
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2243,7 +2362,7 @@ RTN_ERR FNTYPE NMC_GroupStopAll( I32_T DevID );
  * @param GroupIndex         Group index
  * @param[out] PRetCmdPosAcs [Input] A pointer variable, [Output] The command position of the specified group axis.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2270,7 +2389,7 @@ RTN_ERR FNTYPE NMC_GroupGetCommandPosAcs( I32_T DevID, I32_T GroupIndex, Pos_T *
  * @param GroupIndex         Group index
  * @param[out] PRetActPosAcs [Input] A pointer variable, [Output] The actual position of each group axis.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2296,7 +2415,7 @@ RTN_ERR FNTYPE NMC_GroupGetActualPosAcs( I32_T DevID, I32_T GroupIndex, Pos_T *P
  * @param GroupIndex         Group index
  * @param[out] PRetCmdPosPcs [Input] A pointer variable, [Output] The command position of the specified group axis.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2322,7 +2441,7 @@ RTN_ERR FNTYPE NMC_GroupGetCommandPosPcs( I32_T DevID, I32_T GroupIndex, Pos_T *
  * @param GroupIndex         Group index
  * @param[out] PRetActPosPcs [Input] A pointer variable, [Output] The actual position of each group axis.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2349,7 +2468,7 @@ RTN_ERR FNTYPE NMC_GroupGetActualPosPcs( I32_T DevID, I32_T GroupIndex, Pos_T *P
  * @param CoordSys         Specified the coordinate system ( 0:MCS, 1:PCS, 2:ACS )
  * @param[out] PRetCmdPos  [Input] A pointer variable, [Output] The command position depended on the specified coordinate system
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2378,7 +2497,7 @@ RTN_ERR FNTYPE NMC_GroupGetCommandPos( I32_T DevID, I32_T GroupIndex, I32_T Coor
  * @param CoordSys         Specified the coordinate system ( 0:MCS, 1:PCS, 2:ACS )
  * @param[out] PRetActPos  [Input] A pointer variable, [Output] The command position depended on the specified coordinate system
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2405,7 +2524,7 @@ RTN_ERR FNTYPE NMC_GroupGetActualPos( I32_T DevID, I32_T GroupIndex, I32_T Coord
  * @param GroupIndex         Group index
  * @param[out] PRetFreeSpace [Input] A pointer variable, [Output] The free size of the motion buffer
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2441,7 +2560,7 @@ RTN_ERR FNTYPE NMC_GroupGetMotionBuffSpace( I32_T DevID, I32_T GroupIndex, I32_T
  * @param GroupAxesIdxMask  The group axis index mask is specified toexecute the motion.
  * @param PHomePosAcs       A pointer variable to set the origin in the axis coordinate system (ACS).
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2466,7 +2585,7 @@ RTN_ERR FNTYPE NMC_GroupSetHomePos( I32_T DevID, I32_T GroupIndex, I32_T GroupAx
  * @param GroupIndex        Group Index
  * @param GroupAxesIdxMask  The group axis index mask is specified to execute the motion.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2519,7 +2638,7 @@ RTN_ERR FNTYPE NMC_ToolCalib_Ori      ( const Pos_T *PMcsKinOrg, const Pos_T *PM
  * @param PRefBaseP1          The position used in the first step.
  * @param PRetBaseCoordTrans  Return the relationship respected to reference coordinate convertion.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
@@ -2556,7 +2675,7 @@ RTN_ERR FNTYPE NMC_BaseCalib_2p( const Pos_T *PRefBaseP1, const Pos_T *PRefBaseP
  * @param PRefBaseP3          The position used in the third step.
  * @param PRetBaseCoordTrans  Return the relationship respected to reference coordinate convertion.
  *
- * @return Return an error code. <br>
+ * @return Return an [error code](@ref Error_code). <br>
  * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
  *
  * \b Usage: <br>
