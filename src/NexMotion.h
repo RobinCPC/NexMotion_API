@@ -2152,8 +2152,68 @@ RTN_ERR FNTYPE NMC_GroupJogAcs( I32_T DevID, I32_T GroupIndex, I32_T GroupAxisIn
  */
 
 // Group axis jog motion in PCS
+/*! \addtogroup Group_Jog_Motion_PCS
+ *  Group Jog Motion Functions (Cartesian coordinate system)
+ *  @todo Update description of Tcp & Pcs Frame function. (No description in official pdf manual).
+ *  @{
+ */
+/*!
+ * @brief Enable the JOG motion of group axis in the Cartesian coordinate system with respect to the tool center point (TCP).
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group index
+ * @param CartAxis      The coordinate axis index for the motion in the (TCP) Cartesian coordinate system. Please refer to the below table.
+ * @param Dir           Direction. 0: Forward, 1: Reverse
+ * @param[out] PMaxVel  A pointer variable to set the maximum. Input NULL (0) to ignore the parameter.
+ *
+ * | Cartesian Coordinate Axis (TCP)  | V         | U         | C         | B         | A         | Z         | Y         | X         |
+ * | :----:                           | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                        | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit    | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupJogTcpFrame( I32_T DevID, I32_T GroupIndex, I32_T CartAxis, I32_T Dir, _opt_null_ const F64_T *PMaxVel  );
+/*!
+ * @brief Enable the JOG motion of group axis in the Product coordinate system.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group index
+ * @param CartAxis      The coordinate axis index for the motion in the (TCP) Cartesian coordinate system. Please refer to the below table.
+ * @param Dir           Direction. 0: Forward, 1: Reverse
+ * @param[out] PMaxVel  A pointer variable to set the maximum. Input NULL (0) to ignore the parameter.
+ *
+ * | Cartesian Coordinate Axis (PCS)  | V         | U         | C         | B         | A         | Z         | Y         | X         |
+ * | :----:                           | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                        | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit    | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupJogPcsFrame( I32_T DevID, I32_T GroupIndex, I32_T CartAxis, I32_T Dir, _opt_null_ const F64_T *PMaxVel  );
+/*!
+ *  @}
+ */
 
 // Group point to point motion in PCS
 /*! \addtogroup Group_P2P_Motion_PCS
@@ -2608,18 +2668,362 @@ RTN_ERR FNTYPE NMC_GroupAxesHomeDrive( I32_T DevID, I32_T GroupIndex, I32_T Grou
  */
 
 // 2D cartesian space (MCS,PCS) interpolation
+/*! \addtogroup Group_2D_Motion
+ *  Group 2D Line or Arc Interpolation Motion Functions
+ *  @todo Add description to NMC_GroupCirc2BEx function
+ *  @{
+ */
+/*!
+ * @brief Enable the group line interpolation motion on the XY plane from the current position to the target position in the Cartesian coordinate
+ * system. The [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches the target position (i.e. the velocity is
+ * decreased to 0), the [group state](@ref NMC_GroupGetState) will transfer to GROUP_STAND_STILL. The default maximum velocity will refer to the value in the input parameters.
+ * If required, the maximum velocity can be set in the API, and the specified value will be stored in the corresponding parameters automatically.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param[in] PX      A pointer variable to set the target position at X-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PY      A pointer variable to set the target position at Y-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PMaxVel A pointer variable to set the maximum velocity. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T posX= 10.0;
+ * F64_T posY = 20.0;
+ * RTN_ERR ret = 0;
+ *
+ * ret = NMC_GroupLineXY( devID, groupIndex, &posX, &posY, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupLineXY( I32_T DevID, I32_T GroupIndex, _opt_null_ const F64_T *PX, _opt_null_ const F64_T *PY, const F64_T _opt_null_ *PMaxVel );
+/*!
+ * @brief Enable the group arc interpolation motion on the XY plane from the current position to the target position in the Cartesian coordinate
+ * system (radius method). The [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches the target position (i.e. the
+ * velocity is decreased to 0), the [group state](@ref NMC_GroupGetState) will transfer to GROUP_STAND_STILL. The default maximum velocity will refer to the value in the input
+ * parameters. If required, the maximum velocity can be set in the API, and the specified value will be stored in the corresponding parameters
+ * automatically.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param[in] PEX     A pointer variable to set the target position at X-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PEY     A pointer variable to set the target position at Y-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param Radius      Radius of arc (negative value indicates the larger radian path).
+ * @param CW_CCW      Rotation direction of arc (0=CW; 1=CCW)
+ * @param[in] PMaxVel A pointer variable to set the maximum velocity. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T posX = 50.0;
+ * F64_T posY = 50.0;
+ * F64_T radius = 25.0;
+ * I32_T cwCcw = 1;
+ * RTN_ERR ret = 0;
+ *
+ * ret = NMC_GroupCirc2R( devID, groupIndex, &posX, &posX, radius, cwCcw, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupCirc2R( I32_T DevID, I32_T GroupIndex, _opt_null_ const F64_T *PEX, _opt_null_ const F64_T *PEY, F64_T Radius, I32_T CW_CCW, _opt_null_ const F64_T *PMaxVel );
+/*!
+ * @brief Enable the group arc interpolation motion on the XY plane from the current position to the target position in the Cartesian coordinate
+ * system (circle center method). The [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches the target position
+ * (i.e. the velocity is decreased to 0), the [group state](@ref NMC_GroupGetState) will transfer to GROUP_STAND_STILL. The default maximum velocity will refer to the value in
+ * the input parameters. If required, the maximum velocity can be set in the API, and the specified value will be stored in the corresponding
+ * parameters automatically.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group index
+ * @param[in] PEX       A pointer variable to set the target position at X-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PEY       A pointer variable to set the target position at Y-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PCXOffset A pointer variable to set the position of the circle center at X-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PCYOffset A pointer variable to set the position of the circle center at Y-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param CW_CCW        Rotation direction of arc (0=CW; 1=CCW)
+ * @param[in] PMaxVel   A pointer variable to set the maximum velocity. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T posTarX = 20.0;
+ * F64_T posTarY = 0.0;
+ * F64_T posCenX = 10.0;
+ * F64_T posCenY = 0.0;
+ * I32_T cwCcw = 1;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupCirc2C( devID, groupIndex, &posTarX, NULL, &posCenX, NULL, cwCcw, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupCirc2C( I32_T DevID, I32_T GroupIndex, _opt_null_ const F64_T *PEX, _opt_null_ const F64_T *PEY, _opt_null_ const F64_T *PCXOffset, _opt_null_ const F64_T *PCYOffset, I32_T CW_CCW, _opt_null_ const F64_T *PMaxVel );
+/*!
+ * @brief Enable the group arc interpolation motion on the XY plane from the current position to the target position in the Cartesian coordinate
+ * system (pass-through method). The [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches
+ * the target position (i.e. the velocity is decreased to 0), the [group state](@ref NMC_GroupGetState) will transfer to GROUP_STAND_STILL. The
+ * default maximum velocity will refer to the value in the input parameters. If required, the maximum velocity can be set in the API, and the
+ * specified value will be stored in the corresponding parameters automatically.
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param[in] PEX     A pointer variable to set the target position at X-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PEY     A pointer variable to set the target position at Y-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PBX     A pointer variable to set the pass-through point at X-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PBY     A pointer variable to set the pass-through point at Y-axis. Input NULL (0) to ignore the parameter (not to move).
+ * @param[in] PMaxVel A pointer variable to set the maximum velocity. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T posTarX = 20.0;
+ * F64_T posTarY = 20.0;
+ * F64_T posBorX = 0.0;
+ * F64_T posBorY = 20.0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupCirc2B( devID, groupIndex, &posTarX, &posTarY, &posBorX, &posBorY, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupCirc2B( I32_T DevID, I32_T GroupIndex, _opt_null_ const F64_T *PEX, _opt_null_ const F64_T *PEY, _opt_null_ const F64_T *PBX, _opt_null_ const F64_T *PBY, _opt_null_ const F64_T *PMaxVel );
 RTN_ERR FNTYPE NMC_GroupCirc2BEx( I32_T DevID, I32_T GroupIndex, _opt_null_ const F64_T *PEX, _opt_null_ const F64_T *PEY, _opt_null_ const F64_T *PBX, _opt_null_ const F64_T *PBY, _opt_null_ const F64_T *PAngleDeg, _opt_null_ const F64_T *PMaxVel );
+/*!
+ *  @}
+ */
 
 // 3D cartesian space (MCS,PCS) interpolation with orientation control
+/*! \addtogroup Group_3D_Motion
+ *  Group 3D Line or Arc Interpolation Motion Functions
+ *  @todo Add description to NMC_GroupCircBEx function
+ *  @{
+ */
+/*!
+ * @brief Enable the group line interpolation motion from the current position to the target position in the Cartesian space. The
+ * [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches the target position (i.e. the
+ * velocity is decreased to 0), the [group state](@ref NMC_GroupGetState) will transfer to GROUP_STAND_STILL.
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group index
+ * @param CartAxisMask  The mask is specified to execute the motion in the Cartesian space. Please refer to the below table.
+ * @param[in] PCartPos  A pointer variable to set the target position
+ * @param[in] PMaxVel   A pointer variable to set the maximum velocity. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Cartesian Coordinate Axis     | V         | U         | C         | B         | A         | Z         | Y         | X         |
+ * | :----:                        | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                     | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T cartAxesMask = 13; // Move the X-, Z- and A-axis
+ * Pos_T targetPos = { 10, 20, 30, 40, 50, 60, 70 };
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupLine( devID, groupIndex, cartAxesMask, &targetPos, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupLine(  I32_T DevID, I32_T GroupIndex, I32_T CartAxisMask, const Pos_T *PCartPos, _opt_null_ const F64_T *PMaxVel );
+/*!
+ * @brief Enable the group arc interpolation motion from the current position to the target position in the Cartesian space (radius method). The
+ * [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches the target position (i.e. the
+ * velocity is decreased to 0), the [group state](@ref NMC_GroupGetState) will transfer to GROUP_STAND_STILL.
+ * The path algorithm of the arc motion (radius method) is developed based on the PLCopen specification.
+ * Please pay attention to the following items:
+ *
+ * + The starting point of normal vector of the circle plane is the origin in the Cartesian space coordinate system. The unit vector cannot be input.<br>
+ * + The vector formed by the starting point and the end point must be perpendicular to the normal vector of the circle plane. Otherwise, an error code will be returned.<br>
+ * + The path developed based on the radius method can be divided to the larger radian path and the small radian path, and one of the paths shall be selected. They shall be determined by the sign of the radius. That is, the positive sign indicates the small radian path, and the negative sign indicates the larger radian path.<br>
+ * + If the arc is a 2D path, the normal vector of the circle plane is dispensable to set, but the rotation direction (CW_CCW) shall be set because the right-hand rule will be used in the XY-, YZ- or ZX-plane.<br>
+ * + If the arc is a 3D path, the rotation direction (CW_CCW) shall not be referred because the 3D path cannot be determined based on the right-hand rule.<br>
+ *
+ * ![](images/GroupCircR.png)
+ *
+ * @param DevID             Device ID (DevID)
+ * @param GroupIndex        Group index
+ * @param CartAxisMask      The mask is specified to execute the motion in the Cartesian space. Please refer to the below table.
+ * @param[in] PCartPos      A pointer variable to set the target position
+ * @param[in] PNormalVector A pointer variable to set the normal vector of the circle plane
+ * @param Radius            Radius of arc (negative value indicates the larger radian path).
+ * @param CW_CCW            Rotation direction of arc (0=CW; 1=CCW)
+ * @param[in] PMaxVel       A pointer variable to set the maximum velocity. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Cartesian Coordinate Axis     | V         | U         | C         | B         | A         | Z         | Y         | X         |
+ * | :----:                        | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                     | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
+ *
+ * The usage of the mask in the Cartesian space coordinate system (CartAxesMask) is described as follows: <br>
+ * If the group axes to be moved are the X-, Z- and A-axis, the GroupAxesIdxMask is \f$2^0\f$ + \f$2^2\f$ + \f$2^3\f$ = 13.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T cartAxesMask = 3; // Move the X- and Y-axis
+ * Pos_T targetPos = { 50, 50, 0, 0, 0, 0, 0 };
+ * Xyz_T normalVec = { 0, 0, 50 };
+ * F64_T radius = 50.0;
+ * I32_T cwCcw = 1;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupCircR( devID, groupIndex, cartAxesMask, &targetPos, &normalVec, radius, cwCcw, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupCircR( I32_T DevID, I32_T GroupIndex, I32_T CartAxisMask, const Pos_T *PCartPos, const Xyz_T *PNormalVector, F64_T Radius, I32_T CW_CCW, _opt_null_ const F64_T *PMaxVel );
+/*!
+ * @brief Enable the group arc interpolation motion from the current position to the target position in the Cartesian space (circle center method). The
+ * [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches the target position (i.e. the
+ * velocity is decreased to 0), the [group state](@ref NMC_GroupGetState) will transfer to GROUP_STAND_STILL.
+ * The path algorithm of the arc motion (circle center method) is developed based on the PLCopen specification.
+ * Please pay attention to the following items:
+ *
+ * + The path developed based on the circle center method can be divided to the larger radian path and the small radian path, and one of the paths
+ * shall be selected. They shall be determined by the rotation direction (CW_CCW). That is, the CW indicates the small radian path, and the CCW
+ * indicates the larger radian path.
+ * + If the arc is a 2D path, the path can be determined based on the rotation direction (CW_CCW) because the right-hand rule will be used in the XY-, YZ- or ZX-plane.
+ *
+ * ![](images/GroupCircC.png)
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group index
+ * @param CartAxisMask  The mask is specified to execute the motion in the Cartesian space. Please refer to the below table.
+ * @param[in] PCartPos  A pointer variable to set the target position
+ * @param CenOfsMask    The mask of the circle center in the Cartesian space. Please refer to the below table.
+ * @param[in] PCenOfs   A pointer variable to set the position of the circle center
+ * @param CW_CCW        Rotation direction of arc (0=CW; 1=CCW)
+ * @param[in] PMaxVel   A pointer variable to set the maximum. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Cartesian Coordinate Axis     | V         | U         | C         | B         | A         | Z         | Y         | X         |
+ * | :----:                        | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                     | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
+ *
+ * The usage of the mask in the Cartesian space coordinate system (CartAxesMask) is described as follows: <br>
+ * If the group axes to be moved are the X-, Z- and A-axis, the GroupAxesIdxMask is \f$2^0\f$ + \f$2^2\f$ + \f$2^3\f$ = 13.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T cartAxesMask = 7; // Move the X-, Y- and Z-axis
+ * Pos_T targetPos = { 50, 50, 0, 0, 0, 0, 0 };
+ * I32_T cenOfsMask = 7; // Move the X-, Y- and Z-axis
+ * Xyz_T cenOfs = { 50, 0, 50 };
+ * I32_T cwCcw = 1;
+ * RTN_ERR ret = 0;
+ *
+ * ret = NMC_GroupCircC( devID, groupIndex, cartAxesMask, &targetPos, cenOfsMask, &cenOfs, cwCcw, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupCircC( I32_T DevID, I32_T GroupIndex, I32_T CartAxisMask, const Pos_T *PCartPos, I32_T CenOfsMask, const Xyz_T *PCenOfs, I32_T CW_CCW, _opt_null_ const F64_T *PMaxVel );
+/*!
+ * @brief Enable the group arc interpolation motion from the current position to the target position in the Cartesian space (pass-through method). The
+ * [group state](@ref NMC_GroupGetState) will transfer from GROUP_STAND_STILL to GROUP_MOVING. If the group reaches the target position (i.e. the
+ * velocity is decreased to 0), the group state will transfer to GROUP_STAND_STILL.
+ * The path algorithm of the arc motion (pass-through method) is developed based on the PLCopen specification.
+ * Please refer to the below figure for the coordination.
+ *
+ * ![](images/GroupCircB.png)
+ *
+ * @param DevID         Device ID (DevID)
+ * @param GroupIndex    Group index
+ * @param CartAxisMask  The mask is specified to execute the motion in the Cartesian space. Please refer to the below table.
+ * @param[in] PCartPos  A pointer variable to set the target position
+ * @param BorPosMask    The mask of the pass-through point in the Cartesian space. Please refer to the below table.
+ * @param[in] PBorPoint A pointer variable to set the pass-through point
+ * @param[in] PMaxVel   A pointer variable to set the maximum. Input NULL (0) to ignore the parameter.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * | Cartesian Coordinate Axis     | V         | U         | C         | B         | A         | Z         | Y         | X         |
+ * | :----:                        | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    | :----:    |
+ * | Bit index                     | 7         | 6         | 5         | 4         | 3         | 2         | 1         | 0         |
+ * | The power is the index of bit | \f$2^7\f$ | \f$2^6\f$ | \f$2^5\f$ | \f$2^4\f$ | \f$2^3\f$ | \f$2^2\f$ | \f$2^1\f$ | \f$2^0\f$ |
+ *
+ * The usage of the mask in the Cartesian space coordinate system (CartAxesMask) is described as follows: <br>
+ * If the group axes to be moved are the X-, Z- and A-axis, the GroupAxesIdxMask is \f$2^0\f$ + \f$2^2\f$ + \f$2^3\f$ = 13.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * I32_T cartAxesMask = 7; // Move the X-, Y- and Z-axis
+ * Pos_T targetPos = { 50, 50, 0, 0, 0, 0, 0 };
+ * I32_T borPosMask = 7; // Move the X-, Y- and Z-axis
+ * Xyz_T borPoint = { 50, 0, 50 };
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupCircB( devID, groupIndex, cartAxesMask, targetPos, borPosMask, borPoint, NULL );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupCircB( I32_T DevID, I32_T GroupIndex, I32_T CartAxisMask, const Pos_T *PCartPos, I32_T BorPosMask, const Xyz_T *PBorPoint, _opt_null_ const F64_T *PMaxVel );
 RTN_ERR FNTYPE NMC_GroupCircBEx( I32_T DevID, I32_T GroupIndex, I32_T CartAxisMask, const Pos_T *PCartPos, I32_T BorPosMask, const Xyz_T *PBorPoint, _opt_null_ const F64_T *PAngleDeg, _opt_null_ const F64_T *PMaxVel );
+/*!
+ *  @}
+ */
 
 // Tool (TCP) calibration
 RTN_ERR FNTYPE NMC_ToolCalib_4p       ( const Pos_T *PMcsKinP1, const Pos_T *PMcsKinP2, const Pos_T *PMcsKinP3, const Pos_T *PMcsKinP4    , CoordTrans_T *PRetToolCoordTrans, F64_T *PRetTolerance );
