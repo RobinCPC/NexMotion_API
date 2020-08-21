@@ -3026,10 +3026,97 @@ RTN_ERR FNTYPE NMC_GroupCircBEx( I32_T DevID, I32_T GroupIndex, I32_T CartAxisMa
  */
 
 // Tool (TCP) calibration
+/*! \addtogroup Group_Tool_Calibration
+ *  Fuctions for the group to calibrate its tool coordination
+ *  @{
+ */
+/**
+ * @brief ool calibration - TCP translation method
+ *
+ * @param PMcsKinP1               The first step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP2               The second step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP3               The third step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP4               The forth step position, TCP must (as far as possible) fall in the reference position
+ * @param[out] PRetToolCoordTrans Return setting of Tool coordinate convertion
+ * @param[out] PRetTolerance      Return tolerance
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_ToolCalib_4p       ( const Pos_T *PMcsKinP1, const Pos_T *PMcsKinP2, const Pos_T *PMcsKinP3, const Pos_T *PMcsKinP4    , CoordTrans_T *PRetToolCoordTrans, F64_T *PRetTolerance );
+/**
+ * @brief Tool calibration - TCP translation with Z-direction setting method
+ *
+ * @param PMcsKinP1               The first step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP2               The second step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP3               The third step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP4ZDir           The fourth step position, the positive direction of Z axis of TCP needs to indicate negative direction of Z axis of MCS
+ * @param[out] PRetToolCoordTrans Return setting of Tool coordinate convertion
+ * @param[out] PRetTolerance      Return tolerance
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_ToolCalib_4pWithZ  ( const Pos_T *PMcsKinP1, const Pos_T *PMcsKinP2, const Pos_T *PMcsKinP3, const Pos_T *PMcsKinP4ZDir, CoordTrans_T *PRetToolCoordTrans, F64_T *PRetTolerance );
+/**
+ * @brief Tool calibration - TCP translation with orientation setting method
+ *
+ * @param PMcsKinP1               The first step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP2               The second step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP3               The third step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinP4               The forth step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinMinusZAxisPt     The fifth step position, reference position must fall in negative direction of Z axis of TCP
+ * @param PMcsKinYZPlanPt         The sixth step position, reference position must fall in positive direction of Y axis of TCP
+ * @param[out] PRetToolCoordTrans Return setting of Tool coordinate convertion
+ * @param[out] PRetTolerance      Return tolerance
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_ToolCalib_4pWithOri( const Pos_T *PMcsKinP1, const Pos_T *PMcsKinP2, const Pos_T *PMcsKinP3, const Pos_T *PMcsKinP4,  const Pos_T *PMcsKinMinusZAxisPt, const Pos_T *PMcsKinYZPlanPt, CoordTrans_T *PRetToolCoordTrans, F64_T *PRetTolerance );
+/**
+ * @brief Tool calibration - Orientation setting method
+ *
+ * @param PMcsKinOrg              The first step position, TCP must (as far as possible) fall in the reference position
+ * @param PMcsKinMinusZAxisPt     The second step position, reference position must fall in negative direction of Z axis of TCP
+ * @param PMcsKinYZPt             The third step position, reference position must fall in positive direction of Y axis of TCP
+ * @param[out] PRetToolCoordTrans Return setting of Tool coordinate convertion(Only modified the orientation transformation paramter)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_ToolCalib_Ori      ( const Pos_T *PMcsKinOrg, const Pos_T *PMcsKinMinusZAxisPt, const Pos_T *PMcsKinYZPt, CoordTrans_T *PRetToolCoordTrans );
+/*!
+ *  @}
+ */
 
 // Base calibration
 /*! \addtogroup Group_Base_Calibration
