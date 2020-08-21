@@ -235,11 +235,86 @@ int main()
 
 
 
-### 1.1.5. Debugging
+### 1.1.5. Debugging {#Debugging}
 
-  To assist developers to debug the application, there are two measures, system messages and API
-trace.
+  To assist developers to debug the application, there are two measures, system messages and API trace.
 
+#### 1.1.5.1 System Message {#SystemMessage}
+
+  The system messages will be issued by the device during the operating and stored in the message queue. 
+[NMC_MessagePopFirst()](@ref NMC_MessagePopFirst) can be used to get and remove the system messages from the message queue. 
+To facilitate the debugging, [NMC_MessageOutputEnable()](@ref NMC_MessageOutputEnable) can be used to copy the message and 
+to transfer it to the MS Windows system message (OutputDebugString). Developers can download the tool, DebugView, to get 
+the MS Windows system message from the website:  
+https://docs.microsoft.com/zh-tw/sysinternals/downloads/debugview.
+
+![Debug View](images/DebugView.png)
+
+
+#### 1.1.5.2 API Trace {#API_Trace}
+  The API Trace can trace the calling of NexMotion Library by applications. [NMC_DebugSetTraceMode()](@ref NMC_DebugSetTraceMode)
+can used to enable the API Trace. The called function name, input parameters and return values can be output to 
+MS Windows system message (OutputDebugString) in accordance with the configured Trace mode. Developer can observe 
+the calling of NexMotion with the software, DebugView.
+
+  Moreover, a hook function (or a callback function) can be used to hook the self-defined function into the NexMotion 
+functions. [NMC_DebugSetHookFunction()](@ref NMC_DebugSetHookFunction) can register the self-defined function into the system, 
+and the NexMotion APIs will call the hook function before returning.
+
+The registered hook function is global, and all called NexMotion APIs will call the same hook function. [NMC_DebugGetApiAddress()](@ref NMC_DebugGetApiAddress) can be used to inquiry the names of called APIs.
+
+An example is shown as follows:
+
+```c
+#include "NexMotion.h"
+#include "NexMotionError.h" 
+#include <stdio.h>
+
+void MyHookFunction(
+    const void  *PFuncAddress // [i] Function name call this hook function.
+    ,const char *PFuncName // [i] Pass API Name to hook function.
+    ,RTN_ERR    ReturnCode // [i] function return call
+    ,void       *PUserData // [i] User data.
+) 
+{
+    const void *pFunAddr = NMC_DebugGetApiAddress( "NMC_DeviceOpenUp" );
+    I32_T *pCounter = (I32_T *)PUserData;
+    if( PFuncAddress == pFunAddr ) 
+    {
+        (*pCounter)++;
+        printf( " NMC_DeviceOpenUp is called %d times \n", *pCounter );
+    }
+    printf( "Hook: %s is called.\n", PFuncName );
+}
+
+int main() 
+{
+    RTN_ERR ret;
+    I32_T devType = NMC_DEVICE_TYPE_ETHERCAT;
+    I32_T devIndex = 0;
+    I32_T devID;
+    I32_T counter = 0;
+    
+    // Set Hook function
+    NMC_DebugSetHookData( &counter );
+    NMC_DebugSetHookFunction( MyHookFunction );
+
+    ret = NMC_DeviceOpenUp( devType, devIndex, &devID );
+    if( ret != ERR_NEXMOTION_SUCCESS )
+    {
+        // Error handling...
+    }
+    // Device is start up successfully. // Do something...
+    // ...
+    // Disable hook function
+    NMC_DebugSetHookFunction( 0 );
+    NMC_DebugSetHookData( 0 );
+
+    NMC_DeviceShutdown( devID );
+
+    return 0; 
+}
+```
 
 
 ## 1.2. I/O Control {#IO_Control}

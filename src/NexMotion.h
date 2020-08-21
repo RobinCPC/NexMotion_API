@@ -3030,7 +3030,7 @@ RTN_ERR FNTYPE NMC_GroupCircBEx( I32_T DevID, I32_T GroupIndex, I32_T CartAxisMa
  *  Fuctions for the group to calibrate its tool coordination
  *  @{
  */
-/**
+/*!
  * @brief ool calibration - TCP translation method
  *
  * @param PMcsKinP1               The first step position, TCP must (as far as possible) fall in the reference position
@@ -3051,7 +3051,7 @@ RTN_ERR FNTYPE NMC_GroupCircBEx( I32_T DevID, I32_T GroupIndex, I32_T CartAxisMa
  * None.
  */
 RTN_ERR FNTYPE NMC_ToolCalib_4p       ( const Pos_T *PMcsKinP1, const Pos_T *PMcsKinP2, const Pos_T *PMcsKinP3, const Pos_T *PMcsKinP4    , CoordTrans_T *PRetToolCoordTrans, F64_T *PRetTolerance );
-/**
+/*!
  * @brief Tool calibration - TCP translation with Z-direction setting method
  *
  * @param PMcsKinP1               The first step position, TCP must (as far as possible) fall in the reference position
@@ -3072,7 +3072,7 @@ RTN_ERR FNTYPE NMC_ToolCalib_4p       ( const Pos_T *PMcsKinP1, const Pos_T *PMc
  * None.
  */
 RTN_ERR FNTYPE NMC_ToolCalib_4pWithZ  ( const Pos_T *PMcsKinP1, const Pos_T *PMcsKinP2, const Pos_T *PMcsKinP3, const Pos_T *PMcsKinP4ZDir, CoordTrans_T *PRetToolCoordTrans, F64_T *PRetTolerance );
-/**
+/*!
  * @brief Tool calibration - TCP translation with orientation setting method
  *
  * @param PMcsKinP1               The first step position, TCP must (as far as possible) fall in the reference position
@@ -3095,7 +3095,7 @@ RTN_ERR FNTYPE NMC_ToolCalib_4pWithZ  ( const Pos_T *PMcsKinP1, const Pos_T *PMc
  * None.
  */
 RTN_ERR FNTYPE NMC_ToolCalib_4pWithOri( const Pos_T *PMcsKinP1, const Pos_T *PMcsKinP2, const Pos_T *PMcsKinP3, const Pos_T *PMcsKinP4,  const Pos_T *PMcsKinMinusZAxisPt, const Pos_T *PMcsKinYZPlanPt, CoordTrans_T *PRetToolCoordTrans, F64_T *PRetTolerance );
-/**
+/*!
  * @brief Tool calibration - Orientation setting method
  *
  * @param PMcsKinOrg              The first step position, TCP must (as far as possible) fall in the reference position
@@ -3185,15 +3185,154 @@ RTN_ERR FNTYPE NMC_BaseCalib_3p( const Pos_T *PRefBaseP1, const Pos_T *PRefBaseP
  */
 
 
+/*! \addtogroup System_API
+ *  @{
+ */
 // Message output
+/*! \addtogroup System_Information
+ *  Fuctions for outputing messages of system information
+ *  @{
+ */
+/*!
+ * @brief Read system message queue.
+ *
+ * @param[out] PRetMsg Data structure of system information which can be set to NULL to remove the message from the message queue. Note that if the
+ * parameter is not NULL, the "sizeOfStruct" member variable in the structure must be initialized before calling NMC_MessagePopFirst(). See the
+ * sample program below.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ * If there is no system message, the function will return ERR_NEXMOTION_QUEUE_EMPTY.
+ *
+ * \b Usage: <br>
+ * NMC_MessagePopFirst() will read and remove the first (oldest) message from the message queue in order.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret;
+ * NmcMsg_T msg;
+ * msg.sizeOfStruct = sizeof(msg);
+ * do{
+ *   ret = NMC_MessagePopFirst( &msg );
+ *   if( ret == ERR_NEXMOTION_SUCCESS )
+ *   {
+ *     printf( " Msg:Type=%d, code=%d, src=%s, text=%s\n", msg.type, msg.code, msg.source, msg.text );
+ *   }
+ * }while( ret == ERR_NEXMOTION_SUCCESS );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_MessageOutputEnable()
+ */
 RTN_ERR FNTYPE NMC_MessagePopFirst( _opt_null_ NmcMsg_T *PRetMsg );
+/*!
+ * @brief Transfer a copy of message to MS Windows system message.
+ *
+ * @param Enable  False (0): not to transfer, True (1): transfer
+ *
+ * @return None.
+ *
+ * \b Usage: <br>
+ * After NMC_MessageOutputEnable(True) is called, the system message will be transferred to MS Windows system message.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_MessagePopFirst()
+ */
 void    FNTYPE NMC_MessageOutputEnable( BOOL_T Enable );
+/*!
+ *  @}
+ */
 
 // API debugging helper
+/*! \addtogroup Debug_Trace
+ *  Debug trace functions
+ *  @{
+ */
+/*!
+ * @brief Set API trace mode.
+ *
+ * @param TraceMode <br>
+ *  0: Turn off the trace function and do not output anything <br>
+ *  1: Output the APIs with errors only <br>
+ *  2: Output all APIs <br>
+ *
+ * @return None.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, [Function Trace](@ref API_Trace).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None
+ */
 void    FNTYPE NMC_DebugSetTraceMode( I32_T TraceMode );
+/*!
+ * @brief Set the data structure index for the hook function.
+ *
+ * @param[in] PHookUserData [Input] A pointer variable to set a variable or a data structure specified by user
+ *
+ * @return None.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, [Function Trace](@ref API_Trace).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None
+ */
 void    FNTYPE NMC_DebugSetHookData( void *PHookUserData );
+/**
+ * @brief Set the hook function.
+ *
+ * @param PFHookFuncPtr A function pointer to set the hook function
+ *
+ * @return None.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, [Function Trace](@ref API_Trace).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None
+ */
 void    FNTYPE NMC_DebugSetHookFunction( PF_NmcHookAPI PFHookFuncPtr );
+/**
+ * @brief Read the API address.
+ *
+ * @param[in] PApiName [Input] The function name of a NexMotion API
+ *
+ * @return const void*:  Return the function pointer to set the NexMotion API.
+ *
+ * \b Usage: <br>
+ * Please refer to the section, [Function Trace](@ref API_Trace).
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None
+ */
 const void* FNTYPE NMC_DebugGetApiAddress( const char *PApiName );
+/*!
+ *  @}
+ */
+/*!
+ *  @}
+ */
 
 
 // Obsolete API
