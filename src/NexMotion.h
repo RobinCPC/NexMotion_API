@@ -481,7 +481,7 @@ RTN_ERR FNTYPE NMC_SetIniPath( _opt_null_ const char *PIniPath );
  *
  */
 RTN_ERR FNTYPE NMC_GetInputMemorySize ( I32_T DevID, U32_T *PRetSizeByte );
-/**
+/*!
  * @brief Get the size of mapped output (Output) memory.
  *
  * @param DevID         Device ID (DevID)
@@ -602,7 +602,7 @@ RTN_ERR FNTYPE NMC_ReadOutputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeBy
  * \b Reference: <br>
  */
 RTN_ERR FNTYPE NMC_WriteOutputMemory( I32_T DevID, U32_T OffsetByte, U32_T SizeByte, const void *PValue );
-/**
+/*!
  * @brief Read the mapped input memory by bit, word or dword.
  *
  * @param DevID         Device ID (DevID)
@@ -626,7 +626,7 @@ RTN_ERR FNTYPE NMC_ReadInputBit( I32_T DevID, U32_T OffsetByte, U32_T BitIndex, 
 RTN_ERR FNTYPE NMC_ReadInputI8( I32_T DevID, U32_T OffsetByte, I8_T *PRetI8Value );
 RTN_ERR FNTYPE NMC_ReadInputI16( I32_T DevID, U32_T OffsetByte, I16_T *PRetI16Value );
 RTN_ERR FNTYPE NMC_ReadInputI32( I32_T DevID, U32_T OffsetByte, I32_T *PRetI32Value );
-/**
+/*!
  * @brief Read the mapped output memory by bit, word or dword.
  *
  * @param DevID         Device ID (DevID)
@@ -650,7 +650,7 @@ RTN_ERR FNTYPE NMC_ReadOutputBit( I32_T DevID, U32_T OffsetByte, U32_T BitIndex,
 RTN_ERR FNTYPE NMC_ReadOutputI8( I32_T DevID, U32_T OffsetByte, I8_T *PRetI8Value );
 RTN_ERR FNTYPE NMC_ReadOutputI16( I32_T DevID, U32_T OffsetByte, I16_T *PRetI16Value );
 RTN_ERR FNTYPE NMC_ReadOutputI32( I32_T DevID, U32_T OffsetByte, I32_T *PRetI32Value );
-/**
+/*!
  * @brief Write the mapped output memory by bit, word or dword.
  *
  * @param DevID       Device ID (DevID)
@@ -862,6 +862,7 @@ RTN_ERR FNTYPE NMC_DeviceStopAll( I32_T DevID );
 
 /*! \addtogroup Axis_API
  *  Axis APIs
+ *  @todo Add description to NMC_AxisSetSpeedRatio, NMC_AxisGetSpeedRatio
  *  @{
  */
 // Axis parameter setting APIs
@@ -1175,15 +1176,15 @@ RTN_ERR FNTYPE NMC_AxisGetMotionBuffSpace(  I32_T DevID, I32_T AxisIndex, I32_T 
  * \b Usage: <br>
  * 1. The function can be called for point-to-point motion if the axis is excitation.
  * 2. If the axis is homing, the function will return the error code.
- * 3. If the axis is in the axis state_STATE_STOPPING, AXIS_STATE_STOPPED or AXIS_STATE_ERROR, the function will return the error code. After NMC_AxisResetState() is called to reset the axis to normal excitation (AXIS_STATE_STAND_STILL), the function can be called for point-to-point motion successfully.
+ * 3. If the axis is in the [axis state](@ref NMC_AxisGetState) AXIS_STATE_STOPPING, AXIS_STATE_STOPPED or AXIS_STATE_ERROR, the function will return the error code. After NMC_AxisResetState() is called to reset the axis to normal excitation (AXIS_STATE_STAND_STILL), the function can be called for point-to-point motion successfully.
  * 4. If the axis is executing other motions, it will execute the corresponding behavior depended on the axis parameter AXP_BUFF_PARAM after the function is called.
  * 5. The function can be called to enable the point-to-point motion. After the motion completely, the axis will move to the input target position. If the axis parameter 0x30 (Absolute or relative programming) is set to 1, the target position and the relative distance from the current position shall be input in the function. If the relative distance is set to 0, the target position will be set as an absolute position.
- * 6. If the axis is excuting the point-to-point motion, the axis state will transfer to AXIS_STATE_DISCRETE_MOTION. After the axis moves to the target position and there is no successive motion, the bit 9 of axis status will become to 1, and the axis will transfer to the normal excitation (AXIS_STATE_STAND_STILL).
+ * 6. If the axis is excuting the point-to-point motion, the [axis state](@ref NMC_AxisGetState) will transfer to AXIS_STATE_DISCRETE_MOTION. After the axis moves to the target position and there is no successive motion, the bit 9 of axis status will become to 1, and the axis will transfer to the normal excitation (AXIS_STATE_STAND_STILL).
  * 7. The drive will plan the velocity curve depended on the axis parameters, AXP_PROF_TYPE, AXP_ACC, AXP_DEC and AXP_JERK.
  * 8. The maximum velocity can be input with the pointer variable, PMaxVel. Then the corresponding axis parameter AXP_VM will be modified to the input value, and the velocity plan will be performed accordingly.
  * 9. If the pointer variable, PMaxVel, is set to 0, the drive will perform the velocity plan based on the axis parameter AXP_VM as the target velocity.
- * 10. If the axis state is AXIS_STATE_STAND_STILL, the function will enable the point-to-point motion immediately after called whether the content of axis parameter AXP_BUFF_PARAM.
- * 11. After the function is called and if the axis state is AXIS_STATE_WAIT_SYNC and the axis parameter AXP_BUFF_PARAM is aborting, the motions stored in the motion queue will be removed. Then the point-to-point motion will be stored into the motion queue and wait for trigger signal.
+ * 10. If the [axis state](@ref NMC_AxisGetState) is AXIS_STATE_STAND_STILL, the function will enable the point-to-point motion immediately after called whether the content of axis parameter AXP_BUFF_PARAM.
+ * 11. After the function is called and if the [axis state](@ref NMC_AxisGetState) is AXIS_STATE_WAIT_SYNC and the axis parameter AXP_BUFF_PARAM is aborting, the motions stored in the motion queue will be removed. Then the point-to-point motion will be stored into the motion queue and wait for trigger signal.
  * 12. If the axis has not reach the target position during the point-to-point motion, NMC_AxisHalt() can be called to stop the motion.
  *
  * \b Examples: <br>
@@ -3291,7 +3292,7 @@ void    FNTYPE NMC_DebugSetTraceMode( I32_T TraceMode );
  * None
  */
 void    FNTYPE NMC_DebugSetHookData( void *PHookUserData );
-/**
+/*!
  * @brief Set the hook function.
  *
  * @param PFHookFuncPtr A function pointer to set the hook function
@@ -3309,7 +3310,7 @@ void    FNTYPE NMC_DebugSetHookData( void *PHookUserData );
  * None
  */
 void    FNTYPE NMC_DebugSetHookFunction( PF_NmcHookAPI PFHookFuncPtr );
-/**
+/*!
  * @brief Read the API address.
  *
  * @param[in] PApiName [Input] The function name of a NexMotion API
@@ -3336,11 +3337,121 @@ const void* FNTYPE NMC_DebugGetApiAddress( const char *PApiName );
 
 
 // Obsolete API
+/*! \addtogroup Deprecated_API
+ * Depreacted functions
+ *  @{
+ */
+/*!
+ * @brief Axis function for setting velocity ratio
+ *
+ * @param DevID           Device ID (DevID)
+ * @param AxisIndex       Axis index
+ * @param[in] Percentage  [Input] Velocity percentage
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * 1. Whether the axis is in motion, the function can be called to set the velocity percentage. The default value of the velocity percentage is 1.0.
+ * 2. The input velocity percentage shall be more than or equal to 0, and less than 1.
+ * 3. If the axis is in the [axis state](@ref NMC_AxisGetState) AXIS _STATE_STOPPING, AXIS_STATE_STOPPED or AXIS_STATE_ERROR, the function will return the error code.
+ * 4. If the axis is homing, the function will return the error code.
+ * 5. After the function is called to set the velocity percentage, the target velocity of the later axis motion shall be the input maximum velocity multiplied by such velocity percentage.
+ * 6. If the axis is executing the point-to-point motion or the JOG motion and the function is called, the input velocity percentage will change the target velocity of the current motion.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T maxVel = 50.0;
+ * ret = NMC_AxisJog( 0, 0, 1, &maxVel ); // Enable axis JOG motion at target velocity 50.
+ * ret = NMC_AxisSetVelRatio( 0, 0, 0.5 ); // Change velocity percentage to target velocity 25.
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_AxisSetVelRatio( I32_T DevID, I32_T AxisIndex, F64_T Percentage );
+/*!
+ * @brief Axis function for getting velocity ratio
+ *
+ * @param DevID             Device ID (DevID)
+ * @param AxisIndex         Axis index
+ * @param[out] PPercentage  Return the velocity percentage.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function is called to get the current velocity percentage.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T velRatio = 0.0;
+ * ret = NMC_AxisGetVelRatio( 0, 0, &velRatio );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_AxisGetVelRatio( I32_T DevID, I32_T AxisIndex, F64_T *PPercentage );
 
+/*!
+ * @brief Set the velocity percentage of a group from 0.0 ~ 100.0%.
+ * @todo check velocity percentage maximum value (100 or 1000).
+ *
+ * @param DevID       Device ID (DevID)
+ * @param GroupIndex  Group index
+ * @param Percentage  Velocity percentage to be set (0% ~ 100.0%)
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T percentage = 100.0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupSetVelRatio( devID, groupIndex, percentage );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupSetVelRatio( I32_T DevID, I32_T GroupIndex, F64_T Percentage );
+/*!
+ * @brief Get the velocity percentage of a group from 0.0 ~ 100.0%.
+ *
+ * @param DevID               Device ID (DevID)
+ * @param GroupIndex          Group index
+ * @param[out] PRetPercentage [Input] A pointer variable, [Output] Velocity percentage.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * I32_T devID = 0;
+ * I32_T groupIndex = 0;
+ * F64_T percentage = 0.0;
+ * RTN_ERR ret = 0;
+ * ret = NMC_GroupGetVelRatio( devID, groupIndex, &percentage );
+ * if( ret != 0 ) return ret;
+ * @endcode
+ *
+ * \b Reference: <br>
+ * None.
+ */
 RTN_ERR FNTYPE NMC_GroupGetVelRatio( I32_T DevID, I32_T GroupIndex, F64_T *PRetPercentage );
+/*!
+ *  @}
+ */
 
 #ifdef __cplusplus
 }

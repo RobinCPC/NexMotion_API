@@ -36,6 +36,7 @@
 
 /*! \addtogroup Safety
  *  State definition of safety
+ *  @todo update the definition of constants
  *  @{
  */
 #define NMC_SAFETY_STATE_DISABLE            (0)
@@ -47,6 +48,7 @@
 
 /*! \addtogroup Sefety_Mode
  *  Safety operation mode definition.
+ *  @todo update the definition of constants
  *  @{
  */
 #define NMC_SAFETY_MODE_OP_T1               (0)
@@ -58,6 +60,7 @@
 
 /*! \addtogroup Watchdog_Mode
  *  Watch dog timeout mode
+ *  @todo update the definition of constants
  *  @{
  */
 #define NMC_SAFETY_WDT_TIMEOUT_STOP0        (0)
@@ -79,8 +82,8 @@
 
 /*! \addtogroup Axis_State
  *  State definition of axis.
- *  The axis state is read via NMC_AxisGetState(). The variable represents the
- *  meanings as following.
+ *  The axis state is read via NMC_AxisGetState(). The variable represents the meanings as following.
+ *  @todo Add the description for NMC_AXIS_STATE_GROUP_MOTION
  *  @{
  */
 #define NMC_AXIS_STATE_DISABLE              (0)   //!< Disable: The servo is OFF.
@@ -209,6 +212,7 @@
 
 /*! \addtogroup Group_Status_Mask
  *  Status bit mask definition of group
+ *  @todo update the definition of constants
  *  @{
  */
 #define NMC_GROUP_STATUS_MASK_EMG           (0x00000001)
@@ -281,15 +285,16 @@
  *  API Trace mode definition
  *  @{
  */
-#define NMC_TRACE_MODE_DISABLE              (0)
-#define NMC_TRACE_MODE_ERROR                (1)
-#define NMC_TRACE_MODE_ALL                  (2)
+#define NMC_TRACE_MODE_DISABLE              (0)   //!< Turn off the trace function and do not output anything
+#define NMC_TRACE_MODE_ERROR                (1)   //!< Output the APIs with errors only
+#define NMC_TRACE_MODE_ALL                  (2)   //!< Output all APIs
 /*!
  *  @}
  */
 
 /*! \addtogroup Msg_Type_Size
  *  Message type definition
+ *  @todo update the definition of constants
  *  @{
  */
 #define NMC_MAX_MSG_SOURCE_SIZE             (128)
@@ -304,6 +309,7 @@
 
 /*! \addtogroup Memory_Entry_Info
  *  Memory entry infomation
+ *  @todo update the definition of constants
  *  @{
  */
 #define NMC_MEM_ENTRY_NAME_SIZE             (128)
@@ -318,6 +324,7 @@
 
 /*! \addtogroup Tool_Base
  *  Tool & Base
+ *  @todo update the definition of constants
  *  @{
  */
 #define NMC_TOOL_NONE                       (-1)
@@ -328,6 +335,7 @@
 
 /*! \addtogroup RCFG
  *  RCFG
+ *  @todo update the definition of constants
  *  @{
  */
 #define  RCFG_BIT0       0
@@ -407,6 +415,11 @@ typedef struct
     F64_T  cPos[NMC_MAX_CARTESIAN_POS_SIZE];
 } CPos_T;
 
+/*! @struct RCfg_T
+ *  @brief  
+ *  @todo Add the description for struct RCfg_T
+ *
+ */
 typedef struct
 {
     I32_T rc1;
@@ -415,6 +428,11 @@ typedef struct
     I32_T rc4;
 } RCfg_T;
 
+/*! @struct RCPos_T
+ *  @brief  
+ *  @todo Add the description for struct RCPos_T
+ *
+ */
 typedef struct
 {
     // To describe a position in Cartesian space(MCS,PCS) : X, Y, Z, A, B, C
