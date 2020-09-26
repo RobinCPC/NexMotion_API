@@ -1151,11 +1151,139 @@ RTN_ERR FNTYPE NMC_AxisGetDriveAlmCode( I32_T DevID, I32_T AxisIndex, I32_T *PRe
  */
 
 // Axis motion profile read APIs
+/*! \addtogroup Axis_Motion_Status
+ *  Axis Motion Status Functions
+ *  @{
+ */
+/*!
+ * @brief Get the command position for desired axis.
+ *
+ * @param DevID           Device ID (DevID)
+ * @param AxisIndex       Axis index
+ * @param[out] PRetCmdPos Return the command position. Unit: user unit.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called to get the command position for an axis.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T cmdPos = 0.0;
+ * F64_T actPos = 0.0;
+ * ret = NMC_AxisGetCommandPos( 0, 0, &cmdPos );
+ * ret = NMC_AxisGetActualPos( 0, 0, &actPos );
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_AxisGetCommandPos( I32_T DevID, I32_T AxisIndex, F64_T *PRetCmdPos );
+/*!
+ * @brief Get the encoder feedback position for desired axis.
+ *
+ * @param DevID           Device ID (DevID)
+ * @param AxisIndex       Axis index
+ * @param[out] PRetActPos Return the encoder feedback position. Unit: user unit.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called to get the encoder feedback position for an axis.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T cmdPos = 0.0;
+ * F64_T actPos = 0.0;
+ * ret = NMC_AxisGetCommandPos( 0, 0, &cmdPos );
+ * ret = NMC_AxisGetActualPos( 0, 0, &actPos );
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_AxisGetActualPos( I32_T DevID, I32_T AxisIndex, F64_T *PRetActPos );
+/*!
+ * @brief Get the command velocity for desired axis.
+ *
+ * @param DevID           Device ID (DevID)
+ * @param AxisIndex       Axis index
+ * @param[out] PRetCmdVel Return the command velocity. Unit: user unit/sec.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called to get the command velocity for an axis.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T cmdVel = 0.0;
+ * F64_T actVel = 0.0;
+ * ret = NMC_AxisGetCommandVel( 0, 0, &cmdVel );
+ * ret = NMC_AxisGetActualVel( 0, 0, &actVel );
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_AxisGetCommandVel( I32_T DevID, I32_T AxisIndex, F64_T *PRetCmdVel );
+/*!
+ * @brief Get the encoder feedback velocity for desired axis.
+ *
+ * @param DevID           Device ID (DevID)
+ * @param AxisIndex       Axis index
+ * @param[out] PRetActVel Return the encoder feedback velocity. Unit: user unit/sec.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * The function can be called to get the encoder feedback velocity for an axis.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * F64_T cmdVel = 0.0;
+ * F64_T actVel = 0.0;
+ * ret = NMC_AxisGetCommandVel( 0, 0, &cmdVel );
+ * ret = NMC_AxisGetActualVel( 0, 0, &actVel );
+ * @endcode
+ *
+ * \b Reference: <br>
+ */
 RTN_ERR FNTYPE NMC_AxisGetActualVel( I32_T DevID, I32_T AxisIndex, F64_T *PRetActVel );
+/*!
+ * @brief Get the quantity of motions segment which can still be stored into the axis motion queue.
+ *
+ * @param DevID               Device ID (DevID)
+ * @param AxisIndex           Axis index
+ * @param[out] PRetFreeSpace  Return the quantity of motions which can still be stored into the axis motion queue.
+ *
+ * @return Return an [error code](@ref Error_code). <br>
+ * If the function is called successfully, the return value is ERR_NEXMOTION_SUCCESS (0). Otherwise, the return value is an error code. All error codes are defined in the header file, NexMotionError.h.
+ *
+ * \b Usage: <br>
+ * Because the axis supports the motion queue , the function can be called to confirm the quantity of motions which can still be stored into the axis motion queue.
+ *
+ * \b Examples: <br>
+ * @code{.h}
+ * RTN_ERR ret = 0;
+ * I32_T space = 0;
+ * ret = NMC_AxisGetMotionBuffSpace( 0, 0, &space );
+ * @endcode
+ *
+ * \b Reference: <br>
+ * NMC_AxisPtp()
+ * NMC_AxisJog()
+ * NMC_AxisHalt()
+ */
 RTN_ERR FNTYPE NMC_AxisGetMotionBuffSpace(  I32_T DevID, I32_T AxisIndex, I32_T *PRetFreeSpace );
+/*!
+ *  @}
+ */
 
 // Axis motion control APIs
 /*! \addtogroup Axis_Motion_Control
@@ -1293,8 +1421,8 @@ RTN_ERR FNTYPE NMC_AxisHomeDrive( I32_T DevID, I32_T AxisIndex );
 
 
 // Axis motion termination APIs
-/*! \addtogroup Axis_Motion_Status
- *  Axis Motion Status Functions
+/*! \addtogroup Axis_Motion_Termination
+ *  Axis Motion Termination Functions
  *  @todo This group name is duplicated in pdf manual. Check if need to rename.
  *  @{
  */
