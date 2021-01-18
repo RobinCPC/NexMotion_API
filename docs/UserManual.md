@@ -559,12 +559,20 @@ cannot be effective immediately.
 
 ## 2.3. Group Parameters {#GroupParameters}
 
-| Num. | Sub  | Type  | Description                            | Value Description                                            | Common |
-| ---- | ---- | ----- | -------------------------------------- | ------------------------------------------------------------ | ------ |
-| 0x00 | 0    | I32_T | Kinematics type                        | 0:Linear (2~8 Axes)<br/> 1:Articulated Robot (AR6)<br/> 2:Delta<br/> 3:SCARA |        |
-| 0x00 | 1    | F64_T | Kinematics parameter 1~48              | Refer to kinematics chapter                                  |        |
-| 0x48 | 0    | I32_T | Base index selection for motion target | value = -1 :No base assignment (MCS)<br/> value = 0~31: base 0~31 |        |
+| Num. | Sub  | Type  | Description                            | Value Description                                                                             | Common |
+| ---- | ---- | ----- | -------------------------------------- | ------------------------------------------------------------                                  | ------ |
+| 0x00 | 0    | I32_T | Kinematics type                        | 0:Linear (2~8 Axes)<br/> 1:Articulated Robot (AR6)<br/> 2:Delta<br/> 3:SCARA                  | (\*1)  |
+| 0x00 | 1    | F64_T | Kinematics parameter 1~48              | Refer to kinematics chapter                                                                   | (\*1)  |
+| 0x36 | 0    | I32_T | Buffer Mode                            | 0:Aborting<br/> 1:Buffered<br/> 2:Blending                                                    |        |
+| 0x36 | 1    | I32_T | Blending Mode                          | 0:Corner distance<br/> 1:MaxCorner deviation                                                  |        |
+| 0x36 | 2    | F64_T | Blending corner distance               | pos unit, Value 0 to 2147483647                                                               |        |
+| 0x36 | 3    | F64_T | Blending corner deviation              | pos unit, Value 0 to 2147483647                                                               |        |
+| 0x48 | 0    | I32_T | Base index selection for motion target | value = -1 :No base assignment (MCS)<br/> value = 0~31: base 0~31                             |        |
 | 0x48 | 1    | I32_T | Base index selection for read position | value = -2 : Parameter disable<br> value = -1 :No base assignment<br> value = 0~31: base 0~31 |        |
+
+(\*1): The parameter is effective after the system is started. During the system starting, the parameter cannot be modified and will return error.
+
+(\*2): The parameter is effective after the function is enable. The modification in another period cannot be effective immediately.
 
 @todo Update 2.3 Group parameters table
 

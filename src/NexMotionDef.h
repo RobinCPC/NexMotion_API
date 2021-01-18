@@ -517,8 +517,8 @@ typedef struct
 /////////////////////////////////////////////////////////////////////
 //                      Obsolete definition
 /////////////////////////////////////////////////////////////////////
-/*! \addtogroup Obsolete_Definition
- *  Obsolete definition
+/*! \addtogroup Deprecated_Definition
+ *  Deprecated definition
  *  @{
  */
 //! Pos_T array size definition

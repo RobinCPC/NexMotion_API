@@ -2449,7 +2449,7 @@ RTN_ERR FNTYPE NMC_GroupPtpCartAll( I32_T DevID, I32_T GroupIndex, I32_T CartAxe
  * I32_T dev ID = 0;
  * I32_T groupIndex = 0;
  * RTN_ERR ret = 0;
- * ret = NMC_ GroupHalt( devID, gro upIndex );
+ * ret = NMC_GroupHalt( devID, gro upIndex );
  * if( ret != 0 ) return ret;
  * @endcode
  *
@@ -3466,7 +3466,7 @@ const void* FNTYPE NMC_DebugGetApiAddress( const char *PApiName );
 
 // Obsolete API
 /*! \addtogroup Deprecated_API
- * Depreacted functions
+ * Deprecated functions
  *  @{
  */
 /*!
