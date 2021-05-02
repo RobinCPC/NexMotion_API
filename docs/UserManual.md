@@ -338,7 +338,7 @@ After configurations, the following functions can be used to access or control t
 2. [NMC_ReadOutputMemory()](@ref NMC_ReadOutputMemory), and
 3. [NMC_WriteOutputMemory()](@ref NMC_WriteOutputMemory)
 
-Note: The update rate of I/O memoryThe update rate of I/O memory is once per 10 ms (100Hz). Therefore, the functions may not is once per 10 ms (100Hz). Therefore, the functions may not support responses immediately if the frequency of digital output calling is higher than 100Hz.support responses immediately if the frequency of digital output calling is higher than 100Hz.
+Note: The update rate of I/O memory is once per 10 ms (100Hz). Therefore, the functions may not support responses immediately if the frequency of digital output calling is higher than 100Hz.
 
 
 
@@ -352,6 +352,59 @@ part is the motion control functions, including excitation, point-to-point motio
 motion and the change on fly function. Finally, the third part mainly focuses on reading the
 information related to the axis motion, including reading the current status and motion information of
 axis.
+
+
+
+### 1.3.1 Axis Unit Configuration {#AxisUnitConfiguration}
+
+  The required parameters set with the APIs for the axis motion, such as the position of point-to-point motion or the velocity of the JOG motion. These motions are operating on these units defined by users (user unit). To establish the relationships between these user units and the command counts actually set to the device, users shall set the related unit parameters first. The [axis parameters](@ref AxisParameters) related to unit configurations are listed in the below table:
+
+| Param. Num | Sub Index |          Description           | Remark |
+| ---------- | :-------: | :----------------------------: | :----: |
+| 0x00       |     0     |  Mechanical pitch (unit/rev)   |  (*1)  |
+| 0x01       |     0     |     Mechanical revolution      |  (*1)  |
+| 0x02       |     0     |        Motor revolution        |  (*1)  |
+| 0x03       |     0     | Encoder resolution (pulse/rev) |  (*1)  |
+
+(*1) The parameter cannot be modified after the system is enabled.
+
+* 0x00: Mechanical pitch (user unit/rev)
+
+The parameter mainly describes the user unit required for a mechanism revolution.
+
+ 
+
+* 0x01: Mechanical revolution
+
+* 0x02: Motor revolution
+
+The two parameters must be set coordinately. They are used to describe the gear ratio relationship between the motor and the mechanism. For a rotating mechanism, there is usually a velocity reducer between the motor and the mechanism. Assume that the gear ratio of the velocity reducer is 80. It means that the motor rotates 80 revolutions while the mechanism rotates one revolution. Therefore, the 0x01 shall be set to 1 and the 0x02 shall be set to 80. For the linear mechanism with the lead screw, if there is only a coupling between the motor and the mechanism and there is no velocity reduction mechanism between them, the 0x01 and 0x02 shall be set to 1. However, if there is a velocity reduction mechanism between the motor and the mechanism, the 0x01 and 0x02 must be set in accordance with the gear ratio of the velocity reduction mechanism.
+
+ 
+
+* 0x03: Encoder resolution (pulse/rev)
+
+The parameter is mainly used to set the revolution of encoder. It represents how many pulse counts the encoder will return for a revolution of motor. For an encoder with a 20-bit resolution, the parameter shall be set to 1,048,576 because of $2^{20}$.
+
+The unit conversion formula is as follows:
+$$
+1\ User\ unit\ =\ EncoderResolution \times \frac{Motor\ revolution}{Mechanical\ revolution} \div Pitch\ (Pulse)
+$$
+
+
+Unit configuration example 1: A disk mechanism
+
+![A Rotary Motor, a Velocity Reducer and a Rotary Mechanism](images/RotaryMechanism.png)
+
+@todo update content of chapter 1.3.1.
+
+
+
+### 1.3.2 Software Limit Protection {#SoftwareLimitProtection}
+
+  In an actual mechanism, there is often the travel limitation for an axis. Also, there are the position limit with positive/negative direction, the maximum allowable velocity and the maximum allowable acceleration in the axis parameters because of maximum output tongue and velocity limits for a motor. The motion control unit provides the software protection mechanism to ensure the mechanism is operating under conditions of the allowed limits during the axis is in motion. If the software limit protection is enabled, the motion parameters will be checked when an axis motion function is called. If the set limit conditions are not met, the function will return the corresponding error code. When a group is in motion, the device will stop if there is an axis exceeding the set limit protection. These parameters related to the limit protection are described as followed:
+
+@todo update content of chapter 1.3.2.
 
 
 
@@ -421,8 +474,8 @@ The parameters related to the conversions are described in the following table:
 |         Conversion Type         |                   Parameter Type                   | Description                                                  |
 | :-----------------------------: | :------------------------------------------------: | ------------------------------------------------------------ |
 |         Unit Conversion         |          Group axis parameters 0x00~0x06           | Set the conversion between the pulse of servo and the physical unit of axis coordinate system (ACS) |
-| Mechanism kinematics conversion | [Group parameters](@ref GroupParameters)   0x00    | Set the conversion between the axis coordinate system (ACS) and the machine coordinate system (MCS) |
-|  Coordinate system conversion   | [Group Parameters](@ref GroupParameters)  0xC0~ DF | Set the conversion between the machine coordinate system (MCS) and the product coordinate system (PCS) |
+| Mechanism kinematics conversion | [Group parameters](@ref GroupParameters) <br/>0x00 | Set the conversion between the axis coordinate system (ACS) and the machine coordinate system (MCS) |
+|  Coordinate system conversion   | [Group Parameters](@ref GroupParameters)  0xC0~DF  | Set the conversion between the machine coordinate system (MCS) and the product coordinate system (PCS) |
 |    TCP coordinate conversion    | [Group Parameters](@ref GroupParameters)  0x80~8F  | Set the conversion between the tool and the tool center point (TCP) |
 
 NexMotion defines the data structure 「 [Pos_T](@ref Pos_T) 」 and 「 [Xyz_T](@ref Xyz_T) 」 to describe the coordinate
@@ -553,7 +606,7 @@ cannot be effective immediately.
 
 (\*5): The configurable range is depended on the controlled device.
 
-@todo Update 2.2 Axis paramters table
+@todo Update 2.2 Axis parameters table
 
 
 
