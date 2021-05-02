@@ -1,0 +1,9 @@
+<map id="Axis_API" name="Axis_API">
+<area shape="rect" id="node1" href="$group___axis___motion___control.html" title="Axis Motion Control Functions. " alt="" coords="144,5,287,32"/>
+<area shape="rect" id="node2" href="$group___axis___motion___status.html" title="Axis Motion Status Functions. " alt="" coords="146,56,285,83"/>
+<area shape="rect" id="node3" href="$group___axis___motion___change.html" title="Axis Motion Change Functions. " alt="" coords="142,107,289,133"/>
+<area shape="rect" id="node4" href="$group___axis___homing.html" title="Axis Returns to Home Functions. " alt="" coords="165,157,265,184"/>
+<area shape="rect" id="node5" href="$group___axis___state___control.html" title="Axis State Control Functions. " alt="" coords="148,208,283,235"/>
+<area shape="rect" id="node6" href="$group___axis___motion___termination.html" title="Axis Motion Termination Functions. " alt="" coords="131,259,300,285"/>
+<area shape="rect" id="node7" href="$group___axis___config.html" title="Axis Configuration Functions. " alt="" coords="169,309,262,336"/>
+</map>

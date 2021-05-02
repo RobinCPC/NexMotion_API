@@ -1,0 +1,28 @@
+var modules =
+[
+    [ "System_API", "group___system___a_p_i.html", "group___system___a_p_i" ],
+    [ "Axis_API", "group___axis___a_p_i.html", "group___axis___a_p_i" ],
+    [ "Group_API", "group___group___a_p_i.html", "group___group___a_p_i" ],
+    [ "Deprecated_API", "group___deprecated___a_p_i.html", "group___deprecated___a_p_i" ],
+    [ "Device_Type", "group___device___type.html", "group___device___type" ],
+    [ "Device_State", "group___device___state.html", "group___device___state" ],
+    [ "Safety", "group___safety.html", null ],
+    [ "Sefety_Mode", "group___sefety___mode.html", null ],
+    [ "Watchdog_Mode", "group___watchdog___mode.html", null ],
+    [ "Coord_Type", "group___coord___type.html", "group___coord___type" ],
+    [ "Axis_State", "group___axis___state.html", "group___axis___state" ],
+    [ "Axis_Status", "group___axis___status.html", "group___axis___status" ],
+    [ "Axis_Status_Mask", "group___axis___status___mask.html", "group___axis___status___mask" ],
+    [ "Group_State", "group___group___state.html", "group___group___state" ],
+    [ "Group_Status", "group___group___status.html", "group___group___status" ],
+    [ "Group_Status_Mask", "group___group___status___mask.html", null ],
+    [ "Group_Axis_Idx", "group___group___axis___idx.html", "group___group___axis___idx" ],
+    [ "Group_Axis_Mask", "group___group___axis___mask.html", "group___group___axis___mask" ],
+    [ "Trace_Mode", "group___trace___mode.html", "group___trace___mode" ],
+    [ "Msg_Type_Size", "group___msg___type___size.html", null ],
+    [ "Memory_Entry_Info", "group___memory___entry___info.html", null ],
+    [ "Tool_Base", "group___tool___base.html", null ],
+    [ "RCFG", "group___r_c_f_g.html", null ],
+    [ "Deprecated_Definition", "group___deprecated___definition.html", "group___deprecated___definition" ],
+    [ "Error_code", "group___error__code.html", "group___error__code" ]
+];

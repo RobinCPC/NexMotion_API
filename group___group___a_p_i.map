@@ -1,0 +1,16 @@
+<map id="Group_API" name="Group_API">
+<area shape="rect" id="node1" href="$group___group___motion___status.html" title="Group Motion Status Functions. " alt="" coords="151,5,299,32"/>
+<area shape="rect" id="node2" href="$group___group___p2_p___motion___p_c_s.html" title="Group Point&#45;to&#45;Point Motion Functions. " alt="" coords="140,56,311,83"/>
+<area shape="rect" id="node3" href="$group___group___speed___config.html" title="Group Speed Ratio Configuration Functions. " alt="" coords="152,107,299,133"/>
+<area shape="rect" id="node4" href="$group___group___halt__and___stop.html" title="Group Halt and Stop Functions. " alt="" coords="150,157,301,184"/>
+<area shape="rect" id="node5" href="$group___group___jog___motion___p_c_s.html" title="Group Jog Motion Functions (Cartesian coordinate system) " alt="" coords="142,208,309,235"/>
+<area shape="rect" id="node6" href="$group___group___state___control.html" title="Group State Control Functions. " alt="" coords="153,259,297,285"/>
+<area shape="rect" id="node7" href="$group___group___config.html" title="Group Configuration Functions. " alt="" coords="174,309,277,336"/>
+<area shape="rect" id="node8" href="$group___group___base___calibration.html" title="Fuctions for the group to calibration its base coordination. " alt="" coords="144,360,307,387"/>
+<area shape="rect" id="node10" href="$group___group___p2_p___motion___a_c_s.html" title="Group Point&#45;to&#45;Point Motion Function. " alt="" coords="140,411,311,437"/>
+<area shape="rect" id="node11" href="$group___group__3_d___motion.html" title="Group 3D Line or Arc Interpolation Motion Functions. " alt="" coords="162,461,289,488"/>
+<area shape="rect" id="node12" href="$group___group___jog___motion___a_c_s.html" title="Group Axis Jog Motion Function. " alt="" coords="142,512,309,539"/>
+<area shape="rect" id="node13" href="$group___group__2_d___motion.html" title="Group 2D Line or Arc Interpolation Motion Functions. " alt="" coords="162,563,289,589"/>
+<area shape="rect" id="node14" href="$group___group___tool___calibration.html" title="Fuctions for the group to calibrate its tool coordination. " alt="" coords="146,613,305,640"/>
+<area shape="rect" id="node15" href="$group___group___homing.html" title="Group Returns to Home Functions. " alt="" coords="171,664,280,691"/>
+</map>
